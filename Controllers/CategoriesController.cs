@@ -6,18 +6,29 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using EBookStore.Site.Models.DTOs;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.Servives;
 
 namespace EBookStore.Site.Controllers
 {
     public class CategoriesController : Controller
     {
+        private readonly CategoriesServer _server;
+
         private AppDbContext db = new AppDbContext();
+
+
+        public CategoriesController()
+        {
+            _server = new CategoriesServer(db);
+        }
 
         // GET: Categories
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            var categories = _server.GetCategories();
+            return View(categories);
         }
 
         // GET: Categories/Details/5
@@ -46,27 +57,29 @@ namespace EBookStore.Site.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,DisplayOrder")] Category category)
+        public ActionResult Create([Bind(Include = "Id,Name,DisplayOrder")] CategoriesDto dto)
         {
-            if (ModelState.IsValid)
-            {
-                if (db.Categories.Any(c => c.DisplayOrder == category.DisplayOrder))
-                {
-                    ModelState.AddModelError("DisplayOrder", "已有相同的DisplayOrder");
-                    return View(category);
-                }
-                else if(db.Categories.Any(c => c.Name == category.Name))
-                {
-                    ModelState.AddModelError("Name", "書籍分類名稱已有，不能重複創建");
-                    return View(category);
-                }
+            //string errMessage;
+            //if (_server.CreateCategory(dto,out errMessage))
+            //{        
+            //    return RedirectToAction("Index");
 
-                db.Categories.Add(category);
-                db.SaveChanges();
+            //}
+            //else
+            //{
+            //    ModelState.AddModelError("Name", errMessage);
+            //    return View(dto);
+            //}
+            try
+            {
+                _server.CreateCategory(dto);
                 return RedirectToAction("Index");
             }
-
-            return View(category);
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return View(dto);
+            }
         }
 
         // GET: Categories/Edit/5
