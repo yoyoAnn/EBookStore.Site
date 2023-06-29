@@ -50,6 +50,17 @@ namespace EBookStore.Site.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Categories.Any(c => c.DisplayOrder == category.DisplayOrder))
+                {
+                    ModelState.AddModelError("DisplayOrder", "已有相同的DisplayOrder");
+                    return View(category);
+                }
+                else if(db.Categories.Any(c => c.Name == category.Name))
+                {
+                    ModelState.AddModelError("Name", "書籍分類名稱已有，不能重複創建");
+                    return View(category);
+                }
+
                 db.Categories.Add(category);
                 db.SaveChanges();
                 return RedirectToAction("Index");
