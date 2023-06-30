@@ -159,7 +159,9 @@
     <Compile Include="Models\EFModels\User.cs" />
     <Compile Include="Models\EFModels\UserArticleCollection.cs" />
     <Compile Include="Models\EFModels\Writer.cs" />
+    <Compile Include="Models\interface\IBooks.cs" />
     <Compile Include="Models\interface\ICategories.cs" />
+    <Compile Include="Models\Servives\BooksService.cs" />
     <Compile Include="Models\Servives\CategoriesServer.cs" />
     <Compile Include="Models\ViewsModel\BooksVM.cs" />
     <Compile Include="Models\ViewsModel\CategoriesVM.cs" />

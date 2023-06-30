@@ -6,22 +6,36 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using EBookStore.Site.Models;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.Servives;
 using EBookStore.Site.Models.ViewsModel;
 
 namespace EBookStore.Site.Controllers
 {
     public class BooksController : Controller
     {
+
+        private readonly BooksService _service;
         private AppDbContext db = new AppDbContext();
 
+        public BooksController()
+        {
+            _service = new BooksService(db);
+        }
         // GET: Books
         public ActionResult Index()
         {
-            var books = db.Books.Include(b => b.Category).Include(b => b.Publisher);
+            //var books = db.Books.Include(b => b.Category).Include(b => b.Publisher);
+
+           var books = _service.GetBooks();
             
-            return View(books.ToList());
+            return View(books);
         }
+
+        
+
+
 
         // GET: Books/Details/5
         public ActionResult Details(int? id)
