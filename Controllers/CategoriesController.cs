@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using EBookStore.Site.Models.DTOs;
 using EBookStore.Site.Models.EFModels;
 using EBookStore.Site.Models.Servives;
+using EBookStore.Site.Models.ViewsModel;
 
 namespace EBookStore.Site.Controllers
 {
@@ -27,6 +28,10 @@ namespace EBookStore.Site.Controllers
         // GET: Categories
         public ActionResult Index()
         {
+            if (TempData.ContainsKey("SuccessMessage"))
+            {
+                ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
+            }
             var categories = _server.GetCategories();
             return View(categories);
         }
@@ -58,12 +63,15 @@ namespace EBookStore.Site.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,DisplayOrder")] CategoriesDto dto)
+        public ActionResult Create([Bind(Include = "Id,Name,DisplayOrder")] CategoriesVM vm)
         {
+
+            var dto = vm.ToDto();
  
             try
             {
                 _server.CreateCategory(dto);
+                TempData["SuccessMessage"] = "創建成功";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

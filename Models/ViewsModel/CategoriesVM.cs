@@ -10,6 +10,8 @@ namespace EBookStore.Site.Models.ViewsModel
     public class CategoriesVM
     {
         public int Id { get; set; }
+
+
         [Display(Name = "分類名稱")]
         [Required]
         public string Name { get; set; }

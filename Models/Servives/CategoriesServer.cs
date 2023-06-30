@@ -9,7 +9,7 @@ using System.Web.UI;
 
 namespace EBookStore.Site.Models.Servives
 {
-    public class CategoriesServer
+    public class CategoriesServer :ICategories
     {
         private readonly AppDbContext db;
 
@@ -46,7 +46,7 @@ namespace EBookStore.Site.Models.Servives
 
         public void CreateCategory(CategoriesDto dto)
         {
-            //errorMessage = null;
+           
 
             CheckDuplicateCategory(dto);
 

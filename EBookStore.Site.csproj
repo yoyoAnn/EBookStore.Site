@@ -158,6 +158,7 @@
     <Compile Include="Models\EFModels\User.cs" />
     <Compile Include="Models\EFModels\UserArticleCollection.cs" />
     <Compile Include="Models\EFModels\Writer.cs" />
+    <Compile Include="Models\interface\ICategories.cs" />
     <Compile Include="Models\Servives\CategoriesServer.cs" />
     <Compile Include="Models\ViewsModel\CategoriesVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -233,7 +234,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\interface\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
