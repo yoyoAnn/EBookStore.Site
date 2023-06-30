@@ -129,11 +129,13 @@
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PublishersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DTOs\BooksDto.cs" />
     <Compile Include="Models\DTOs\CategoriesDto.cs" />
+    <Compile Include="Models\DTOs\PublisherDto.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Article.cs" />
     <Compile Include="Models\EFModels\Author.cs" />
@@ -161,9 +163,12 @@
     <Compile Include="Models\EFModels\Writer.cs" />
     <Compile Include="Models\interface\IBooks.cs" />
     <Compile Include="Models\interface\ICategories.cs" />
+    <Compile Include="Models\interface\IPublisher.cs" />
     <Compile Include="Models\Servives\BooksService.cs" />
     <Compile Include="Models\Servives\CategoriesServer.cs" />
+    <Compile Include="Models\Servives\PublishersServices.cs" />
     <Compile Include="Models\ViewsModel\BooksVM.cs" />
+    <Compile Include="Models\ViewsModel\PublishersVM.cs" />
     <Compile Include="Models\ViewsModel\CategoriesVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -235,6 +240,11 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Publishers\Create.cshtml" />
+    <Content Include="Views\Publishers\Delete.cshtml" />
+    <Content Include="Views\Publishers\Details.cshtml" />
+    <Content Include="Views\Publishers\Edit.cshtml" />
+    <Content Include="Views\Publishers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
