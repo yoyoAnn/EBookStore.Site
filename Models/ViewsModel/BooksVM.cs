@@ -43,7 +43,7 @@ namespace EBookStore.Site.Models.ViewsModel
         public int Stock { get; set; }
 
         [Display(Name = "上架狀況")]
-        public bool? Status { get; set; } = true;
+        public bool Status { get; set; } = true;
 
         [Display(Name = "價格")]
         public decimal Price { get; set; }

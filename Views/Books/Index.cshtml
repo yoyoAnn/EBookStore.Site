@@ -5,10 +5,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>書籍</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("新增書籍", "Create")
 </p>
 <table class="table">
     <tr>
@@ -85,9 +85,9 @@
                 @Html.DisplayFor(modelItem => item.Discount)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("修改", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("清單", "Details", new { id = item.Id }) |
+                @Html.ActionLink("刪除", "Delete", new { id = item.Id })
             </td>
         </tr>
     }
