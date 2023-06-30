@@ -20,6 +20,7 @@ namespace EBookStore.Site.Models.EFModels
 		public virtual DbSet<Cart> Carts { get; set; }
 		public virtual DbSet<Category> Categories { get; set; }
 		public virtual DbSet<Comment> Comments { get; set; }
+		public virtual DbSet<CustomerServiceMail> CustomerServiceMails { get; set; }
 		public virtual DbSet<EBookOrder> EBookOrders { get; set; }
 		public virtual DbSet<EBook> EBooks { get; set; }
 		public virtual DbSet<Employee> Employees { get; set; }
@@ -28,11 +29,14 @@ namespace EBookStore.Site.Models.EFModels
 		public virtual DbSet<Order> Orders { get; set; }
 		public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
 		public virtual DbSet<Permission> Permissions { get; set; }
+		public virtual DbSet<ProblemType> ProblemTypes { get; set; }
 		public virtual DbSet<Publisher> Publishers { get; set; }
 		public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+		public virtual DbSet<RepliedMail> RepliedMails { get; set; }
 		public virtual DbSet<RolePermission> RolePermissions { get; set; }
 		public virtual DbSet<Role> Roles { get; set; }
 		public virtual DbSet<ShippingStatus> ShippingStatuses { get; set; }
+		public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 		public virtual DbSet<UserArticleCollection> UserArticleCollections { get; set; }
 		public virtual DbSet<User> Users { get; set; }
 		public virtual DbSet<Writer> Writers { get; set; }
@@ -103,6 +107,20 @@ namespace EBookStore.Site.Models.EFModels
 			modelBuilder.Entity<Category>()
 				.HasMany(e => e.Books)
 				.WithRequired(e => e.Category)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<CustomerServiceMail>()
+				.Property(e => e.UserAccount)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<CustomerServiceMail>()
+				.Property(e => e.Email)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<CustomerServiceMail>()
+				.HasMany(e => e.RepliedMails)
+				.WithRequired(e => e.CustomerServiceMail)
+				.HasForeignKey(e => e.CSId)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<EBookOrder>()
@@ -183,6 +201,11 @@ namespace EBookStore.Site.Models.EFModels
 				.WithRequired(e => e.Permission)
 				.WillCascadeOnDelete(false);
 
+			modelBuilder.Entity<ProblemType>()
+				.HasMany(e => e.CustomerServiceMails)
+				.WithRequired(e => e.ProblemType)
+				.WillCascadeOnDelete(false);
+
 			modelBuilder.Entity<Publisher>()
 				.Property(e => e.Phone)
 				.IsFixedLength()
@@ -235,6 +258,10 @@ namespace EBookStore.Site.Models.EFModels
 
 			modelBuilder.Entity<User>()
 				.Property(e => e.Photo)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<User>()
+				.Property(e => e.ConfirmCode)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<User>()

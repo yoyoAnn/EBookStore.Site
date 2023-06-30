@@ -143,6 +143,7 @@
     <Compile Include="Models\EFModels\Cart.cs" />
     <Compile Include="Models\EFModels\Category.cs" />
     <Compile Include="Models\EFModels\Comment.cs" />
+    <Compile Include="Models\EFModels\CustomerServiceMail.cs" />
     <Compile Include="Models\EFModels\EBook.cs" />
     <Compile Include="Models\EFModels\EBookOrder.cs" />
     <Compile Include="Models\EFModels\Employee.cs" />
@@ -151,11 +152,14 @@
     <Compile Include="Models\EFModels\OrderItem.cs" />
     <Compile Include="Models\EFModels\OrderStatus.cs" />
     <Compile Include="Models\EFModels\Permission.cs" />
+    <Compile Include="Models\EFModels\ProblemType.cs" />
     <Compile Include="Models\EFModels\Publisher.cs" />
     <Compile Include="Models\EFModels\PurchaseOrder.cs" />
+    <Compile Include="Models\EFModels\RepliedMail.cs" />
     <Compile Include="Models\EFModels\Role.cs" />
     <Compile Include="Models\EFModels\RolePermission.cs" />
     <Compile Include="Models\EFModels\ShippingStatus.cs" />
+    <Compile Include="Models\EFModels\sysdiagram.cs" />
     <Compile Include="Models\EFModels\User.cs" />
     <Compile Include="Models\EFModels\UserArticleCollection.cs" />
     <Compile Include="Models\EFModels\Writer.cs" />
