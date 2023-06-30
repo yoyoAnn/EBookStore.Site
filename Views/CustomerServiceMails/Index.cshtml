@@ -1,0 +1,74 @@
+﻿@model IEnumerable<EBookStore.Site.Models.EFModels.CustomerServiceMail>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>客服管理</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+        </th>
+        <th>
+            使用者
+        </th>
+        <th>
+            信箱
+        </th>
+        <th>
+            問題種類
+        </th>
+        <th>
+            問題敘述
+        </th>
+        <th>
+            已讀取
+        </th>
+        <th>
+            已回覆
+        </th>
+        <th>
+            發問時間
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <input id="delete" type="checkbox" class="form-check" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserAccount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProblemType.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProblemStatement)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsRead)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsReplied)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedTime)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+}
+
+</table>

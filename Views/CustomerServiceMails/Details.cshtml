@@ -1,0 +1,82 @@
+﻿@model EBookStore.Site.Models.EFModels.CustomerServiceMail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CustomerServiceMail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.ReceiverName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order.ReceiverName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProblemType.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProblemType.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserAccount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserAccount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProblemStatement)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProblemStatement)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsRead)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsRead)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsReplied)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsReplied)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedTime)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

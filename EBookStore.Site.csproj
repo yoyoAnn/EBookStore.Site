@@ -130,6 +130,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\CustomerServiceMailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -228,6 +229,11 @@
     <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Books\Edit.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Create.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Delete.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Details.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Edit.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
