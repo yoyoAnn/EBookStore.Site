@@ -28,12 +28,22 @@ namespace EBookStore.Site.Controllers
         {
             //var books = db.Books.Include(b => b.Category).Include(b => b.Publisher);
 
-           var books = _service.GetBooks();
-            
+            var books = _service.GetBooks();
+
             return View(books);
         }
 
-        
+        public ActionResult GetBooksByPriceAscending()
+        {
+            var books = _service.GetBooksByPriceAscending();
+            return View(books);
+        }
+
+        public ActionResult GetBooksByPriceDescending()
+        {
+            var books = _service.GetBooksByPriceDescending();
+            return View(books);
+        }
 
 
 
