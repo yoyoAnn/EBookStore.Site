@@ -25,17 +25,22 @@ namespace EBookStore.Site.Models.EFModels
 
         [Required]
         [StringLength(255)]
+        [Display(Name = "書名")]
         public string Name { get; set; }
 
+        [Display(Name = "書本分類")]
         public int CategoryId { get; set; }
 
+        [Display(Name = "出版商")]
         public int PublisherId { get; set; }
 
         [Column(TypeName = "date")]
+        [Display(Name = "出版日期")]
         public DateTime PublishDate { get; set; }
 
         [Required]
         [StringLength(200)]
+        [Display(Name = "內容摘要")]
         public string Summary { get; set; }
 
         [Required]
@@ -45,12 +50,16 @@ namespace EBookStore.Site.Models.EFModels
         [StringLength(13)]
         public string EISBN { get; set; }
 
+        [Display(Name = "庫存")]
         public int Stock { get; set; }
 
+        [Display(Name = "上架狀況")]
         public bool Status { get; set; }
 
+        [Display(Name = "價格")]
         public decimal Price { get; set; }
 
+        [Display(Name = "折扣")]
         public int? Discount { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
