@@ -18,7 +18,12 @@ namespace EBookStore.Site.Controllers
         // GET: CustomerServiceMails
         public ActionResult Index(CSMailCriteria criteria)
         {
-            var customerServiceMails = db.CustomerServiceMails.Include(c => c.Order).Include(c => c.ProblemType);
+            ViewBag.Criteria = criteria;
+
+			var problemTypes = db.ProblemTypes.ToList().Prepend(new ProblemType());
+			ViewBag.ProblemTypeId = new SelectList(problemTypes, "Id", "Name", criteria.ProblemTypeId);
+
+			var customerServiceMails = db.CustomerServiceMails.Include(c => c.Order).Include(c => c.ProblemType);
             return View(customerServiceMails.ToList());
         }
 

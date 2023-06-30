@@ -11,7 +11,7 @@ namespace EBookStore.Site.Models.ViewModels
 	{
 		public bool IsRead { get; set; }
 		public bool IsReplied { get; set; }
-		public int ProblemTypeId { get; set; }
+		public int? ProblemTypeId { get; set; }
 		public string ProblemStatement { get; set; }
 		public string Account { get; set; }
 		public DateTime CreatedTime { get; set; }
