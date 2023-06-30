@@ -39,6 +39,7 @@ namespace EBookStore.Site.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Category category = db.Categories.Find(id);
+            
             if (category == null)
             {
                 return HttpNotFound();
@@ -59,17 +60,7 @@ namespace EBookStore.Site.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,DisplayOrder")] CategoriesDto dto)
         {
-            //string errMessage;
-            //if (_server.CreateCategory(dto,out errMessage))
-            //{        
-            //    return RedirectToAction("Index");
-
-            //}
-            //else
-            //{
-            //    ModelState.AddModelError("Name", errMessage);
-            //    return View(dto);
-            //}
+ 
             try
             {
                 _server.CreateCategory(dto);

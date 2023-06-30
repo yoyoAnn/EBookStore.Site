@@ -58,7 +58,7 @@ namespace EBookStore.Site.Models.Servives
 
             db.Categories.Add(category);
             db.SaveChanges();
-
         }
+
     }
 }
