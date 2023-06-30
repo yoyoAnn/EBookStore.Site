@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Xml.Linq;
@@ -11,27 +12,43 @@ namespace EBookStore.Site.Models.ViewsModel
     {
         public int Id { get; set; }
 
-        [Display(Name = "書名")]
         [Required]
+        [StringLength(255)]
+        [Display(Name = "書名")]
         public string Name { get; set; }
 
-        public DateTime? PublishDate { get; set; }
+        [Display(Name = "書本分類")]
+        public int CategoryId { get; set; }
 
-        public string? Summary { get; set; }
+        [Display(Name = "出版商")]
+        public int PublisherId { get; set; }
 
-        [Display(Name = "ISBN")]
+        [Column(TypeName = "date")]
+        [Display(Name = "出版日期")]
+        public DateTime PublishDate { get; set; }
+
         [Required]
+        [StringLength(200)]
+        [Display(Name = "內容摘要")]
+        public string Summary { get; set; }
+
+        [Required]
+        [StringLength(13)]
         public string ISBN { get; set; }
-        [Display(Name = "EISBN")]
-        [Required]
+
+        [StringLength(13)]
         public string EISBN { get; set; }
 
-        public int? Stock { get; set; }
+        [Display(Name = "庫存")]
+        public int Stock { get; set; }
+
+        [Display(Name = "上架狀況")]
+        public bool Status { get; set; }
 
         [Display(Name = "價格")]
-        [Required]
-        public decimal Price{ get; set; }
+        public decimal Price { get; set; }
 
-        public float? Discount { get; set; }
+        [Display(Name = "折扣")]
+        public int? Discount { get; set; }
     }
 }

@@ -77,7 +77,7 @@ namespace EBookStore.Site.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex.Message);
-                return View(dto);
+                return View(vm);
             }
         }
 

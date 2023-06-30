@@ -1,5 +1,5 @@
 ﻿@*@model EBookStore.Site.Models.EFModels.Category*@
-@model EBookStore.Site.Models.DTOs.CategoriesDto
+@model EBookStore.Site.Models.ViewsModel.CategoriesVM
 
 @{
     ViewBag.Title = "Create";
@@ -15,7 +15,9 @@
     <div class="form-horizontal">
         <h4>Category</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger",@id = "validationSummary" } )
+
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -49,5 +51,13 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
-
+    <script>
+        $(document).ready(function () {
+            var validationSummary = $("#validationSummary");
+            validationSummary.fadeIn();
+            setTimeout(function () {
+                validationSummary.fadeOut();
+            }, 2000); // 2秒後自動消失
+        });
+    </script>
 }
