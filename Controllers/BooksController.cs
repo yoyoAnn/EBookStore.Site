@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.ViewsModel;
 
 namespace EBookStore.Site.Controllers
 {
@@ -18,6 +19,7 @@ namespace EBookStore.Site.Controllers
         public ActionResult Index()
         {
             var books = db.Books.Include(b => b.Category).Include(b => b.Publisher);
+            
             return View(books.ToList());
         }
 

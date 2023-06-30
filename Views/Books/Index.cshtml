@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<EBookStore.Site.Models.EFModels.Book>
+@*@model IEnumerable<EBookStore.Site.Models.ViewsModel.BooksVM>*@
 
 @{
     ViewBag.Title = "Index";
@@ -12,10 +13,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Category.Name)
+            @Html.DisplayNameFor(model => model.CategoryId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Publisher.Name)
+            @Html.DisplayNameFor(model => model.PublisherId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -51,10 +52,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
+                @Html.DisplayFor(modelItem => item.CategoryId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Publisher.Name)
+                @Html.DisplayFor(modelItem => item.PublisherId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -91,7 +92,7 @@
         </tr>
     }
     @{
-        string displayName = ViewData.ModelMetadata.Properties.FirstOrDefault(p => p.PropertyName == "Category.Name")?.AdditionalValues["DisplayName"] as string;
+        string displayName = ViewData.ModelMetadata.Properties.FirstOrDefault(p => p.PropertyName == "CategoryId")?.AdditionalValues["DisplayName"] as string;
     }
 
     @Html.Raw(displayName)
