@@ -2,13 +2,41 @@
 
 @{
     ViewBag.Title = "Index";
+
+    var problemType = ViewBag.Problem as SelectList;
+    var criteria = ViewBag.Criteria as EBookStore.Site.Models.ViewModels.CSMailCriteria;
+    //string s_categoryId = criteria.CategoryId.HasValue ? criteria.CategoryId.Value.ToString() : "";
 }
 
 <h2>客服管理</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<section class="container">
+    <form method="get">
+        <div class="row">
+            <div class="mb-3 col-md-3">
+                <label for="s_categoryId">問題分類</label>
+                <select name="categoryId" id="s_categoryId" class="form-select">
+                    @*@foreach (var item in categories)
+                {
+                    <option value="@item.Value" @(s_categoryId == item.Value ? "selected" : "")>@item.Text</option>
+                }*@
+                </select>
+            </div>
+            <div class="mb-3 col-md-3">
+                <input type="text" class="form-control" name="Account" id="s_Account" value="" placeholder="會員帳號">
+
+            </div>
+            <div class="mb-3 col-md-3">
+                <input type="text" class="form-control" name="Statement" id="s_Statement" value="" placeholder="問題敘述">
+
+            </div>
+            <div class="mb-3 col-md-2 align-self-end">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+</section>
+
 <table class="table">
     <tr>
         <th>
@@ -37,38 +65,39 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            <input id="delete" type="checkbox" class="form-check" />
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserAccount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProblemType.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProblemStatement)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsRead)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsReplied)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedTime)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <input id="delete" type="checkbox" class="form-check" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserAccount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProblemType.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProblemStatement)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsRead)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsReplied)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedTime)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>

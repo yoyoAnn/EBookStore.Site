@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.ViewModels;
 
 namespace EBookStore.Site.Controllers
 {
@@ -15,7 +16,7 @@ namespace EBookStore.Site.Controllers
         private AppDbContext db = new AppDbContext();
 
         // GET: CustomerServiceMails
-        public ActionResult Index()
+        public ActionResult Index(CSMailCriteria criteria)
         {
             var customerServiceMails = db.CustomerServiceMails.Include(c => c.Order).Include(c => c.ProblemType);
             return View(customerServiceMails.ToList());
