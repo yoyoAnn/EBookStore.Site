@@ -9,7 +9,7 @@ using System.Web.UI;
 
 namespace EBookStore.Site.Models.Servives
 {
-    public class CategoriesServer :ICategories
+    public class CategoriesServer : ICategories
     {
         private readonly AppDbContext db;
 
@@ -60,5 +60,12 @@ namespace EBookStore.Site.Models.Servives
             db.SaveChanges();
         }
 
+    
+        public void DeleteCategory(int id)
+        {
+            Category category = db.Categories.Find(id);
+            db.Categories.Remove(category);
+            db.SaveChanges();
+        }
     }
 }

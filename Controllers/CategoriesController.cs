@@ -132,9 +132,7 @@ namespace EBookStore.Site.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
-            db.SaveChanges();
+            _server.DeleteCategory(id);
             return RedirectToAction("Index");
         }
 

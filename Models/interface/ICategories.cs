@@ -14,5 +14,11 @@ namespace EBookStore.Site.Models
         /// </summary>
         /// <returns></returns>
         IEnumerable<Category> GetCategories();
+
+        /// <summary>
+        /// 刪除一筆分類
+        /// </summary>
+        /// <param name="id"></param>
+        void DeleteCategory(int id);
     }
 }
