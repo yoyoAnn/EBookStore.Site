@@ -23,8 +23,44 @@ namespace EBookStore.Site.Controllers
 			var problemTypes = db.ProblemTypes.ToList().Prepend(new ProblemType());
 			ViewBag.ProblemTypeId = new SelectList(problemTypes, "Id", "Name", criteria.ProblemTypeId);
 
-			var customerServiceMails = db.CustomerServiceMails.Include(c => c.Order).Include(c => c.ProblemType);
-            return View(customerServiceMails.ToList());
+            ViewBag.MailStatus = criteria.MailStatus;
+
+			var query = db.CustomerServiceMails.Include(c => c.Order).Include(c => c.ProblemType);
+
+            #region where
+            switch (criteria.MailStatus)
+            {
+                case "All":
+                    break;
+				case "IsRead":
+					query = query.Where(p => p.IsRead == true);
+					break;
+				case "IsReplied":
+					query = query.Where(p => p.IsReplied == true);
+					break;
+			}
+
+            if (criteria.ProblemTypeId != null && criteria.ProblemTypeId.Value > 0)
+            {
+                query = query.Where(p => p.ProblemTypeId == criteria.ProblemTypeId.Value);
+            }
+            if (string.IsNullOrEmpty(criteria.Account) == false)
+            {
+                query = query.Where(p => p.UserAccount.Contains(criteria.Account));
+            }
+            if (string.IsNullOrEmpty(criteria.ProblemStatement) == false)
+            {
+                query = query.Where(p => p.ProblemStatement.Contains(criteria.ProblemStatement));
+            }
+            if (criteria.CreatedTime != null)
+            {
+                var dateStart = criteria.CreatedTime.Value;
+                var dateEnd = dateStart.AddDays(1);
+                query = query.Where(p => p.CreatedTime >= dateStart && p.CreatedTime <= dateEnd);
+            }
+            #endregion
+
+            return View(query.ToList());
         }
 
         // GET: CustomerServiceMails/Details/5

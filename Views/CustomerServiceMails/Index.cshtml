@@ -6,41 +6,49 @@
 
     var problemTypes = ViewBag.ProblemTypeId as SelectList;
     string s_problemTypeId = criteria.ProblemTypeId.HasValue ? criteria.ProblemTypeId.Value.ToString() : "";
+
+    string s_MailStatus = criteria.MailStatus;
+
 }
 
 <h2>客服管理</h2>
 
 <section class="container">
     <form method="get">
-        <div class="row">
-            <div class="mb-3 col-md-3">
-                <select name="ProblemTypeId" id="s_problemTypeId" class="form-select">
-                @foreach (var item in problemTypes)
-                {
-                    <option value="@item.Value" @(s_problemTypeId == item.Value ? "selected" : "")>@item.Text</option>
-                }
-                </select>
-            </div>
-            <div class="mb-3 col-md-3">
-                <input type="text" class="form-control" name="Account" id="s_Account" value="@criteria.Account" placeholder="會員帳號">
-            </div>
-            <div class="mb-3 col-md-3">
-                <input type="text" class="form-control" name="Statement" id="s_Statement" value="@criteria.ProblemStatement" placeholder="問題敘述">
-            </div>
-            <div class="mb-3 col-md-3">
-                <input type="date" class="form-control" name="CreatedTime" id="s_CreatedTime" value="@criteria.CreatedTime">
-            </div>
-            <div class="mb-3 col-md-2 align-self-end">
-                <button class="btn btn-primary">Search</button>
-            </div>
-        </div>
+		<div class="row">
+			<div class="mb-3 col-md-3">
+				<select name="MailStatus" id="s_MailStatus" class="form-select">
+					<option value="All" @(s_MailStatus == "All" ? "selected" : "")>全部信件</option>
+					<option value="IsRead" @(s_MailStatus == "IsRead" ? "selected" : "")>已讀取</option>
+					<option value="IsReplied" @(s_MailStatus == "IsReplied" ? "selected" : "")>已回覆</option>
+				</select>
+			</div>
+			<div class="mb-3 col-md-3">
+				<select name="ProblemTypeId" id="s_problemTypeId" class="form-select">
+					@foreach (var item in problemTypes)
+					{
+						<option value="@item.Value" @(s_problemTypeId == item.Value ? "selected" : "")>@item.Text</option>
+					}
+				</select>
+			</div>
+			<div class="mb-3 col-md-3">
+				<input type="text" class="form-control" name="Account" id="s_Account" value="@criteria.Account" placeholder="會員帳號">
+			</div>
+			<div class="mb-3 col-md-3">
+				<input type="text" class="form-control" name="Statement" id="s_Statement" value="@criteria.ProblemStatement" placeholder="問題敘述">
+			</div>
+			<div class="mb-3 col-md-3">
+				<input type="date" class="form-control" name="CreatedTime" id="s_CreatedTime" value="@criteria.CreatedTime">
+			</div>
+			<div class="mb-3 col-md-2 align-self-end">
+				<button class="btn btn-primary">Search</button>
+			</div>
+		</div>
     </form>
 </section>
 
 <table class="table">
     <tr>
-        <th>
-        </th>
         <th>
             使用者
         </th>
@@ -69,9 +77,6 @@
     {
         <tr>
             <td>
-                <input id="delete" type="checkbox" class="form-check" />
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.UserAccount)
             </td>
             <td>
@@ -93,11 +98,10 @@
                 @Html.DisplayFor(modelItem => item.CreatedTime)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>
     }
-
 </table>
