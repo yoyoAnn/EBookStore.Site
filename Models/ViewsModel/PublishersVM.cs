@@ -25,5 +25,7 @@ namespace EBookStore.Site.Models.ViewsModel
 
         [Display(Name = "Email")]
         public string Email { get; set; } = null;
+
+        public HttpPostedFileBase ExcelFile { get; set; }
     }
 }
