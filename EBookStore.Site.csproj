@@ -338,6 +338,7 @@
     <Content Include="Views\Publishers\Edit.cshtml" />
     <Content Include="Views\Publishers\Index.cshtml" />
     <Content Include="Views\Publishers\CreatePublishersFromExcel.cshtml" />
+    <Content Include="Views\Publishers\CreateFromExcel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

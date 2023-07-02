@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "CreateFromExcel";
+}
+
+<h2>CreateFromExcel</h2>
+
+@using (Html.BeginForm("CreateFromExcel", "Publishers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="excelFile">Select File:</label>
+        <input type="file" id="excelFile" name="excelFiles" class="form-control" />
+    </div>
+
+    <input type="submit" value="Upload File" class="btn btn-primary" />
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -18,7 +18,7 @@ namespace EBookStore.Site.Controllers
     public class PublishersController : Controller
     {
         private PublishersServices _services;
-        private AppDbContext db = new AppDbContext();
+        private readonly AppDbContext db = new AppDbContext();
 
 
         public PublishersController()
@@ -109,62 +109,41 @@ namespace EBookStore.Site.Controllers
                 return View(excelFiles);
             }
         }
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult CreatePublishersFromExcel(PublishersVM model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            if (model.ExcelFile != null && model.ExcelFile.ContentLength > 0)
-        //            {
-        //                using (var workbook = new XLWorkbook(model.ExcelFile.InputStream))
-        //                {
-        //                    var worksheet = workbook.Worksheet(1); // 預設第一個工作表
-
-        //                    foreach (var row in worksheet.RowsUsed().Skip(1)) // 跳過標題列
-        //                    {
-        //                        var name = row.Cell(4).Value.ToString(); // 預設第四欄為出版商，讀取第四個欄位的值
-
-        //                        // 創建 Publisher 物件並設定相應的屬性
-        //                        var publisher = new PublishersVM
-        //                        {
-        //                            Id = model.Id,
-        //                            Name = name,
-        //                            Address = model.Address,
-        //                            Phone = model.Phone,
-        //                            Email = model.Email
-        //                        };
-
-        //                        // 執行創建出版商的邏輯
-        //                        _services.CreatePublisher(publisher.ToDto());
-        //                    }
-        //                }
-        //            }
-
-        //            TempData["SuccessMessage"] = "從 Excel 創建出版商成功";
-        //            return RedirectToAction("Index");
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            ModelState.AddModelError("", ex.Message);
-        //            return View(model);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View(model);
-        //    }
-        //}
 
 
 
 
 
 
+        public ActionResult CreateFromExcel()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateFromExcel(HttpPostedFileBase excelFile)
+        {
+            if (excelFile != null && excelFile.ContentLength > 0)
+            {
+                try
+                {
+                    _services.CreatePublishersFromExcel(new[] { excelFile });
+
+                    TempData["SuccessMessage"] = "從 Excel 創建出版商成功";
+                    return RedirectToAction("Index", "Publisher");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Please select a valid Excel file.");
+            }
+
+            return View();
+        }
 
         // GET: Publishers/Edit/5
         public ActionResult Edit(int? id)
@@ -232,4 +211,5 @@ namespace EBookStore.Site.Controllers
             base.Dispose(disposing);
         }
     }
+
 }
