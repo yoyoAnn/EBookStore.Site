@@ -29,6 +29,10 @@ namespace EBookStore.Site.Controllers
         // GET: Publishers
         public ActionResult Index()
         {
+            if (TempData.ContainsKey("SuccessMessage"))
+            {
+                ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
+            }
             return View(db.Publishers.ToList());
         }
 
@@ -51,6 +55,7 @@ namespace EBookStore.Site.Controllers
         // GET: Publishers/Create
         public ActionResult Create()
         {
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
             return View();
         }
 
@@ -83,20 +88,43 @@ namespace EBookStore.Site.Controllers
 
         public ActionResult CreateFromExcel()
         {
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
             return View();
         }
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult CreateFromExcel(HttpPostedFileBase excelFiles)
         {
+
+            var categories = GetCategories();
+            ViewBag.CategoryId = new SelectList(categories, "Value", "Text");
+
+            string categoryId = Request.Form["CategoryId"];
+            // 從選項列表中查詢分類名稱
+            string categoryName = categories.FirstOrDefault(c => c.Value == categoryId)?.Text;
+
+
             if (excelFiles != null && excelFiles.ContentLength > 0)
             {
                 try
                 {
-                    _services.CreatePublishersFromExcel(new[] { excelFiles });
+                    int initialCount = _services.GetPublishersCount(); // 紀錄創建前的出版商數量
 
-                    TempData["SuccessMessage"] = "從 Excel 創建出版商成功";
-                    return RedirectToAction("Index", "Publisher");
+                    _services.CreatePublishersFromExcel(new[] { excelFiles }, categoryName);
+
+                    int newCount = _services.GetPublishersCount(); //取得新增的數量
+
+
+                    if (newCount > initialCount)
+                    {
+                        TempData["SuccessMessage"] = "從 Excel 創建出版商成功";
+                    }
+                    else
+                    {
+                        TempData["SuccessMessage"] = "Excel 中的所有出版商都已存在";
+                    }
+
+                    return RedirectToAction("Index");
                 }
                 catch (Exception ex)
                 {
@@ -106,9 +134,25 @@ namespace EBookStore.Site.Controllers
             else
             {
                 ModelState.AddModelError("", "Please select a valid Excel file.");
-            }
-
+            }        
             return View();
+        }
+
+        private IEnumerable<SelectListItem> GetCategories()
+        {
+       
+
+            // 從資料庫或其他資料來源獲取分類資料
+            var categories = db.Categories.ToList();
+
+            // 將分類資料轉換為選項列表
+            var categoryList = categories.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            });
+
+            return categoryList;
         }
 
         // GET: Publishers/Edit/5

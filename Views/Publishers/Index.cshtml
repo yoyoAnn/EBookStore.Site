@@ -3,7 +3,10 @@
 @{
     ViewBag.Title = "Index";
 }
-
+@if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+{
+    <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+}
 <div class="container">
     <h2>Index</h2>
     <div class="row mb-3">
@@ -56,3 +59,13 @@
         }
     </table>
 </div>
+@section Scripts{
+    <script>
+         $(document).ready(function () {
+            var successMessage = '@ViewBag.SuccessMessage';
+            if (successMessage !== '') {
+                alert(successMessage);
+            }
+        });
+    </script>
+}

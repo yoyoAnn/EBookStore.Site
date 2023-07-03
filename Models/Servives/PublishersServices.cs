@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using System.Web.Mvc;
 namespace EBookStore.Site.Models.Servives
 {
     public class PublishersServices : IPublisher
@@ -35,59 +35,72 @@ namespace EBookStore.Site.Models.Servives
         {
             return _db.Publishers.Any(p => p.Name == name);
         }
+        
 
-        /// <summary>
-        /// 創建出版商
-        /// </summary>
-        /// <param name="vms"></param>
-        //public void CreatePublishersFromExcel(IEnumerable<PublishersVM> vms)
-        //{
-
-        //    foreach (var vm in vms)
-        //    {
-        //        if (!IsPublisherNameExists(vm.Name))
-        //        {
-        //            using (var workbook = new XLWorkbook(vm.ExcelFile.InputStream))
-        //            {
-        //                var worksheet = workbook.Worksheet(1);//預設第一個工作表
-
-        //                foreach (var row in worksheet.RowsUsed().Skip(1)) // 跳過標題列
-        //                {
-        //                    var name = row.Cell(4).Value.ToString(); // 預設第四欄為出版商，讀取第四個欄位的值
-
-        //                    // 創建 Publisher 物件並設定 Address 屬性
-        //                    var dto = new PublishersDto
-        //                    {
-        //                        Id = vm.Id,
-        //                        Name = name,
-        //                        Address = vm.Address,
-        //                        Phone = vm.Phone,
-        //                        Email = vm.Email
-        //                    };
-
-        //                    CreatePublisher(dto);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
-        public void CreatePublishersFromExcel(IEnumerable<HttpPostedFileBase> excelFiles)
+        public int GetWorksheetNumber(string category)
         {
+            switch (category)
+            {
+                case "文學小說":
+                    return 1;
+                case "商業理財":
+                    return 2;
+                case "藝術設計":
+                    return 3;
+                case "人文社科":
+                    return 4;
+                case "心理勵志":
+                    return 5;
+                case "宗教命理":
+                    return 6;
+                case "自然科普":
+                    return 7;
+                case "醫療保健":
+                    return 8;
+                case "飲食":
+                    return 9;
+                case "生活風格":
+                    return 10;
+                default:
+                    throw new ArgumentException("Invalid category");
+            }
+        }
+
+   
+
+        public IEnumerable<Publisher> GetExistingPublishers()
+        {
+            var existingPublishers = _db.Publishers.ToList();
+            return existingPublishers;
+        }
+
+        public int GetPublishersCount()
+        {
+            return _db.Publishers.Count();
+        }
+        public void CreatePublishersFromExcel(IEnumerable<HttpPostedFileBase> excelFiles,string CategoryName)
+        {
+
+            var num = GetWorksheetNumber(CategoryName);
             foreach (var excelFile in excelFiles)
             {
                 using (var workbook = new XLWorkbook(excelFile.InputStream))
                 {
-                    var worksheet = workbook.Worksheet(1);
+                    var worksheet = workbook.Worksheet(num);
 
                     foreach (var row in worksheet.RowsUsed().Skip(1))
                     {
                         var name = row.Cell(2).Value.ToString();
 
+                        if (IsPublisherNameExists(name))
+                        {
+                            continue;
+                        }
+
                         var vm = new PublishersVM
                         {
                             Name = name,
-                            Address = null, // Set the address, phone, and email accordingly
+                            Address = null,
                             Phone = null,
                             Email = null
                         };
