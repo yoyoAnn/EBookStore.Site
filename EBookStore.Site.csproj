@@ -163,6 +163,9 @@
     <Compile Include="Models\EFModels\User.cs" />
     <Compile Include="Models\EFModels\UserArticleCollection.cs" />
     <Compile Include="Models\EFModels\Writer.cs" />
+    <Compile Include="Models\Infra\EmailHelper.cs" />
+    <Compile Include="Models\Infra\HashUtility.cs" />
+    <Compile Include="Models\Infra\Result.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
