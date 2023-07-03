@@ -1830,6 +1830,29 @@ pre code {
     background-color: rgba(0, 0, 0, .075)
 }
 
+.table-yellow,
+.table-yellow>td,
+.table-yellow>th {
+    background-color: #f4f5df
+        /* background-color: #f4f5df; */
+}
+
+.table-yellow tbody+tbody,
+.table-yellow td,
+.table-yellow th,
+.table-yellow thead th {
+    border-color: #f4f8a0
+}
+
+.table-hover .table-yellow:hover {
+    background-color: #c8ca40
+}
+
+.table-hover .table-yellow:hover>td,
+.table-hover .table-yellow:hover>th {
+    background-color: #c8ca40
+}
+
 .table-primary,
 .table-primary>td,
 .table-primary>th {
