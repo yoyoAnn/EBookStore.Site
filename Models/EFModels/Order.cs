@@ -16,7 +16,7 @@ namespace EBookStore.Site.Models.EFModels
             OrderItems = new HashSet<OrderItem>();
         }
 
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public int UserId { get; set; }
 

@@ -14,7 +14,7 @@ namespace EBookStore.Site.Models.EFModels
 
         public int UserId { get; set; }
 
-        public int OrderId { get; set; }
+        public long OrderId { get; set; }
 
         public int Scores { get; set; }
 

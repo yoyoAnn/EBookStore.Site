@@ -79,12 +79,21 @@ namespace EBookStore.Site.Controllers
         }
 
         // GET: CustomerServiceMails/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.OrderId = new SelectList(db.Orders, "Id", "ReceiverName");
-            ViewBag.ProblemTypeId = new SelectList(db.ProblemTypes, "Id", "Name");
-            return View();
-        }
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			CustomerServiceMail customerServiceMail = db.CustomerServiceMails.Find(id);
+			if (customerServiceMail == null)
+			{
+				return HttpNotFound();
+			}
+			ViewBag.OrderId = new SelectList(db.Orders, "Id", "ReceiverName", customerServiceMail.OrderId);
+			ViewBag.ProblemTypeId = new SelectList(db.ProblemTypes, "Id", "Name", customerServiceMail.ProblemTypeId);
+			return View(customerServiceMail);
+		}
 
         // POST: CustomerServiceMails/Create
         // 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，

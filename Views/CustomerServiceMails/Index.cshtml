@@ -15,35 +15,35 @@
 
 <section class="container">
     <form method="get">
-		<div class="row">
-			<div class="mb-3 col-md-3">
-				<select name="MailStatus" id="s_MailStatus" class="form-select">
-					<option value="All" @(s_MailStatus == "All" ? "selected" : "")>全部信件</option>
-					<option value="IsRead" @(s_MailStatus == "IsRead" ? "selected" : "")>已讀取</option>
-					<option value="IsReplied" @(s_MailStatus == "IsReplied" ? "selected" : "")>已回覆</option>
-				</select>
-			</div>
-			<div class="mb-3 col-md-3">
-				<select name="ProblemTypeId" id="s_problemTypeId" class="form-select">
-					@foreach (var item in problemTypes)
-					{
-						<option value="@item.Value" @(s_problemTypeId == item.Value ? "selected" : "")>@item.Text</option>
-					}
-				</select>
-			</div>
-			<div class="mb-3 col-md-3">
-				<input type="text" class="form-control" name="Account" id="s_Account" value="@criteria.Account" placeholder="會員帳號">
-			</div>
-			<div class="mb-3 col-md-3">
-				<input type="text" class="form-control" name="Statement" id="s_Statement" value="@criteria.ProblemStatement" placeholder="問題敘述">
-			</div>
-			<div class="mb-3 col-md-3">
-				<input type="date" class="form-control" name="CreatedTime" id="s_CreatedTime" value="@criteria.CreatedTime">
-			</div>
-			<div class="mb-3 col-md-2 align-self-end">
-				<button class="btn btn-primary">Search</button>
-			</div>
-		</div>
+        <div class="row">
+            <div class="mb-3 col-md-3">
+                <select name="MailStatus" id="s_MailStatus" class="form-select">
+                    <option value="All" @(s_MailStatus == "All" ? "selected" : "")>全部信件</option>
+                    <option value="IsRead" @(s_MailStatus == "IsRead" ? "selected" : "")>已讀取</option>
+                    <option value="IsReplied" @(s_MailStatus == "IsReplied" ? "selected" : "")>已回覆</option>
+                </select>
+            </div>
+            <div class="mb-3 col-md-3">
+                <select name="ProblemTypeId" id="s_problemTypeId" class="form-select">
+                    @foreach (var item in problemTypes)
+                    {
+                        <option value="@item.Value" @(s_problemTypeId == item.Value ? "selected" : "")>@item.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3 col-md-3">
+                <input type="text" class="form-control" name="Account" id="s_Account" value="@criteria.Account" placeholder="會員帳號">
+            </div>
+            <div class="mb-3 col-md-3">
+                <input type="text" class="form-control" name="Statement" id="s_Statement" value="@criteria.ProblemStatement" placeholder="問題敘述">
+            </div>
+            <div class="mb-3 col-md-3">
+                <input type="date" class="form-control" name="CreatedTime" id="s_CreatedTime" value="@criteria.CreatedTime">
+            </div>
+            <div class="mb-3 col-md-2 align-self-end">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
     </form>
 </section>
 
@@ -75,7 +75,7 @@
 
     @foreach (var item in Model)
     {
-        <tr>
+        <tr class="clickToDetail" data-CSMailId="@item.Id">
             <td>
                 @Html.DisplayFor(modelItem => item.UserAccount)
             </td>
@@ -105,3 +105,19 @@
         </tr>
     }
 </table>
+@section scripts{
+    @Scripts.Render("~/bundles/jquery")
+
+    <script>
+        var basement = "https://localhost:44314";
+        $(function () {
+            $('.clickToDetail').each(function () {
+                $(this).on("click", function () {
+                    var id = $(this).attr("data-CSMailId");
+                    $(location).attr("href", "/CustomerServiceMails/Details?id=" + id);                    
+                });
+            });
+        });
+
+    </script>
+}
