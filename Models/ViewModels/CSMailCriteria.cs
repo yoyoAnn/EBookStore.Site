@@ -9,7 +9,7 @@ namespace EBookStore.Site.Models.ViewModels
 {
 	public class CSMailCriteria
 	{
-		public string MailStatus; 
+		public string MailStatus { get; set; }
 		public bool IsRead { get; set; }
 		public bool IsReplied { get; set; }
 		public int? ProblemTypeId { get; set; }
