@@ -11,7 +11,7 @@ namespace EBookStore.Site.Models.Infra
     {
         public static void AddAuthorIfNotExists(string name)
         {
-            using (var db = new AppDbContext()) // 使用自己的 DbContext
+            using (var db = new AppDbContext()) 
             {
                 if (!IsAuthorNameExists(db, name))
                 {
@@ -28,7 +28,13 @@ namespace EBookStore.Site.Models.Infra
             }
         }
 
-        public static bool IsAuthorNameExists(YourDbContext db, string name)
+
+        /// <summary>
+        /// 確認資料庫裡面偶沒有相同作者名字
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static bool IsAuthorNameExists(AppDbContext db, string name)
         {
             return db.Authors.Any(p => p.Name == name);
         }

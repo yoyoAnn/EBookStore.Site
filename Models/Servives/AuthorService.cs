@@ -41,7 +41,8 @@ namespace EBookStore.Site.Models.Servives
 
                     foreach (var row in worksheet.RowsUsed().Skip(1))
                     {
-                        var names = row.Cell(4).Value.ToString().Split(',');
+                        var delimiters = new char[] { ',', '、' };
+                        var names = row.Cell(4).Value.ToString().Split(delimiters);
                         foreach (var name in names)
                         {
                             var trimmedName = name.Trim();
