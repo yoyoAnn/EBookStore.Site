@@ -253,6 +253,7 @@
     <Compile Include="Models\EFModels\User.cs" />
     <Compile Include="Models\EFModels\UserArticleCollection.cs" />
     <Compile Include="Models\EFModels\Writer.cs" />
+    <Compile Include="Models\Infra\BookHelper.cs" />
     <Compile Include="Models\Infra\StringHelper.cs" />
     <Compile Include="Models\interface\IBooks.cs" />
     <Compile Include="Models\interface\ICategories.cs" />

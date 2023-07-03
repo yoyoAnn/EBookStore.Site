@@ -18,16 +18,16 @@ namespace EBookStore.Site.Models.ViewsModel
         public string Name { get; set; }
 
         [Display(Name = "書本分類")]
-        public int CategoryId { get; set; }
+        public string CategoryId { get; set; }
 
         [Display(Name = "出版商")]
-        public int PublisherId { get; set; }
+        public string PublisherId { get; set; }
 
         [Column(TypeName = "date")]
         [Display(Name = "出版日期")]
         public DateTime PublishDate { get; set; }
 
-        [Required]
+    
         [StringLength(200)]
         [Display(Name = "內容摘要")]
         public string Summary { get; set; }
@@ -49,6 +49,6 @@ namespace EBookStore.Site.Models.ViewsModel
         public decimal Price { get; set; }
 
         [Display(Name = "折扣")]
-        public int? Discount { get; set; }
+        public float? Discount { get; set; } = 1;
     }
 }

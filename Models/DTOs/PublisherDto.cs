@@ -39,8 +39,6 @@ namespace EBookStore.Site.Models.DTOs
             dto.Email = StringHelper.SetEmptyStringIfNull(dto.Email);
 
             return dto;
-        }
-
-        
+        }       
     }
 }

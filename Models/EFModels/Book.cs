@@ -29,10 +29,10 @@ namespace EBookStore.Site.Models.EFModels
         public string Name { get; set; }
 
         [Display(Name = "書本分類")]
-        public int CategoryId { get; set; }
+        public string CategoryId { get; set; }
 
         [Display(Name = "出版商")]
-        public int PublisherId { get; set; }
+        public string PublisherId { get; set; }
 
         [Column(TypeName = "date")]
         [Display(Name = "出版日期")]
@@ -60,7 +60,7 @@ namespace EBookStore.Site.Models.EFModels
         public decimal Price { get; set; }
 
         [Display(Name = "折扣")]
-        public int? Discount { get; set; }
+        public float? Discount { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Article> Articles { get; set; }
