@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Xml.Linq;
+using EBookStore.Site.Models.Infra;
 
 namespace EBookStore.Site.Models.DTOs
 {
@@ -33,21 +34,13 @@ namespace EBookStore.Site.Models.DTOs
                 Phone = vm.Phone,
                 Email = vm.Email,
             };
-            dto.Address= SetEmptyStringIfNull(dto.Address);
-            dto.Phone = SetEmptyStringIfNull(dto.Phone);
-            dto.Email = SetEmptyStringIfNull(dto.Email);
+            dto.Address= StringHelper.SetEmptyStringIfNull(dto.Address);
+            dto.Phone = StringHelper.SetEmptyStringIfNull(dto.Phone);
+            dto.Email = StringHelper.SetEmptyStringIfNull(dto.Email);
 
             return dto;
         }
 
-        private static string SetEmptyStringIfNull(string value)
-        {
-            if (value == null)
-            {
-                return "";
-               
-            }
-            return value;
-        }
+        
     }
 }
