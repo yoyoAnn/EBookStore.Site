@@ -82,9 +82,9 @@ namespace EBookStore.Site.Models.Servives
 
                     foreach (var row in worksheet.RowsUsed().Skip(1))
                     {
-                        var name = row.Cell(4).Value.ToString();
+                        var name = row.Cell(2).Value.ToString();
 
-                        var dto = new PublishersDto
+                        var vm = new PublishersVM
                         {
                             Name = name,
                             Address = null, // Set the address, phone, and email accordingly
@@ -92,7 +92,7 @@ namespace EBookStore.Site.Models.Servives
                             Email = null
                         };
 
-                        CreatePublisher(dto);
+                        CreatePublisher(vm.ToDto());
                     }
                 }
             }

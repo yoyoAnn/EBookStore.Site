@@ -81,53 +81,19 @@ namespace EBookStore.Site.Controllers
 
 
 
-        public ActionResult CreatePublishersFromExcel()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreatePublishersFromExcel(IEnumerable<HttpPostedFileBase> excelFiles)
-        {
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _services.CreatePublishersFromExcel(excelFiles);
-                    TempData["SuccessMessage"] = "從 Excel 創建出版商成功";
-                    return RedirectToAction("Index");
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                    return View(excelFiles);
-                }
-            }
-            else
-            {
-                return View(excelFiles);
-            }
-        }
-
-
-
-
-
-
         public ActionResult CreateFromExcel()
         {
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateFromExcel(HttpPostedFileBase excelFile)
+        //[ValidateAntiForgeryToken]
+        public ActionResult CreateFromExcel(HttpPostedFileBase excelFiles)
         {
-            if (excelFile != null && excelFile.ContentLength > 0)
+            if (excelFiles != null && excelFiles.ContentLength > 0)
             {
                 try
                 {
-                    _services.CreatePublishersFromExcel(new[] { excelFile });
+                    _services.CreatePublishersFromExcel(new[] { excelFiles });
 
                     TempData["SuccessMessage"] = "從 Excel 創建出版商成功";
                     return RedirectToAction("Index", "Publisher");
