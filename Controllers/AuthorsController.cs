@@ -30,6 +30,8 @@ namespace EBookStore.Site.Controllers
             if (TempData.ContainsKey("SuccessMessage"))
             {
                 ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
+                TempData.Remove("SuccessMessage");
+
             }
             return View(db.Authors.ToList());
         }
@@ -80,7 +82,7 @@ namespace EBookStore.Site.Controllers
             return View();
         }
 
-       [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateFromExcel(HttpPostedFileBase excelFiles)
         {

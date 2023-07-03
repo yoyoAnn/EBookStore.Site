@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<EBookStore.Site.Models.EFModels.Author>
 
 @{
-    Layout = null;
+    ViewBag.Title = "Index";
 }
 
 <!DOCTYPE html>
@@ -11,10 +11,20 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
 </head>
+
+@if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+{
+    <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+}
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    <div class="row mb-3">
+        <div class="col">
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+        </div>
+        <div class="col text-center">
+            @Html.ActionLink("傳入excel新增作者", "CreateFromExcel", null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
     <table class="table">
         <tr>
             <th>
@@ -28,26 +38,37 @@
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Photo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Profile)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-    }
-    
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Photo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Profile)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
     </table>
 </body>
 </html>
+@section Scripts{
+    <script>
+         $(document).ready(function () {
+            var successMessage = '@ViewBag.SuccessMessage';
+            if (successMessage !== '') {
+                alert(successMessage);
+            }
+        });
+    </script>
+}

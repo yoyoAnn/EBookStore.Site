@@ -18,16 +18,7 @@ namespace EBookStore.Site.Models.Servives
             _db = db;
         }
 
-        /// <summary>
-        /// 確認資料庫裡面偶沒有相同作者名字
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public bool IsAuthorNameExists(string name)
-        {
-            return _db.Authors.Any(p => p.Name == name);
-        }
-
+   
         /// <summary>
         /// 確認作者數量
         /// </summary>
@@ -50,23 +41,13 @@ namespace EBookStore.Site.Models.Servives
 
                     foreach (var row in worksheet.RowsUsed().Skip(1))
                     {
-                        var name = row.Cell(4).Value.ToString();
-
-                        if (IsAuthorNameExists(name))
+                        var names = row.Cell(4).Value.ToString().Split(',');
+                        foreach (var name in names)
                         {
-                            continue;
+                            var trimmedName = name.Trim();
+                            AuthorHelper.AddAuthorIfNotExists(trimmedName);
                         }
 
-                        var dto = new AuthorDto
-                        {
-                            Name = name,
-                            Photo = null,
-                            Profile = null,
-                        };
-
-                        _db.Authors.Add(dto.ToEntity());
-                        _db.SaveChanges();
-                       
                     }
                 }
             }
