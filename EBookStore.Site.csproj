@@ -218,6 +218,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTOs\AuthorDto.cs" />
     <Compile Include="Models\DTOs\BooksDto.cs" />
     <Compile Include="Models\DTOs\CategoriesDto.cs" />
     <Compile Include="Models\DTOs\PublisherDto.cs" />
@@ -258,6 +260,7 @@
     <Compile Include="Models\interface\IBooks.cs" />
     <Compile Include="Models\interface\ICategories.cs" />
     <Compile Include="Models\interface\IPublisher.cs" />
+    <Compile Include="Models\Servives\AuthorService.cs" />
     <Compile Include="Models\Servives\BooksService.cs" />
     <Compile Include="Models\Servives\CategoriesServer.cs" />
     <Compile Include="Models\Servives\PublishersServices.cs" />
@@ -339,8 +342,13 @@
     <Content Include="Views\Publishers\Details.cshtml" />
     <Content Include="Views\Publishers\Edit.cshtml" />
     <Content Include="Views\Publishers\Index.cshtml" />
-    <Content Include="Views\Publishers\CreatePublishersFromExcel.cshtml" />
     <Content Include="Views\Publishers\CreateFromExcel.cshtml" />
+    <Content Include="Views\Authors\Create.cshtml" />
+    <Content Include="Views\Authors\Delete.cshtml" />
+    <Content Include="Views\Authors\Details.cshtml" />
+    <Content Include="Views\Authors\Edit.cshtml" />
+    <Content Include="Views\Authors\Index.cshtml" />
+    <Content Include="Views\Authors\CreateFromExcel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

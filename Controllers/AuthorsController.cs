@@ -6,85 +6,72 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ClosedXML.Excel;
+using System.Web.Services.Description;
 using EBookStore.Site.Models.DTOs;
 using EBookStore.Site.Models.EFModels;
-using EBookStore.Site.Models.Servives;
-using EBookStore.Site.Models.ViewsModel;
-using System.IO;
 using EBookStore.Site.Models.Infra;
+using EBookStore.Site.Models.Servives;
 
 namespace EBookStore.Site.Controllers
 {
-    public class PublishersController : Controller
+    public class AuthorsController : Controller
     {
-        private PublishersServices _services;
+        private AuthorService _service;
         private readonly AppDbContext db = new AppDbContext();
 
-
-        public PublishersController()
+        public AuthorsController()
         {
-            _services = new PublishersServices(db);
+            _service = new AuthorService(db);
         }
 
-        // GET: Publishers
+        // GET: Authors
         public ActionResult Index()
         {
             if (TempData.ContainsKey("SuccessMessage"))
             {
                 ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
             }
-            return View(db.Publishers.ToList());
+            return View(db.Authors.ToList());
         }
 
-
-        // GET: Publishers/Details/5
+        // GET: Authors/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Publisher publisher = db.Publishers.Find(id);
-            if (publisher == null)
+            Author author = db.Authors.Find(id);
+            if (author == null)
             {
                 return HttpNotFound();
             }
-            return View(publisher);
+            return View(author);
         }
 
-        // GET: Publishers/Create
+        // GET: Authors/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
             return View();
         }
 
-        // POST: Publishers/Create
+        // POST: Authors/Create
         // 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Address,Phone,Email")] PublishersVM vm)
+        public ActionResult Create([Bind(Include = "Id,Name,Photo,Profile")] AuthorDto dto)
         {
             if (ModelState.IsValid)
             {
-                var pbServices = new PublishersServices(db);
-
-                if (pbServices.IsPublisherNameExists(vm.Name))
-                {
-                    ModelState.AddModelError("", "已存在相同名稱的出版商");
-                    return View(vm);
-                }
-                _services.CreatePublisher(vm.ToDto());
-
-
+                var author = dto.ToEntity();
+                db.Authors.Add(author);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(vm);
+            return View(dto);
         }
-
 
 
         public ActionResult CreateFromExcel()
@@ -92,7 +79,8 @@ namespace EBookStore.Site.Controllers
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
             return View();
         }
-        [HttpPost]
+
+       [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateFromExcel(HttpPostedFileBase excelFiles)
         {
@@ -109,20 +97,20 @@ namespace EBookStore.Site.Controllers
             {
                 try
                 {
-                    int initialCount = _services.GetPublishersCount(); // 紀錄創建前的出版商數量
+                    int initialCount = _service.GetAuthorsCount(); // 紀錄創建前的作者數量
 
-                    _services.CreatePublishersFromExcel(new[] { excelFiles }, categoryName);
+                    _service.CreateAuthorsFromExcel(new[] { excelFiles }, categoryName);
 
-                    int newCount = _services.GetPublishersCount(); //取得新增的數量
+                    int newCount = _service.GetAuthorsCount(); //取得新增的數量
 
 
                     if (newCount > initialCount)
                     {
-                        TempData["SuccessMessage"] = "從 Excel 創建出版商成功";
+                        TempData["SuccessMessage"] = "從 Excel 創建作者成功";
                     }
                     else
                     {
-                        TempData["SuccessMessage"] = "Excel 中的所有出版商都已存在";
+                        TempData["SuccessMessage"] = "Excel 中的所有作者都已存在";
                     }
 
                     return RedirectToAction("Index");
@@ -135,65 +123,68 @@ namespace EBookStore.Site.Controllers
             else
             {
                 ModelState.AddModelError("", "Please select a valid Excel file.");
-            }        
+            }
             return View();
         }
 
 
 
-        // GET: Publishers/Edit/5
+
+        // GET: Authors/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Publisher publisher = db.Publishers.Find(id);
-            if (publisher == null)
+            Author author = db.Authors.Find(id);
+            if (author == null)
             {
                 return HttpNotFound();
             }
-            return View(publisher);
+            return View(author);
         }
 
-        // POST: Publishers/Edit/5
+        // POST: Authors/Edit/5
         // 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Address,Phone,Email")] Publisher publisher)
+        public ActionResult Edit([Bind(Include = "Id,Name,Photo,Profile")] AuthorDto dto)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(publisher).State = EntityState.Modified;
+                var author = dto.ToEntity();
+
+                db.Entry(author).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(publisher);
+            return View(dto);
         }
 
-        // GET: Publishers/Delete/5
+        // GET: Authors/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Publisher publisher = db.Publishers.Find(id);
-            if (publisher == null)
+            Author author = db.Authors.Find(id);
+            if (author == null)
             {
                 return HttpNotFound();
             }
-            return View(publisher);
+            return View(author);
         }
 
-        // POST: Publishers/Delete/5
+        // POST: Authors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Publisher publisher = db.Publishers.Find(id);
-            db.Publishers.Remove(publisher);
+            Author author = db.Authors.Find(id);
+            db.Authors.Remove(author);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -207,5 +198,4 @@ namespace EBookStore.Site.Controllers
             base.Dispose(disposing);
         }
     }
-
 }

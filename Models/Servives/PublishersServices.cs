@@ -39,12 +39,6 @@ namespace EBookStore.Site.Models.Servives
         
      
 
-        public IEnumerable<Publisher> GetExistingPublishers()
-        {
-            var existingPublishers = _db.Publishers.ToList();
-            return existingPublishers;
-        }
-
         public int GetPublishersCount()
         {
             return _db.Publishers.Count();
