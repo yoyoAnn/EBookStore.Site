@@ -18,10 +18,10 @@ namespace EBookStore.Site.Models.ViewsModel
         public string Name { get; set; }
 
         [Display(Name = "書本分類")]
-        public string CategoryId { get; set; }
+        public int CategoryId { get; set; }
 
         [Display(Name = "出版商")]
-        public string PublisherId { get; set; }
+        public int PublisherId { get; set; }
 
         [Column(TypeName = "date")]
         [Display(Name = "出版日期")]

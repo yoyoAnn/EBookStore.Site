@@ -72,7 +72,7 @@ namespace EBookStore.Site.Models.Servives
                     foreach (var row in worksheet.RowsUsed().Skip(1))
                     {
                         var name = row.Cell(1).Value.ToString();
-                        var publisherId = row.Cell(2).Value.ToString();
+                        var publisherId = row.Cell(2).GetValue<int>();
                         var publishDate = row.Cell(3).Value;
                         //var Authors = row.Cell(4).Value.ToString();
                         var iSBN = row.Cell(5).Value.ToString();

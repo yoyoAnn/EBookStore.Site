@@ -15,9 +15,9 @@ namespace EBookStore.Site.Models.DTOs
         public string Name { get; set; }
 
 
-        public string CategoryId { get; set; }
+        public int CategoryId { get; set; }
 
-        public string PublisherId { get; set; }
+        public int PublisherId { get; set; }
 
         public DateTime PublishDate { get; set; }
 
