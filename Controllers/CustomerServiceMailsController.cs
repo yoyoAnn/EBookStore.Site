@@ -21,7 +21,7 @@ namespace EBookStore.Site.Controllers
         {
             ViewBag.Criteria = criteria;
 
-			var problemTypes = db.ProblemTypes.ToList().Prepend(new ProblemType());
+			var problemTypes = db.ProblemTypes.ToList().Prepend(new ProblemType { Name="問題種類:" });
 			ViewBag.ProblemTypeId = new SelectList(problemTypes, "Id", "Name", criteria.ProblemTypeId);
 
             ViewBag.MailStatus = criteria.MailStatus;
