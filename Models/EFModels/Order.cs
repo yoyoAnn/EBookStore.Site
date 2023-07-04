@@ -11,12 +11,11 @@ namespace EBookStore.Site.Models.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Order()
         {
-            Comments = new HashSet<Comment>();
             CustomerServiceMails = new HashSet<CustomerServiceMail>();
             OrderItems = new HashSet<OrderItem>();
         }
 
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public int UserId { get; set; }
 
@@ -57,9 +56,6 @@ namespace EBookStore.Site.Models.EFModels
         public int? ShippingStatusId { get; set; }
 
         public decimal TotalPayment { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comment> Comments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerServiceMail> CustomerServiceMails { get; set; }
