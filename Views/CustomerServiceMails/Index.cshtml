@@ -19,8 +19,10 @@
             <div class="mb-3 col-md-3">
                 <select name="MailStatus" id="s_MailStatus" class="form-select">
                     <option value="All" @(s_MailStatus == "All" ? "selected" : "")>全部信件</option>
-                    <option value="IsRead" @(s_MailStatus == "IsRead" ? "selected" : "")>已讀取</option>
-                    <option value="IsReplied" @(s_MailStatus == "IsReplied" ? "selected" : "")>已回覆</option>
+                    <option value="NotRead" @(s_MailStatus == "NotRead" ? "selected" : "")>未讀取</option>
+                    <option value="NotReplied" @(s_MailStatus == "NotReplied" ? "selected" : "")>未回覆</option>
+                    <option value="Read" @(s_MailStatus == "Read" ? "selected" : "")>已讀取</option>
+                    <option value="Replied" @(s_MailStatus == "Replied" ? "selected" : "")>已回覆</option>
                 </select>
             </div>
             <div class="mb-3 col-md-3">
@@ -31,7 +33,7 @@
                     }
                 </select>
             </div>
-            <div class="mb-3 col-md-3">
+            <div class="mb-3 col-md-3 replied">
                 <input type="text" class="form-control" name="Account" id="s_Account" value="@criteria.Account" placeholder="會員帳號">
             </div>
             <div class="mb-3 col-md-3">
@@ -47,8 +49,14 @@
     </form>
 </section>
 
-<table class="table table-hover table-striped">
-    <tr>
+<table class="table table-hover">
+    <tr class="bg-yellow">
+        <th>
+            已讀取
+        </th>
+        <th>
+            已回覆
+        </th>
         <th>
             使用者
         </th>
@@ -62,20 +70,19 @@
             問題敘述
         </th>
         <th>
-            已讀取
-        </th>
-        <th>
-            已回覆
-        </th>
-        <th>
             發問時間
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr class="clickToDetail" data-id="@item.Id">
+        <tr class="mails" data-id="@item.Id" @(item.IsReplied ? "isReplied" : string.Empty)>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsRead)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsReplied)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UserAccount)
             </td>
@@ -89,18 +96,9 @@
                 @Html.DisplayFor(modelItem => item.ProblemStatement)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsRead)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsReplied)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.CreatedTime)
             </td>
-            <td>
-                <button class="btn btn-sm btn-warning create" data-isRplied="@item.IsReplied">回覆</button>
-            </td>                
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
         @Html.ActionLink("Details", "Details", new { id = item.Id }) |
         @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
         </tr>
@@ -112,21 +110,16 @@
     <script>
         var basement = "https://localhost:44314";
         $(function () {
-            $('.clickToDetail').each(function () {
+            $('.mails').each(function () {
+                if (this.hasAttribute('isReplied')) {
+                    console.log(123);
+                    $(this).addClass("bg-gray-300");
+                }
                 $(this).on("click", function () {
                     var id = $(this).attr("data-id");
-                    $(location).attr("href", "/CustomerServiceMails/Details?id=" + id);                    
+                    $(location).attr("href", "/CustomerServiceMails/Details?id=" + id);
                 });
-            });
-
-            $('.create').each(function () {
-                var isRplied = $(this).attr("data-isRplied");
-                $(this).on("click", function () {
-                    console.log(isRplied);
-                });
-                
             });
         });
-
     </script>
 }

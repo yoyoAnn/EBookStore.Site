@@ -32,10 +32,16 @@ namespace EBookStore.Site.Controllers
             {
                 case "All":
                     break;
-				case "IsRead":
+				case "NotRead":
+					query = query.Where(p => p.IsRead == false);
+					break;
+				case "NotReplied":
+					query = query.Where(p => p.IsReplied == false);
+					break;
+				case "Read":
 					query = query.Where(p => p.IsRead == true);
 					break;
-				case "IsReplied":
+				case "Replied":
 					query = query.Where(p => p.IsReplied == true);
 					break;
 			}
