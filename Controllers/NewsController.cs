@@ -14,11 +14,76 @@ namespace EBookStore.Site.Controllers
     public class NewsController : Controller
     {
         
-        public ActionResult Index()
+        public ActionResult Index(NewsCriteria criteria)
         {
-            IEnumerable<NewsIndexVm> news = GetNews();
-            return View(news);
+		
+
+			var selectListItems = new List<SelectListItem>
+			{
+				new SelectListItem { Text = string.Empty, Value =string.Empty},
+				new SelectListItem { Text = "已發佈", Value ="true"},
+				new SelectListItem { Text = "未發佈", Value ="false"}
+			};
+
+			ViewBag.statusList = new SelectList(selectListItems, "Value", "Text", criteria.Status.ToString());
+			ViewBag.Criteria = criteria;
+
+
+
+			//第一次進到這個網頁時，criteria是沒有值的，所以不會去執行下面會有這些if有沒有值的判斷。
+
+			AppDbContext db = new AppDbContext();
+
+			IQueryable<News> query =db.News;
+
+			if (string.IsNullOrEmpty(criteria.Title) == false)
+			{
+				//如果Name有值
+				query = query.Where(p => p.Title.Contains(criteria.Title));
+			}
+			if(criteria.Status!=null)
+			{
+				query = query.Where(p => p.Status == criteria.Status.Value);
+			}
+
+			if (criteria.StartDateTime.HasValue)
+			{
+				query = query.Where(p => p.CreatedTime >= criteria.StartDateTime);
+
+			}
+
+			if (criteria.EndDateTime.HasValue)
+			{
+				query = query.Where(p => p.CreatedTime <= criteria.EndDateTime);
+
+			}
+
+			//var news= db.News.ToList().Select(x => new NewsIndexVm
+			//{
+			//	Id = x.Id,
+			//	Title = x.Title,
+			//	Content = x.Content,
+			//	PageViews = x.PageViews,
+			//	Status = x.Status,
+			//	Image = x.Image,
+			//	CreatedTime = x.CreatedTime,
+
+			//});
+
+			var news = query.ToList().Select(x => new NewsIndexVm
+			{
+				Id = x.Id,
+				Title = x.Title,
+				Content = x.Content,
+				PageViews = x.PageViews,
+				Status = x.Status,
+				Image = x.Image,
+				CreatedTime = x.CreatedTime,
+
+			});
+			return View(news);
         }
+
 
 		public ActionResult Create()
         {
@@ -133,22 +198,7 @@ namespace EBookStore.Site.Controllers
 		}
 
 
-		private IEnumerable<NewsIndexVm> GetNews()
-		{
-            var db = new AppDbContext();
-
-            return db.News.ToList().Select(x =>new NewsIndexVm
-            {
-                Id = x.Id,
-                Title = x.Title,
-                Content = x.Content,    
-                PageViews = x.PageViews,
-                Status = x.Status,
-                Image = x.Image,
-                CreatedTime = x.CreatedTime,
-
-            });
-		}
+		
 
 
 		private string SaveUploadedFile(string path, HttpPostedFileBase file1)

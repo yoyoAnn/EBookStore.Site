@@ -12,15 +12,15 @@
         <table class="table">
             <tbody>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.Title)</th>
+                    <th><div style="width:45px">標題</div></th>
                     <td>@Html.DisplayFor(model => model.Title)</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.Content)</th>
+                    <th>內容</th>
                     <td>@Html.DisplayFor(model => model.Content)</td>
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.Status)</th>
+                    <th>狀態</th>
                     <td>
                         @if (Model.Status)
                         {
@@ -34,7 +34,7 @@
                     
                 </tr>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.Content)</th>
+                    <th>內容</th>
                     <td>@Html.DisplayFor(model => model.Content)</td>
                 </tr>
             </tbody>
