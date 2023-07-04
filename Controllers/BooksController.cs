@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using EBookStore.Site.Models;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.Infra.DapperRepository;
 using EBookStore.Site.Models.Servives;
 using EBookStore.Site.Models.ViewsModel;
 
@@ -32,6 +33,16 @@ namespace EBookStore.Site.Controllers
 
             return View(books);
         }
+
+
+        public ActionResult IndexDapper()
+        {
+            var booksItems = new BookDapperRepository().GetBookItems();
+
+            return View(booksItems);
+        }
+
+
 
         public ActionResult GetBooksByPriceAscending()
         {
