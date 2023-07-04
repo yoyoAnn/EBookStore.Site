@@ -92,12 +92,21 @@ namespace EBookStore.Site.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 			CustomerServiceMail customerServiceMail = db.CustomerServiceMails.Find(id);
-			if (customerServiceMail == null)
+            if (customerServiceMail == null)
 			{
 				return HttpNotFound();
 			}
-			ViewBag.OrderId = new SelectList(db.Orders, "Id", "ReceiverName", customerServiceMail.OrderId);
-			ViewBag.ProblemTypeId = new SelectList(db.ProblemTypes, "Id", "Name", customerServiceMail.ProblemTypeId);
+            ViewBag.CSMail = customerServiceMail;
+            var problemType = customerServiceMail.ProblemType.Name;
+            var account = customerServiceMail.UserAccount;
+            var createdTime = customerServiceMail.CreatedTime;
+
+            string title = $"回覆問題:[{problemType}]";
+            ViewBag.MailTitle = title;
+
+            string content = $"親愛的{account}用戶您好，針對您於{createdTime}提出的關於{problemType}的提問，客服人員在此回覆您的問題：";
+            ViewBag.Content = content;
+
 			return View(customerServiceMail);
 		}
 
@@ -114,8 +123,10 @@ namespace EBookStore.Site.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ReplyMailVM vm = new ReplyMailVM();
 
-            ViewBag.OrderId = new SelectList(db.Orders, "Id", "ReceiverName", customerServiceMail.OrderId);
+
+			ViewBag.OrderId = new SelectList(db.Orders, "Id", "ReceiverName", customerServiceMail.OrderId);
             ViewBag.ProblemTypeId = new SelectList(db.ProblemTypes, "Id", "Name", customerServiceMail.ProblemTypeId);
             return View(customerServiceMail);
         }

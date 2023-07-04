@@ -168,6 +168,7 @@
     <Compile Include="Models\Infra\HashUtility.cs" />
     <Compile Include="Models\Infra\Result.cs" />
     <Compile Include="Models\ViewModels\CSMailCriteria.cs" />
+    <Compile Include="Models\ViewModels\ReplyMailVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

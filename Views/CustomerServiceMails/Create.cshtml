@@ -1,7 +1,11 @@
 ﻿@model EBookStore.Site.Models.EFModels.CustomerServiceMail
+@*@model EBookStore.Site.Models.ViewModels.ReplyMailVM*@
 
 @{
     ViewBag.Title = "Create";
+    var csmail = ViewBag.CSMail as EBookStore.Site.Models.EFModels.CustomerServiceMail;
+    var mailTitle = ViewBag.MailTitle;
+    var content = ViewBag.Content;
 }
 
 <h2>回覆信件</h2>
@@ -11,63 +15,36 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserAccount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UserAccount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.UserAccount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProblemTypeId, "ProblemTypeId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ProblemTypeId", null, htmlAttributes: new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
-                @Html.ValidationMessageFor(model => model.ProblemTypeId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProblemStatement, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ProblemStatement, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.ProblemStatement, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderId, "OrderId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.OrderId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedTime, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.CreatedTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+<div class="form-horizontal">
+    <hr />
+    <div class="form-group">
+        <div class="col-md-10">
+            <label class="form-label">To.</label>
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <label class="form-label">標題</label>
+            <input id="title" type="text" class="form-control" value="@mailTitle" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <label class="form-label">內容</label>
+            <textarea id="textContent" type="text" class="form-control" rows="5">@content</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="mb-3 col-md-10">
+            <input type="submit" value="寄出" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
 }
 
 <div>
@@ -76,4 +53,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        
+    </script>
 }

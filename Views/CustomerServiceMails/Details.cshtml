@@ -6,61 +6,33 @@
 
 <h2>信件內容</h2>
 
-<div class="row">
+<div class="form-horizontal">
     <hr />
-    <dl class="dl-horizontal">
-        <dt class="mb-3">
-            問題種類
-        </dt>
-
-        <dd class="mb-3">
-            @Html.DisplayFor(model => model.ProblemType.Name)
-        </dd>
-
-        <dt class="mb-3">
-            會員帳號
-        </dt>
-
-        <dd class="mb-3">
-            @Html.DisplayFor(model => model.UserAccount)
-        </dd>
-
-        <dt class="mb-3">
-            聯絡信箱
-        </dt>
-
-        <dd class="mb-3">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt class="mb-3">
-            問題敘述
-        </dt>
-
-        <dd class="mb-3">
-            @Html.DisplayFor(model => model.ProblemStatement)
-        </dd>
-
-        <dt class="mb-3">
-            發問時間
-        </dt>
-
-        <dd class="mb-3">
-            @Html.DisplayFor(model => model.CreatedTime).ToString()
-        </dd>
-
-        <dt class="mb-3">
-            是否回覆
-        </dt>
-
-        <dd class="isReplied" data-id="@Model.Id">
-            @Html.DisplayFor(model => model.IsReplied)
-        </dd>
-        @*<input type="button" value="new button" onclick="location.href='~/CustomerServiceMail/Create'"/>*@
-    </dl>
+    <div class="mb-3 col-md-3">
+        <label class="form-label">會員帳號</label>
+        @Html.EditorFor(model => model.UserAccount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
+    </div>
+    <div class="mb-3 col-md-3">
+        <label class="form-label">聯絡信箱</label>
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
+    </div>
+    <div class="mb-3 col-md-3">
+        <label class="form-label">問題種類</label>
+        @Html.EditorFor(model => model.ProblemType.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
+    </div>
+    <div class="mb-3 col-md-10">
+        <label class="form-label">問題敘述</label>
+        @Html.EditorFor(model => model.ProblemStatement, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
+    </div>
+    <div class="mb-3 col-md-3">
+        <label class="form-label">發問時間</label>
+        @Html.EditorFor(model => model.CreatedTime, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
+    </div>
+    <div class="mb-3 col-md-3 isReplied" data-id="@Model.Id" data-isReplied="@Model.IsReplied">
+        <label class="form-label">已回覆使用者</label>
+    </div>
 </div>
 <p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
     @Html.ActionLink("Back to List", "Index")
 </p>
 
@@ -70,16 +42,15 @@
     <script>
         var basement = "https://localhost:44314";
         $(function () {
-            var isReplied = $(".isReplied");
-            var id = isReplied.attr("data-id")
-            var answer = isReplied.children("input").attr("checked");
-            if (answer == "checked") {
-                $(".isReplied").text("已回覆");
-            }
-            else {
+            var id = $(".isReplied").attr("data-id")
+            var isReplied = $(".isReplied").attr("data-isReplied")
+
+            /*console.log(isReplied);*/
+            if (isReplied == "False") {
+                console.log(isReplied);
                 $(".isReplied").text("");
-                var r = `<input type="button" value="new button" onclick="location.href='${basement}/CustomerServiceMails/Create?id=1'"/>`
-                isReplied.append(r);
+                var r = `<input class="btn btn-primary" type="button" value="回覆使用者" onclick="location.href='${basement}/CustomerServiceMails/Create?id=${id}'"/>`
+                $(".isReplied").append(r);
             }
         });
     </script>
