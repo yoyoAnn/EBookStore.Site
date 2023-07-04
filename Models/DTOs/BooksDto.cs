@@ -14,7 +14,7 @@ namespace EBookStore.Site.Models.DTOs
 
         public string Name { get; set; }
 
-
+        public string Author { get; set; }
         public int CategoryId { get; set; }
 
         public int PublisherId { get; set; }
@@ -32,13 +32,15 @@ namespace EBookStore.Site.Models.DTOs
         public bool Status { get; set; } = true;
         public decimal Price { get; set; }
 
-        public float? Discount { get; set; } = 1;
+        public int? Discount { get; set; } = 1;
     }
 
     public static class BookExt
     {
         public static BooksDto ToDto(this BooksVM vm)
         {
+
+            
             return new BooksDto
             {
                 Id = vm.Id,
@@ -52,7 +54,7 @@ namespace EBookStore.Site.Models.DTOs
                 Stock = vm.Stock,
                 Status = true,
                 Price = vm.Price,
-                Discount = vm.Discount??1
+                Discount = vm.Discount.HasValue ? vm.Discount.Value : 1,
             };
         }
 

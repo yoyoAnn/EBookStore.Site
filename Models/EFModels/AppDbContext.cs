@@ -299,5 +299,7 @@ namespace EBookStore.Site.Models.EFModels
 		}
 
         public System.Data.Entity.DbSet<EBookStore.Site.Models.BooksViewsModel.BooksDapperVM> BooksDapperVMs { get; set; }
+
+        public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewsModel.BooksVM> BooksVMs { get; set; }
     }
 }

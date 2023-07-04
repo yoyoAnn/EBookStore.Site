@@ -27,8 +27,10 @@ namespace EBookStore.Site.Models.ViewsModel
         [Display(Name = "出版日期")]
         public DateTime PublishDate { get; set; }
 
-    
-        [StringLength(200)]
+
+        [Display(Name = "作者")]
+        public string Author{ get; set; }
+
         [Display(Name = "內容摘要")]
         public string Summary { get; set; }
 
@@ -49,6 +51,6 @@ namespace EBookStore.Site.Models.ViewsModel
         public decimal Price { get; set; }
 
         [Display(Name = "折扣")]
-        public float? Discount { get; set; } = 1;
+        public int? Discount { get; set; }
     }
 }

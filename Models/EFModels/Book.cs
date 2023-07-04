@@ -37,11 +37,14 @@ namespace EBookStore.Site.Models.EFModels
         [Column(TypeName = "date")]
         [Display(Name = "出版日期")]
         public DateTime PublishDate { get; set; }
+        public string PublishDatetxt => PublishDate.ToString("yyyy/MM/dd");
 
         [Required]
-        [StringLength(200)]
         [Display(Name = "內容摘要")]
         public string Summary { get; set; }
+
+        [Display(Name = "作者")]
+        public string Author { get; set; }
 
         [Required]
         [StringLength(13)]
@@ -60,7 +63,7 @@ namespace EBookStore.Site.Models.EFModels
         public decimal Price { get; set; }
 
         [Display(Name = "折扣")]
-        public float? Discount { get; set; }
+        public int? Discount { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Article> Articles { get; set; }

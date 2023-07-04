@@ -16,16 +16,18 @@ namespace EBookStore.Site.Models.BooksViewsModel
         public string Name { get; set; }
 
         [Display(Name = "出版商")]
-        public int PublisherId { get; set; }
+        public string PublisherName { get; set; }
 
         [Display(Name = "作者")]
         public string Author { get; set; }
 
         [Display(Name = "書本分類")]
-        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
 
         [Display(Name = "出版日期")]
         public DateTime PublishDate { get; set; }
+
+        public string PublishDatetxt => PublishDate.ToString("yyyy/MM/dd");
 
         [Display(Name = "內容摘要")]
         public string Summary { get; set; }

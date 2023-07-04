@@ -6,6 +6,7 @@ using EBookStore.Site.Models.Infra;
 using EBookStore.Site.Models.ViewsModel;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -53,7 +54,6 @@ namespace EBookStore.Site.Models.Servives
                 Price = dto.Price,
                 Discount = dto.Discount,
             };
-
             _db.Books.Add(book);
             _db.SaveChanges();
         }
