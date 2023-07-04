@@ -168,6 +168,8 @@
     <Compile Include="Models\Infra\Result.cs" />
     <Compile Include="Models\ViewModels\CommentIndexVm.cs" />
     <Compile Include="Models\ViewModels\NewsCreateVm.cs" />
+    <Compile Include="Models\ViewModels\NewsEditVm.cs" />
+    <Compile Include="Models\ViewModels\NewsIndexVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +234,9 @@
     <Content Include="Views\Comments\Delete.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\News\Create.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\News\Edit.cshtml" />
+    <Content Include="Views\News\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

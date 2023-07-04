@@ -1,0 +1,68 @@
+﻿@model IEnumerable<EBookStore.Site.Models.ViewModels.NewsIndexVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div style="margin-left:5px">
+    <h2>最新消息</h2>
+</div>
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-m btn-outline-primary" style="margin-left:5px" >撰寫新消息</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.ContentText)
+        </th>
+        <th style="width:80px;">
+            @Html.DisplayNameFor(model => model.PageViews)
+        </th>
+        <th style="width:80px;">
+            @Html.DisplayNameFor(model => model.StatusText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedTime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.ContentText)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PageViews)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StatusText)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Image)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedTime)
+        </td>
+        <td>
+            <button onclick="location.href='@Url.Action("Edit", new { id = item.Id })'" class="btn btn-outline-secondary btn-sm" style="margin-bottom:2px;">編輯</button>
+
+            <button onclick="location.href='@Url.Action("Delete", new { id = item.Id })'" class="btn btn-outline-danger btn-sm">刪除</button>
+
+        </td>
+    </tr>
+}
+
+</table>
