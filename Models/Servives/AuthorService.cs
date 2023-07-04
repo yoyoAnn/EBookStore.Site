@@ -32,24 +32,32 @@ namespace EBookStore.Site.Models.Servives
         public void CreateAuthorsFromExcel(IEnumerable<HttpPostedFileBase> excelFiles, string CategoryName)
         {
 
-            var num = BookHelper.GetWorksheetNumber(CategoryName);
+            
             foreach (var excelFile in excelFiles)
             {
                 using (var workbook = new XLWorkbook(excelFile.InputStream))
                 {
-                    var worksheet = workbook.Worksheet(num);
+                    //var worksheet = workbook.Worksheet(CategoryName);
 
-                    foreach (var row in worksheet.RowsUsed().Skip(1))
+                    if(workbook.TryGetWorksheet(CategoryName,out var worksheet))
                     {
-                        var delimiters = new char[] { ',', '、' };
-                        var names = row.Cell(4).Value.ToString().Split(delimiters);
-                        foreach (var name in names)
+                        foreach (var row in worksheet.RowsUsed().Skip(1))
                         {
-                            var trimmedName = name.Trim();
-                            AuthorHelper.AddAuthorIfNotExists(trimmedName);
-                        }
+                            var delimiters = new char[] { ',', '、' };
+                            var names = row.Cell(4).Value.ToString().Split(delimiters);
+                            foreach (var name in names)
+                            {
+                                var trimmedName = name.Trim();
+                                AuthorHelper.AddAuthorIfNotExists(trimmedName);
+                            }
 
+                        }
                     }
+                    else
+                    {
+                        throw new Exception($"工作表 '{CategoryName}' 不存在。");
+                    }
+                    
                 }
             }
         }

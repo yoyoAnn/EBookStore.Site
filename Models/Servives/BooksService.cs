@@ -61,13 +61,12 @@ namespace EBookStore.Site.Models.Servives
 
         public void CreateFromExcel(IEnumerable<HttpPostedFileBase> excelFiles, string CategoryName)
         {
-
-            var num = BookHelper.GetWorksheetNumber(CategoryName);
+          
             foreach (var excelFile in excelFiles)
             {
                 using (var workbook = new XLWorkbook(excelFile.InputStream))
                 {
-                    var worksheet = workbook.Worksheet(num);
+                    var worksheet = workbook.Worksheet(CategoryName);
 
                     foreach (var row in worksheet.RowsUsed().Skip(1))
                     {

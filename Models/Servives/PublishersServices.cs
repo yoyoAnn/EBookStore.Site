@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using EBookStore.Site.Models.DTOs;
 using EBookStore.Site.Models.EFModels;
 using EBookStore.Site.Models.Infra;
@@ -36,42 +37,50 @@ namespace EBookStore.Site.Models.Servives
         {
             return _db.Publishers.Any(p => p.Name == name);
         }
-        
-     
+
+
 
         public int GetPublishersCount()
         {
             return _db.Publishers.Count();
         }
-        public void CreatePublishersFromExcel(IEnumerable<HttpPostedFileBase> excelFiles,string CategoryName)
+        public void CreatePublishersFromExcel(IEnumerable<HttpPostedFileBase> excelFiles, string CategoryName)
         {
 
-            var num = BookHelper.GetWorksheetNumber(CategoryName);
             foreach (var excelFile in excelFiles)
             {
                 using (var workbook = new XLWorkbook(excelFile.InputStream))
                 {
-                    var worksheet = workbook.Worksheet(num);
 
-                    foreach (var row in worksheet.RowsUsed().Skip(1))
+                    if (workbook.TryGetWorksheet(CategoryName, out var worksheet))
                     {
-                        var name = row.Cell(2).Value.ToString();
-
-                        if (IsPublisherNameExists(name))
+                        foreach (var row in worksheet.RowsUsed().Skip(1))
                         {
-                            continue;
+                            var name = row.Cell(2).Value.ToString();
+
+                            if (IsPublisherNameExists(name))
+                            {
+                                continue;
+                            }
+
+                            var vm = new PublishersVM
+                            {
+                                Name = name,
+                                Address = null,
+                                Phone = null,
+                                Email = null
+                            };
+
+                            CreatePublisher(vm.ToDto());
                         }
 
-                        var vm = new PublishersVM
-                        {
-                            Name = name,
-                            Address = null,
-                            Phone = null,
-                            Email = null
-                        };
-
-                        CreatePublisher(vm.ToDto());
                     }
+                    else
+                    {
+                        throw new Exception($"工作表 '{CategoryName}' 不存在。");
+                    }
+
+                    
                 }
             }
         }

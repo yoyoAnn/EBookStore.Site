@@ -9,6 +9,10 @@ namespace EBookStore.Site.Models.Infra
 {
     public static class AuthorHelper
     {
+        /// <summary>
+        /// 如果資料庫內沒重複的作者名稱，則會加入
+        /// </summary>
+        /// <param name="name"></param>
         public static void AddAuthorIfNotExists(string name)
         {
             using (var db = new AppDbContext()) 
