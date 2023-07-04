@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Xml.Linq;
 using EBookStore.Site.Models.Infra;
+using EBookStore.Site.Models.EFModels;
 
 namespace EBookStore.Site.Models.DTOs
 {
@@ -39,6 +40,21 @@ namespace EBookStore.Site.Models.DTOs
             dto.Email = StringHelper.SetEmptyStringIfNull(dto.Email);
 
             return dto;
-        }       
+        }
+
+
+        public static Publisher ToEntity(this PublishersDto dto)
+        {
+            var entity = new Publisher
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                Address = dto.Address,
+                Phone = dto.Phone,
+                Email = dto.Email,
+            };     
+
+            return entity;
+        }
     }
 }

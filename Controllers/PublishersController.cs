@@ -161,15 +161,17 @@ namespace EBookStore.Site.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Address,Phone,Email")] Publisher publisher)
+        public ActionResult Edit([Bind(Include = "Id,Name,Address,Phone,Email")] PublishersVM vm)
         {
             if (ModelState.IsValid)
             {
+                var publisher = vm.ToDto().ToEntity();
+
                 db.Entry(publisher).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(publisher);
+            return View(vm);
         }
 
         // GET: Publishers/Delete/5
