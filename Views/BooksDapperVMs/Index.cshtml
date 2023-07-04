@@ -1,25 +1,27 @@
-﻿@model IEnumerable<EBookStore.Site.Models.EFModels.Book>
-@*@model IEnumerable<EBookStore.Site.Models.ViewsModel.BooksVM>*@
+﻿@model IEnumerable<EBookStore.Site.Models.BooksViewsModel.BooksDapperVM>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "IndexDapper";
 }
 
-<h2>書籍</h2>
+<h2>IndexDapper</h2>
 
 <p>
-    @Html.ActionLink("新增書籍", "Create")
+    @Html.ActionLink("新建書本", "CreateBook")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CategoryId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PublisherId)
+            @Html.DisplayNameFor(model => model.CategoryName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PublisherName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PublishDate)
@@ -52,13 +54,16 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CategoryId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublisherId)
+                @Html.DisplayFor(modelItem => item.CategoryName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublisherName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PublishDatetxt)
@@ -85,15 +90,11 @@
                 @Html.DisplayFor(modelItem => item.Discount)
             </td>
             <td>
-                @Html.ActionLink("修改", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("清單", "Details", new { id = item.Id }) |
-                @Html.ActionLink("刪除", "Delete", new { id = item.Id })
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
             </td>
         </tr>
     }
-    @{
-        string displayName = ViewData.ModelMetadata.Properties.FirstOrDefault(p => p.PropertyName == "CategoryId")?.AdditionalValues["DisplayName"] as string;
-    }
 
-    @Html.Raw(displayName)
 </table>

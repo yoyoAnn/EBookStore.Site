@@ -12,8 +12,11 @@ namespace EBookStore.Site.Models.BooksViewsModel
     {
         public int Id { get; set; }
 
+        [Required]
         [Display(Name = "書名")]
         public string Name { get; set; }
+
+        public int PublisherId { get; set; }
 
         [Display(Name = "出版商")]
         public string PublisherName { get; set; }
@@ -21,9 +24,13 @@ namespace EBookStore.Site.Models.BooksViewsModel
         [Display(Name = "作者")]
         public string Author { get; set; }
 
+        public int CategoryId{ get; set; }
+
         [Display(Name = "書本分類")]
         public string CategoryName { get; set; }
 
+
+        [Column(TypeName = "date")]
         [Display(Name = "出版日期")]
         public DateTime PublishDate { get; set; }
 
@@ -38,6 +45,8 @@ namespace EBookStore.Site.Models.BooksViewsModel
         [StringLength(13)]
         public string EISBN { get; set; }
 
+
+        [Required]
         [Display(Name = "庫存")]
         public int Stock { get; set; }
 
@@ -48,6 +57,6 @@ namespace EBookStore.Site.Models.BooksViewsModel
         public decimal Price { get; set; }
 
         [Display(Name = "折扣")]
-        public float? Discount { get; set; } = 1;
+        public int Discount { get; set; } = 1;
     }
 }
