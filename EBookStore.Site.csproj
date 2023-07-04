@@ -225,7 +225,6 @@
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PublishersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -364,11 +363,6 @@
     <Content Include="Views\Authors\Edit.cshtml" />
     <Content Include="Views\Authors\Index.cshtml" />
     <Content Include="Views\Authors\CreateFromExcel.cshtml" />
-    <Content Include="Views\Orders\Create.cshtml" />
-    <Content Include="Views\Orders\Delete.cshtml" />
-    <Content Include="Views\Orders\Details.cshtml" />
-    <Content Include="Views\Orders\Edit.cshtml" />
-    <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Books\IndexDapper.cshtml" />
   </ItemGroup>
   <ItemGroup>
