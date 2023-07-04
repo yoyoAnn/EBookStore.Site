@@ -71,25 +71,16 @@
         var basement = "https://localhost:44314";
         $(function () {
             var isReplied = $(".isReplied");
+            var id = isReplied.attr("data-id")
             var answer = isReplied.children("input").attr("checked");
-            console.log(answer)
             if (answer == "checked") {
                 $(".isReplied").text("已回覆");
             }
             else {
                 $(".isReplied").text("");
-                /*var r = $('<input type="button" value="new button"/>');*/
-                var r = `$('<input type="button" value="new button" onclick="location.href='${basement}/CustomerServiceMails/Create?id=1'"/>')`
-                console.log(r);
-            //    var btn = $('r');
-            //    console.log(btn);
+                var r = `<input type="button" value="new button" onclick="location.href='${basement}/CustomerServiceMails/Create?id=1'"/>`
                 isReplied.append(r);
             }
-            
-            
-            
-
-            /*console.log(isChecked);*/
         });
     </script>
     }

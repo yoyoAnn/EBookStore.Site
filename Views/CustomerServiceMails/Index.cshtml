@@ -75,7 +75,7 @@
 
     @foreach (var item in Model)
     {
-        <tr class="clickToDetail" data-CSMailId="@item.Id">
+        <tr class="clickToDetail" data-id="@item.Id">
             <td>
                 @Html.DisplayFor(modelItem => item.UserAccount)
             </td>
@@ -98,10 +98,11 @@
                 @Html.DisplayFor(modelItem => item.CreatedTime)
             </td>
             <td>
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
+                <button class="btn btn-sm btn-warning create" data-isRplied="@item.IsReplied">回覆</button>
+            </td>                
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
         </tr>
     }
 </table>
@@ -113,10 +114,18 @@
         $(function () {
             $('.clickToDetail').each(function () {
                 $(this).on("click", function () {
-                    var id = $(this).attr("data-CSMailId");
+                    var id = $(this).attr("data-id");
                     $(location).attr("href", "/CustomerServiceMails/Details?id=" + id);                    
                 });
             });
+
+            //$('.create').each(function () {
+            //    var isRplied = $(this).attr("data-isRplied");
+            //    $(this).on("click", function () {
+            //        console.log(isRplied);
+            //    });
+                
+            //});
         });
 
     </script>
