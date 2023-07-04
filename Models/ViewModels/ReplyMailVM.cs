@@ -11,11 +11,12 @@ namespace EBookStore.Site.Models.ViewModels
 		public int Id { get; set; }
 
 		public int CSId { get; set; }
+		public string Account { get; set; }
 
 		[Required]
 		[StringLength(255)]
 		public string Email { get; set; }
-
+		public int ProblemTypeId { get; set; }
 		[Required]
 		[StringLength(20)]
 		public string Title { get; set; }
@@ -23,5 +24,6 @@ namespace EBookStore.Site.Models.ViewModels
 		[Required]
 		[StringLength(500)]
 		public string Content { get; set; }
+		public DateTime CreatedTime { get; set; }
 	}
 }

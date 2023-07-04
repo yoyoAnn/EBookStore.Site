@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using EBookStore.Site.Models.EFModels;
@@ -91,23 +92,24 @@ namespace EBookStore.Site.Controllers
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
+
 			CustomerServiceMail customerServiceMail = db.CustomerServiceMails.Find(id);
             if (customerServiceMail == null)
 			{
 				return HttpNotFound();
 			}
-            ViewBag.CSMail = customerServiceMail;
-            var problemType = customerServiceMail.ProblemType.Name;
-            var account = customerServiceMail.UserAccount;
-            var createdTime = customerServiceMail.CreatedTime;
 
-            string title = $"回覆問題:[{problemType}]";
-            ViewBag.MailTitle = title;
+            ReplyMailVM mail = new ReplyMailVM
+			{
+                CSId = customerServiceMail.Id,
+                Account = customerServiceMail.UserAccount,
+                Email = customerServiceMail.Email,
+                ProblemTypeId = customerServiceMail.ProblemTypeId,
+                Title = $"回覆問題:[{customerServiceMail.ProblemType.Name}]",
+                Content = $"親愛的{customerServiceMail.UserAccount}用戶您好，針對您於提出關於{customerServiceMail.ProblemType.Name}的提問，客服人員在此回覆您："
+		    };
 
-            string content = $"親愛的{account}用戶您好，針對您於{createdTime}提出的關於{problemType}的提問，客服人員在此回覆您的問題：";
-            ViewBag.Content = content;
-
-			return View(customerServiceMail);
+			return View(mail);
 		}
 
         // POST: CustomerServiceMails/Create
