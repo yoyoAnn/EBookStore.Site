@@ -22,6 +22,7 @@ namespace EBookStore.Site.Models.EFModels
 
         [Required]
         [StringLength(255)]
+        [Display(Name = "±b¸¹")]
         public string Account { get; set; }
 
         [Required]
@@ -48,6 +49,11 @@ namespace EBookStore.Site.Models.EFModels
         public string Photo { get; set; }
 
         public DateTime CreatedTime { get; set; }
+
+        public bool IsConfirmed { get; set; }
+
+        [StringLength(50)]
+        public string ConfirmCode { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Carts { get; set; }

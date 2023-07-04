@@ -19,6 +19,7 @@ namespace EBookStore.Site.Models.EFModels
 
         [Required]
         [StringLength(255)]
+        [Display(Name = "­q³æª¬ºA")]
         public string Name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
