@@ -130,14 +130,17 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                 Discount = vm.Discount
             };
         }
-        public void UpdateBook(BooksDapperVM vm)
+        public void UpdateBook(BooksDapperVM vm,string categoryName,string PublisherName)
         {
+            var categoryid = GetCategoryIdByName(categoryName);
+            var publisherid = GetOrCreatePublisherId(PublisherName);
+
             var book = new Book
             {
                 Id = vm.Id,
                 Name = vm.Name,
-                CategoryId = vm.CategoryId,
-                PublisherId = vm.PublisherId,
+                CategoryId = categoryid,
+                PublisherId = publisherid,
                 PublishDate = vm.PublishDate,
                 Summary = vm.Summary,
                 ISBN = vm.ISBN,
@@ -147,6 +150,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                 Price = vm.Price,
                 Discount = vm.Discount
             };
+
 
             string sql = @"
         UPDATE Books

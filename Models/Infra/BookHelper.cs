@@ -48,5 +48,6 @@ namespace EBookStore.Site.Models.Infra
             //return count > 0;
             return db.Books.Any(p => p.Name == name);
         }
+
     }
 }

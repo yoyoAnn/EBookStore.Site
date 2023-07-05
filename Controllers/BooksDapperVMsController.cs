@@ -143,8 +143,9 @@ namespace EBookStore.Site.Controllers
             {
                 try
                 {
+  
                     // 更新書籍資訊
-                    _repository.UpdateBook(vm);
+                    _repository.UpdateBook(vm,vm.CategoryName,vm.PublisherName);
 
                     return RedirectToAction("Index");
                 }
