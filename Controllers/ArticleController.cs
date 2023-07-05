@@ -9,9 +9,12 @@ namespace EBookStore.Site.Controllers
     public class ArticleController : Controller
     {
         // GET: Article
-        public ActionResult Index()
+        public ActionResult Create()
         {
             return View();
         }
+
+
+       
     }
 }
