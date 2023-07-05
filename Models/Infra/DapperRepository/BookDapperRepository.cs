@@ -16,10 +16,12 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
     public class BookDapperRepository
     {
         private readonly IDbConnection _connection;
+        private readonly AppDbContext _db;
 
-
-        public BookDapperRepository()
+        public BookDapperRepository(AppDbContext db)
         {
+
+            _db = db;
             string connStr = "data source=.;initial catalog=EBookStore;user id=ebookLogin;password=123;MultipleActiveResultSets=True;App=EntityFramework\" providerName=\"System.Data.SqlClient";
 
             _connection = new SqlConnection(connStr);
@@ -58,9 +60,9 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                 ISBN = vm.ISBN,
                 EISBN = vm.EISBN,
                 Stock = vm.Stock,
-                Status = vm.Status,
+                Status = true,
                 Price = vm.Price,
-                Discount = vm.Discount
+                Discount = vm.Discount,
             };
 
             string sql = @"
@@ -232,8 +234,15 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                                 Summary = summary,
                                 ISBN = isbn,
                                 Price = price,
+                                Status = true,
+                                Stock = 1,//預設庫存都是1
                                 Discount = 1//預設沒折扣
                             };
+
+                            if (BookHelper.IsBooksNameExists(_db, name))
+                            {
+                                continue; // 如果書名已存在，跳過此本書籍，處理下一本
+                            }
 
                             CreateBookWithAuthor(bookVm);
                         }
@@ -244,6 +253,14 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
         }
 
 
+        public int GetBooksCount()
+        {
+            string query = "SELECT COUNT(*) FROM Books";
+            int booksCount = _connection.ExecuteScalar<int>(query);
+
+            return booksCount;
+        }
+
 
         private int GetOrCreatePublisherId(string publisherName)
         {
@@ -253,7 +270,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             if (publisherId == 0)
             {
 
-                string insertSql = "INSERT INTO Publishers (Name) VALUES (@PublisherName); SELECT SCOPE_IDENTITY();";
+                string insertSql = "INSERT INTO Publishers (Name) VALUES (@PublisherName);";
                 publisherId = _connection.ExecuteScalar<int>(insertSql, new { PublisherName = publisherName });
             }
 

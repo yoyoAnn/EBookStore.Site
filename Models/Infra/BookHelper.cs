@@ -33,5 +33,20 @@ namespace EBookStore.Site.Models.Infra
             }
             
         }
+
+        /// <summary>
+        /// 判斷書名有沒有重複
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static bool IsBooksNameExists(AppDbContext db, string name)
+        {
+            //string query = "SELECT COUNT(*) FROM Books WHERE Name = @Name";
+            //int count = db.Connection.ExecuteScalar<int>(query, new { Name = name });
+
+            //return count > 0;
+            return db.Books.Any(p => p.Name == name);
+        }
     }
 }

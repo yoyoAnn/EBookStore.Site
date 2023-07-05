@@ -6,9 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using EBookStore.Site.Models.BooksViewsModel;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.Infra;
 using EBookStore.Site.Models.Infra.DapperRepository;
 
 namespace EBookStore.Site.Controllers
@@ -20,22 +22,22 @@ namespace EBookStore.Site.Controllers
 
         public BooksDapperVMsController()
         {
-            _repository = new BookDapperRepository();
+            _repository = new BookDapperRepository(db);
         }
         // GET: BooksDapperVMs
         public ActionResult Index()
         {
             var books = _repository.GetBookItems();
+            if (TempData.ContainsKey("SuccessMessage"))
+            {
+                ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
+            }
             return View(books);
         }
 
         // GET: BooksDapperVMs/Details/5
         public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             var books = _repository.GetBookById(id);
             return View(books);
         }
@@ -65,6 +67,62 @@ namespace EBookStore.Site.Controllers
                 return View("Error", ex.Message);
             }
         }
+
+
+        public ActionResult CreateFromExcel()
+        {
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateFromExcel(HttpPostedFileBase excelFiles)
+        {
+            var categories = BookHelper.GetCategories();
+            ViewBag.CategoryId = new SelectList(categories, "Value", "Text");
+
+            string categoryId = Request.Form["CategoryId"];
+            // 從選項列表中查詢分類名稱
+            string categoryName = categories.FirstOrDefault(c => c.Value == categoryId)?.Text;
+
+
+            if (excelFiles != null && excelFiles.ContentLength > 0)
+            {
+                try
+                {
+                    int initialCount = _repository.GetBooksCount();
+
+                    _repository.CreateFromExcel(new[] { excelFiles }, categoryName);
+
+                    int newCount = _repository.GetBooksCount();
+                    if (newCount > initialCount)
+                    {
+                        TempData["SuccessMessage"] = "從 Excel 創建書籍成功";
+                    }
+                    else
+                    {
+                        TempData["SuccessMessage"] = "Excel 中的所有書籍都已存在";
+                    }
+
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Please select a valid Excel file.");
+            }
+            return View();
+
+
+
+            return View();
+        }
+
 
         public ActionResult Edit(int id)
         {
@@ -103,28 +161,7 @@ namespace EBookStore.Site.Controllers
         }
 
 
-        //// GET: BooksDapperVMs/Edit/5
-        //public ActionResult Edit()
-        //{
 
-        //    return View();
-        //}
-
-        //// POST: BooksDapperVMs/Edit/5
-        //// 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，
-        //// 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,Name,PublisherName,Author,CategoryName,PublishDate,Summary,ISBN,EISBN,Stock,Status,Price,Discount")] BooksDapperVM booksDapperVM)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(booksDapperVM).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(booksDapperVM);
-        //}
 
 
         protected override void Dispose(bool disposing)

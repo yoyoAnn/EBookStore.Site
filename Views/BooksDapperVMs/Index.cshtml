@@ -3,11 +3,22 @@
 @{
     ViewBag.Title = "IndexDapper";
 }
-
+@if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+{
+    <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+}
 <h2>IndexDapper</h2>
 
+<div class="row mb-3">
+    <div class="col">
+        @Html.ActionLink("新建書本", "CreateBook", null, new { @class = "btn btn-primary" })
+    </div>
+    <div class="col text-center">
+        @Html.ActionLink("從Excel創建資料", "CreateFromExcel", null, new { @class = "btn btn-primary" })
+    </div>
+</div>
 <p>
-    @Html.ActionLink("新建書本", "CreateBook")
+   
 </p>
 <table class="table">
     <tr>
@@ -98,3 +109,13 @@
     }
 
 </table>
+@section Scripts{
+    <script>
+         $(document).ready(function () {
+            var successMessage = '@ViewBag.SuccessMessage';
+            if (successMessage !== '') {
+                alert(successMessage);
+            }
+        });
+    </script>
+}

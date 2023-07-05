@@ -363,6 +363,7 @@
     <Content Include="Views\BooksDapperVMs\Edit.cshtml" />
     <Content Include="Views\BooksDapperVMs\Index.cshtml" />
     <Content Include="Views\BooksDapperVMs\CreateBook.cshtml" />
+    <Content Include="Views\BooksDapperVMs\CreateFromExcel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
