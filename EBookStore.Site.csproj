@@ -132,7 +132,6 @@
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\CustomerServiceMailsController.cs" />
-    <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
@@ -287,7 +286,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Uploads\NewsImage\" />
     <Folder Include="Views\Article\" />
-    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
