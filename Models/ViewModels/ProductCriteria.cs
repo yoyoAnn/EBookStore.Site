@@ -14,5 +14,11 @@ namespace EBookStore.Site.Models.ViewModels
 
         [Display(Name = "訂單狀態")]
         public int? OrderId { get; set; }
+
+        [Display(Name = "日期:(起)")]
+        public DateTime? Date_Start { get; set; }
+
+        [Display(Name = "日期:(迄)")]
+        public DateTime? Date_End { get; set; }
     }
 }

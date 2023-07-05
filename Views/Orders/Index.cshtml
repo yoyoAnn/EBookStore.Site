@@ -8,6 +8,11 @@
     string s_OrderId = criteria.OrderId.HasValue ? criteria.OrderId.Value.ToString() : "";
 
 }
+@section cdn{
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
+
 @section Style
 {
     <style>
@@ -85,6 +90,15 @@
                     <input type="text" class="form-control" name="name" id="s_name" value="@criteria.Name">
                 </div>
 
+                <div class="mb-3 col-md-3">
+                    <label for="s_name">日期:(起)</label>
+                    <input type="text" class="form-control" name="name" id="date_start" value="@criteria.Date_Start">
+                </div>
+
+                <div class="mb-3 col-md-3">
+                    <label for="s_name">日期:(迄)</label>
+                    <input type="text" class="form-control" name="name" id="date_end" value="@criteria.Date_End">
+                </div>
 
                 <div class="mb-3 col-md-2 align-self-end">
                     <button class="btn btn-primary">Search</button>
@@ -208,6 +222,9 @@
 </div>
 
 @section scripts {
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script>
