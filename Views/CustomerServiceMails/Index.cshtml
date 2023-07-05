@@ -11,7 +11,7 @@
 
 }
 @section cdn{
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    @*<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />*@
     <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 }
 
@@ -49,7 +49,7 @@
                 <div class="col">
                     <input type="text" class="form-control" name="ProblemStatement" id="s_Statement" value="@criteria.ProblemStatement" placeholder="問題敘述">
                 </div>
-                <div class="col">
+                <div class="col" id="datetimepicker1">
                     <input type="date" class="form-control" name="CreatedTime" id="s_CreatedTime" value="@criteria.CreatedTime">
                 </div>
                 <div class="col align-self-end">
@@ -122,6 +122,10 @@
         <script>
             var basement = "https://localhost:44314";
             $(function () {
+                //$('#datetimepicker1').datetimepicker({
+                //    format: "YYYY/MM/DD"
+                //});
+
                 $('.mails').each(function () {
                     if (this.hasAttribute('isReplied')) {
                         $(this).addClass("bg-gray-200");
