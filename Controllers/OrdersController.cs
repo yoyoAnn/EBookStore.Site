@@ -48,12 +48,12 @@ namespace EBookStore.Site.Controllers
 
             if ((criteria.Date_Start) != null)
             {
-                query = (IEnumerable<OrdersItemDapperVM>)query.Where(p => p.CreatedTime >= (criteria.Date_Start));
+                query = (IEnumerable<OrdersItemDapperVM>)query.Where(p => p.OrderTime >= (criteria.Date_Start));
             }
 
             if ((criteria.Date_End) != null)
             {
-                query = (IEnumerable<OrdersItemDapperVM>)query.Where(p => p.CreatedTime <= (criteria.Date_End));
+                query = (IEnumerable<OrdersItemDapperVM>)query.Where(p => p.OrderTime <= (criteria.Date_End));
             }
 
             #endregion

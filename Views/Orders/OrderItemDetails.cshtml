@@ -4,12 +4,20 @@
     ViewBag.Title = "OrderItemDetails";
 }
 
+<style>
+    .center-table {
+        margin: 0 auto;
+        width: fit-content;
+    }
+</style>
+
 <h2>OrderItemDetails</h2>
+
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table center-table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
