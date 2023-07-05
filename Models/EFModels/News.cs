@@ -15,8 +15,8 @@ namespace EBookStore.Site.Models.EFModels
         public string Title { get; set; }
 
         [Required]
-        [StringLength(255)]
-        public string Content { get; set; }
+		[StringLength(255)]
+		public string Content { get; set; }
 
         public int PageViews { get; set; }
 

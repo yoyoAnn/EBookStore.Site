@@ -224,8 +224,15 @@
     <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BooksDapperVMsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\CustomerServiceMailsController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PublishersController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -259,7 +266,6 @@
     <Compile Include="Models\EFModels\Role.cs" />
     <Compile Include="Models\EFModels\RolePermission.cs" />
     <Compile Include="Models\EFModels\ShippingStatus.cs" />
-    <Compile Include="Models\EFModels\sysdiagram.cs" />
     <Compile Include="Models\EFModels\User.cs" />
     <Compile Include="Models\EFModels\UserArticleCollection.cs" />
     <Compile Include="Models\EFModels\Writer.cs" />
@@ -279,8 +285,28 @@
     <Compile Include="Models\BooksViewsModel\CategoriesVM.cs" />
     <Compile Include="Models\Infra\EmailHelper.cs" />
     <Compile Include="Models\Infra\HashUtility.cs" />
+    <Compile Include="Models\Infra\OrderDapperRepository.cs" />
+    <Compile Include="Models\Infra\OrderEditDapperRepository.cs" />
+    <Compile Include="Models\Infra\OrderItemDapperRepository.cs" />
     <Compile Include="Models\Infra\Result.cs" />
     <Compile Include="Models\ViewModels\ProductCriteria.cs" />
+    <Compile Include="Models\ViewModels\CommentIndexVm.cs" />
+    <Compile Include="Models\ViewModels\NewsCreateVm.cs" />
+    <Compile Include="Models\ViewModels\NewsCriteria.cs" />
+    <Compile Include="Models\ViewModels\NewsEditVm.cs" />
+    <Compile Include="Models\ViewModels\NewsIndexVm.cs" />
+    <Compile Include="Models\ViewModels\CSMailCriteria.cs" />
+    <Compile Include="Models\ViewModels\ReplyMailVM.cs" />
+    <Compile Include="Models\ViewModels\EmployeeCreateVM.cs" />
+    <Compile Include="Models\ViewModels\EmployeeCriteria.cs" />
+    <Compile Include="Models\ViewModels\EmployeeEditVM.cs" />
+    <Compile Include="Models\ViewModels\EmployeeExts.cs" />
+    <Compile Include="Models\ViewModels\EmployeeIndexVM.cs" />
+    <Compile Include="Models\ViewModels\UserCreateVM.cs" />
+    <Compile Include="Models\ViewModels\UserCriteria.cs" />
+    <Compile Include="Models\ViewModels\UserEditVM.cs" />
+    <Compile Include="Models\ViewModels\UserExts.cs" />
+    <Compile Include="Models\ViewModels\UserIndexVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -341,6 +367,39 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Books\Create.cshtml" />
+    <Content Include="Views\Books\Delete.cshtml" />
+    <Content Include="Views\Books\Details.cshtml" />
+    <Content Include="Views\Books\Edit.cshtml" />
+    <Content Include="Views\Books\Index.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Comments\Create.cshtml" />
+    <Content Include="Views\Comments\Delete.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\News\Create.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\News\Edit.cshtml" />
+    <Content Include="Views\News\Delete.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Create.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Delete.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Details.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Edit.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Index.cshtml" />
+    <Content Include="Views\Employees\Create.cshtml" />
+    <Content Include="Views\Employees\Delete.cshtml" />
+    <Content Include="Views\Employees\Details.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\Orders\OrderItemDetails.cshtml" />
     <Content Include="Views\Categories\Create.cshtml" />
     <Content Include="Views\Categories\Delete.cshtml" />
     <Content Include="Views\Categories\Details.cshtml" />
@@ -367,6 +426,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\NewsImage\" />
+    <Folder Include="Views\Article\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

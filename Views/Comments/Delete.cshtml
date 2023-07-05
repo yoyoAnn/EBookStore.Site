@@ -1,0 +1,50 @@
+﻿@model EBookStore.Site.Models.EFModels.Comment
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+
+
+<div>
+<table class="table">
+    <tbody>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Book.Name)</th>
+            <td>@Html.DisplayFor(model => model.Book.Name)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.User.Account)</th>
+            <td>@Html.DisplayFor(model => model.User.Account)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Scores)</th>
+            <td>@Html.DisplayFor(model => model.Scores)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Content)</th>
+            <td>@Html.DisplayFor(model => model.Content)</td>
+        </tr>
+    </tbody>
+</table>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    
+    <a href="@Url.Action("Delete")">
+        <button class="btn btn-outline-danger btn-lg">刪除</button>
+    </a>
+
+
+
+    <a href="@Url.Action("Index")" class="btn btn-lg btn-outline-secondary">回到主頁</a>
+</div>
+
+  
+}
+</div>
+
