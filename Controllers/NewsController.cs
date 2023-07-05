@@ -46,6 +46,7 @@ namespace EBookStore.Site.Controllers
 				query = query.Where(p => p.Status == criteria.Status.Value);
 			}
 
+
 			if (criteria.StartDateTime.HasValue)
 			{
 				query = query.Where(p => p.CreatedTime >= criteria.StartDateTime);

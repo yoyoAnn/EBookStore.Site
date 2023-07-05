@@ -129,7 +129,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
@@ -168,6 +168,9 @@
     <Compile Include="Models\Infra\EmailHelper.cs" />
     <Compile Include="Models\Infra\HashUtility.cs" />
     <Compile Include="Models\Infra\Result.cs" />
+    <Compile Include="Models\ViewModels\ArticleCreateVm.cs" />
+    <Compile Include="Models\ViewModels\ArticleEditVm.cs" />
+    <Compile Include="Models\ViewModels\ArticleIndexVm.cs" />
     <Compile Include="Models\ViewModels\ProductCriteria.cs" />
     <Compile Include="Models\ViewModels\CommentIndexVm.cs" />
     <Compile Include="Models\ViewModels\NewsCreateVm.cs" />
@@ -251,11 +254,15 @@
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\News\Edit.cshtml" />
     <Content Include="Views\News\Delete.cshtml" />
+    <Content Include="Views\Articles\Create.cshtml" />
+    <Content Include="Views\Articles\Delete.cshtml" />
+    <Content Include="Views\Articles\Details.cshtml" />
+    <Content Include="Views\Articles\Edit.cshtml" />
+    <Content Include="Views\Articles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Uploads\NewsImage\" />
-    <Folder Include="Views\Article\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
