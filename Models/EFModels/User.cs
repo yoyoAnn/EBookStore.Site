@@ -22,6 +22,7 @@ namespace EBookStore.Site.Models.EFModels
 
         [Required]
         [StringLength(255)]
+        [Display(Name = "±b¸¹")]
         public string Account { get; set; }
 
         [Required]

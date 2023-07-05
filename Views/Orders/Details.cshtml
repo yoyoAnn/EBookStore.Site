@@ -1,0 +1,138 @@
+﻿@model EBookStore.Site.Models.EFModels.Order
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderStatus.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderStatus.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShippingStatus.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShippingStatus.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Account)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Account)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceiverName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceiverName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceiverAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceiverAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceiverPhone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceiverPhone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxIdNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxIdNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VehicleNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VehicleNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Remark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Remark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShippingNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShippingNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShippingTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShippingTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShippingFee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShippingFee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalPayment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalPayment)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
