@@ -129,9 +129,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\CustomerServiceMailsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -161,10 +166,20 @@
     <Compile Include="Models\EFModels\Role.cs" />
     <Compile Include="Models\EFModels\RolePermission.cs" />
     <Compile Include="Models\EFModels\ShippingStatus.cs" />
-    <Compile Include="Models\EFModels\sysdiagram.cs" />
     <Compile Include="Models\EFModels\User.cs" />
     <Compile Include="Models\EFModels\UserArticleCollection.cs" />
     <Compile Include="Models\EFModels\Writer.cs" />
+    <Compile Include="Models\Infra\EmailHelper.cs" />
+    <Compile Include="Models\Infra\HashUtility.cs" />
+    <Compile Include="Models\Infra\Result.cs" />
+    <Compile Include="Models\ViewModels\ProductCriteria.cs" />
+    <Compile Include="Models\ViewModels\CommentIndexVm.cs" />
+    <Compile Include="Models\ViewModels\NewsCreateVm.cs" />
+    <Compile Include="Models\ViewModels\NewsCriteria.cs" />
+    <Compile Include="Models\ViewModels\NewsEditVm.cs" />
+    <Compile Include="Models\ViewModels\NewsIndexVm.cs" />
+    <Compile Include="Models\ViewModels\CSMailCriteria.cs" />
+    <Compile Include="Models\ViewModels\ReplyMailVM.cs" />
     <Compile Include="Models\ViewModels\EmployeeCreateVM.cs" />
     <Compile Include="Models\ViewModels\EmployeeCriteria.cs" />
     <Compile Include="Models\ViewModels\EmployeeEditVM.cs" />
@@ -240,6 +255,23 @@
     <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Books\Edit.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Comments\Create.cshtml" />
+    <Content Include="Views\Comments\Delete.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\News\Create.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\News\Edit.cshtml" />
+    <Content Include="Views\News\Delete.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Create.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Delete.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Details.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Edit.cshtml" />
+    <Content Include="Views\CustomerServiceMails\Index.cshtml" />
     <Content Include="Views\Employees\Create.cshtml" />
     <Content Include="Views\Employees\Delete.cshtml" />
     <Content Include="Views\Employees\Details.cshtml" />
@@ -253,6 +285,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\NewsImage\" />
+    <Folder Include="Views\Article\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
