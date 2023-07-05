@@ -225,6 +225,21 @@ table {
     border-collapse: collapse
 }
 
+tables {
+    width: 100%;
+    height: 100%;
+    table-layout: fixed;
+}
+
+ellipsis {
+    white-space: nowrap;
+    /*禁止td換行*/
+    overflow: hidden;
+    /*隱藏X,Y滾動條*/
+    text-overflow: ellipsis;
+    /*將顯示不完的以...顯示*/
+}
+
 caption {
     padding-top: .75rem;
     padding-bottom: .75rem;
