@@ -43,8 +43,6 @@ namespace EBookStore.Site.Models.EFModels
         [Display(Name = "內容摘要")]
         public string Summary { get; set; }
 
-        [Display(Name = "作者")]
-        public string Author { get; set; }
 
         [Required]
         [StringLength(13)]

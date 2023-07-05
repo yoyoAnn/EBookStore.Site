@@ -71,26 +71,26 @@ namespace EBookStore.Site.Models.Servives
                     foreach (var row in worksheet.RowsUsed().Skip(1))
                     {
                         var name = row.Cell(1).Value.ToString();
-                        var publisherId = row.Cell(2).GetValue<int>();
+                        var publishername = row.Cell(2).GetValue<int>();
                         var publishDate = row.Cell(3).Value;
-                        //var Authors = row.Cell(4).Value.ToString();
+                        var Authors = row.Cell(4).Value.ToString();
                         var iSBN = row.Cell(5).Value.ToString();
                         var price = row.Cell(6).GetValue<decimal>();
                         var summary = row.Cell(7).Value.ToString();
 
 
 
-                        var vm = new BooksVM
-                        {
-                            Name = name,
-                            PublisherId = publisherId,
-                            PublishDate = publishDate,
-                            ISBN = iSBN,
-                            Price = price,
-                            Summary = summary
-                        };
+                        //var vm = new BooksVM
+                        //{
+                        //    Name = name,
+                        //    PublisherId = publisherId,
+                        //    PublishDate = publishDate,
+                        //    ISBN = iSBN,
+                        //    Price = price,
+                        //    Summary = summary
+                        //};
 
-                        CreateBook(vm.ToDto());
+                        //CreateBook(vm.ToDto());
                     }
                 }
             }

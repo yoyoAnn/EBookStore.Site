@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using ClosedXML.Excel;
+using Dapper;
 using EBookStore.Site.Models.BooksViewsModel;
 using EBookStore.Site.Models.EFModels;
 using EBookStore.Site.Models.ViewsModel;
@@ -38,7 +39,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             }
             catch (Exception ex)
             {
-                
+
                 throw ex;
             }
 
@@ -73,6 +74,11 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             return bookId;
         }
 
+        /// <summary>
+        /// 創建book author bookauthor關聯
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <param name="authorId"></param>
         public void CreateBookAuthorRelationship(int bookId, int authorId)
         {
             // 在 BookAuthor 表中創建新的關聯紀錄
@@ -96,7 +102,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             {
 
                 AuthorHelper.AddAuthorIfNotExists(authorName);
- 
+
                 authorId = _connection.QuerySingleOrDefault<int>(sql, new { AuthorName = authorName });
             }
 
@@ -153,7 +159,11 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
 
 
 
-
+        /// <summary>
+        /// 用BookId取得書籍資料
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public BooksDapperVM GetBookById(int id)
         {
             string sql = $@"SELECT C.Name as CategoryName,B.ID as Id,B.Name as Name,P.Name as PublisherName ,A.Name as Author,
@@ -191,8 +201,70 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
         }
 
 
+        public void CreateFromExcel(IEnumerable<HttpPostedFileBase> excelFiles, string CategoryName)
+        {
+            foreach (var excelFile in excelFiles)
+            {
+                using (var workbook = new XLWorkbook(excelFile.InputStream))
+                {
+                    if (workbook.TryGetWorksheet(CategoryName, out var worksheet))
+                    {
+                        foreach (var row in worksheet.RowsUsed().Skip(1))
+                        {
+                            var name = row.Cell(1).Value.ToString();
+                            var publisherName = row.Cell(2).Value.ToString();
+                            var publishDate = row.Cell(3).GetDateTime();
+                            var authors = row.Cell(4).Value.ToString();
+                            var isbn = row.Cell(5).Value.ToString();
+                            var price = row.Cell(6).GetValue<decimal>();
+                            var summary = row.Cell(7).Value.ToString();
+                            int publisherId = GetOrCreatePublisherId(publisherName);
+                            int categoryId = GetCategoryIdByName(CategoryName);
+
+                            var bookVm = new BooksDapperVM
+                            {
+                                Name = name,
+                                PublisherName = publisherName,
+                                CategoryId = categoryId,
+                                PublisherId = publisherId,
+                                PublishDate = publishDate,
+                                Author = authors,
+                                Summary = summary,
+                                ISBN = isbn,
+                                Price = price,
+                                Discount = 1//預設沒折扣
+                            };
+
+                            CreateBookWithAuthor(bookVm);
+                        }
+                    }
+
+                }
+            }
+        }
 
 
+
+        private int GetOrCreatePublisherId(string publisherName)
+        {
+            string sql = "SELECT Id FROM Publishers WHERE Name = @PublisherName";
+            int publisherId = _connection.QuerySingleOrDefault<int>(sql, new { PublisherName = publisherName });
+
+            if (publisherId == 0)
+            {
+
+                string insertSql = "INSERT INTO Publishers (Name) VALUES (@PublisherName); SELECT SCOPE_IDENTITY();";
+                publisherId = _connection.ExecuteScalar<int>(insertSql, new { PublisherName = publisherName });
+            }
+
+            return publisherId;
+        }
+
+        private int GetCategoryIdByName(string categoryName)
+        {
+            string sql = "SELECT Id FROM Categories WHERE Name = @CategoryName";
+            return _connection.QuerySingleOrDefault<int>(sql, new { CategoryName = categoryName });
+        }
     }
 }
 
