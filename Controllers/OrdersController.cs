@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.Infra;
 using EBookStore.Site.Models.ViewModels;
 
 namespace EBookStore.Site.Controllers
@@ -30,19 +31,25 @@ namespace EBookStore.Site.Controllers
             //ViewBag.Order = new SelectList(categories, "Id", "Name", categoryId);
 
             //查詢紀錄，由於第一次進到這網頁時，criteria是沒有值的
-            var quary = db.Orders.Include(o => o.OrderStatus).Include(o => o.ShippingStatus).Include(o => o.User);
+            //var quary = db.Orders.Include(o => o.OrderStatus).Include(o => o.ShippingStatus).Include(o => o.User);
+
+            var customerAccount = User.Identity.Name;
+            var query = new OrderDapperRepository().GetOrdersItemsByAccount(customerAccount);
+
             #region where
             if (string.IsNullOrEmpty(criteria.Name) == false)
             {
-                quary = quary.Where(p => p.User.Account.Contains(criteria.Name));
+                query = (IEnumerable<OrdersItemDapperVM>)query.Where(p => p.Account.Contains(criteria.Name));
             }
             if (criteria.OrderId != null && criteria.OrderId.Value > 0)
             {
-                quary = quary.Where(p => p.OrderStatusId == criteria.OrderId.Value);
+                query = (IEnumerable<OrdersItemDapperVM>)query.Where(p => p.OrderStatusId == criteria.OrderId.Value);
+
             }
             #endregion
 
-            return View(quary.ToList());
+            return View(query.ToList());
+
         }
 
         // GET: Orders/Details/5
@@ -58,6 +65,14 @@ namespace EBookStore.Site.Controllers
                 return HttpNotFound();
             }
             return View(order);
+        }
+
+        public ActionResult OrderItemDetails(long orderId)
+        {
+
+            var OrderItem = new OrderItemDapperRepository().GetOrdersItemsByOrderId(orderId);
+
+            return View(OrderItem);
         }
 
         // GET: Orders/Create
@@ -133,6 +148,18 @@ namespace EBookStore.Site.Controllers
             PrepareCategoryDataSource(order.OrderStatusId, order.ShippingStatusId, order.UserId);
             return View(order);
         }
+
+        // 新增的方法，處理自訂按鈕的觸發事件
+        [HttpPost]
+        public ActionResult CustomAction(long orderId)
+        {
+            new OrderEditDapperRepository().PostOrdersShippingStatusIdByOrderId(orderId);
+
+            return RedirectToAction("Index"); // 重新導向到訂單列表頁面或其他適當的頁面
+
+        }
+
+
 
         private void PrepareCategoryDataSource(int? OrderStatusId, int? ShippingStatusId, int? UserId)
         {
