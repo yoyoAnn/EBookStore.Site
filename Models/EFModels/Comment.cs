@@ -14,8 +14,6 @@ namespace EBookStore.Site.Models.EFModels
 
         public int UserId { get; set; }
 
-        public long OrderId { get; set; }
-
         public int Scores { get; set; }
 
         [Required]
@@ -23,8 +21,6 @@ namespace EBookStore.Site.Models.EFModels
         public string Content { get; set; }
 
         public virtual Book Book { get; set; }
-
-        public virtual Order Order { get; set; }
 
         public virtual User User { get; set; }
     }

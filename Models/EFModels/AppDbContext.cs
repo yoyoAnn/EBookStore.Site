@@ -36,7 +36,6 @@ namespace EBookStore.Site.Models.EFModels
 		public virtual DbSet<RolePermission> RolePermissions { get; set; }
 		public virtual DbSet<Role> Roles { get; set; }
 		public virtual DbSet<ShippingStatus> ShippingStatuses { get; set; }
-		public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 		public virtual DbSet<UserArticleCollection> UserArticleCollections { get; set; }
 		public virtual DbSet<User> Users { get; set; }
 		public virtual DbSet<Writer> Writers { get; set; }
@@ -185,11 +184,6 @@ namespace EBookStore.Site.Models.EFModels
 			modelBuilder.Entity<Order>()
 				.Property(e => e.TotalPayment)
 				.HasPrecision(18, 0);
-
-			modelBuilder.Entity<Order>()
-				.HasMany(e => e.Comments)
-				.WithRequired(e => e.Order)
-				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Order>()
 				.HasMany(e => e.OrderItems)
