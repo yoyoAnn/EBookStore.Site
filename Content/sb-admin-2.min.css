@@ -231,7 +231,7 @@ tables {
     table-layout: fixed;
 }
 
-table_tit {
+ellipsis {
     white-space: nowrap;
     /*禁止td換行*/
     overflow: hidden;

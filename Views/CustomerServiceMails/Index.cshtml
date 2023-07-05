@@ -46,7 +46,7 @@
         </div>
     </form>
 
-    <div class="mt-3 table-responsive-md">
+    <div class="mt-3 table-responsive-lg">
         <table class="table table-bordered table-hover">
             <tr class="">
                 <th>
@@ -90,8 +90,8 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.ProblemType.Name)
                     </td>
-                    <td class="table_tit">
-                        @Html.DisplayFor(modelItem => item.ProblemStatement)
+                    <td>
+                        <p class="ellipsis">@Html.DisplayFor(modelItem => item.ProblemStatement)</p>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CreatedTime)
@@ -112,13 +112,21 @@
         $(function () {
             $('.mails').each(function () {
                 if (this.hasAttribute('isReplied')) {
-                    console.log(123);
                     $(this).addClass("bg-gray-200");
                 }
                 $(this).on("click", function () {
                     var id = $(this).attr("data-id");
                     $(location).attr("href", "/CustomerServiceMails/Details?id=" + id);
                 });
+            });
+
+            var length = 10; // 超過30個字以"..."取代
+            $(".ellipsis").each(function () {
+                if ($(this).text().length > length) {
+                    $(this).attr("title", $(this).text());
+                    var text = $(this).text().substring(0, length - 1) + "...";
+                    $(this).text(text);
+                }
             });
         });
     </script>
