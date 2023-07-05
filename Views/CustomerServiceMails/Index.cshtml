@@ -11,96 +11,98 @@
 
 }
 <div class="container-fluid">
-	<h2>客服管理</h2>
-	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6">
-		<div class="col">
-			<select name="MailStatus" id="s_MailStatus" class="form-control">
-				<option value="All" @(s_MailStatus == "All" ? "selected" : "")>全部信件</option>
-				<option value="NotRead" @(s_MailStatus == "NotRead" ? "selected" : "")>未讀取</option>
-				<option value="NotReplied" @(s_MailStatus == "NotReplied" ? "selected" : "")>未回覆</option>
-				<option value="Read" @(s_MailStatus == "Read" ? "selected" : "")>已讀取</option>
-				<option value="Replied" @(s_MailStatus == "Replied" ? "selected" : "")>已回覆</option>
-			</select>
-		</div>
-		<div class="col">
-			<select name="ProblemTypeId" id="s_problemTypeId" class="form-control">
-				@foreach (var item in problemTypes)
-				{
-					<option value="@item.Value" @(s_problemTypeId == item.Value ? "selected" : "")>@item.Text</option>
-				}
-			</select>
-		</div>
-		<div class="col replied">
-			<input type="text" class="form-control" name="Account" id="s_Account" value="@criteria.Account" placeholder="會員帳號">
-		</div>
-		<div class="col">
-			<input type="text" class="form-control" name="Statement" id="s_Statement" value="@criteria.ProblemStatement" placeholder="問題敘述">
-		</div>
-		<div class="col">
-			<input type="date" class="form-control" name="CreatedTime" id="s_CreatedTime" value="@criteria.CreatedTime">
-		</div>
-		<div class="col align-self-end">
-			<button class="btn btn-primary">Search</button>
-		</div>
-	</div>
+    <h2>客服管理</h2>
+    <form method="get">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6">
+            <div class="col">
+                <select name="MailStatus" id="s_MailStatus" class="form-control">
+                    <option value="All" @(s_MailStatus == "All" ? "selected" : "")>全部信件</option>
+                    <option value="NotRead" @(s_MailStatus == "NotRead" ? "selected" : "")>未讀取</option>
+                    <option value="NotReplied" @(s_MailStatus == "NotReplied" ? "selected" : "")>未回覆</option>
+                    <option value="Read" @(s_MailStatus == "Read" ? "selected" : "")>已讀取</option>
+                    <option value="Replied" @(s_MailStatus == "Replied" ? "selected" : "")>已回覆</option>
+                </select>
+            </div>
+            <div class="col">
+                <select name="ProblemTypeId" id="s_problemTypeId" class="form-control">
+                    @foreach (var item in problemTypes)
+                    {
+                        <option value="@item.Value" @(s_problemTypeId == item.Value ? "selected" : "")>@item.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="col replied">
+                <input type="text" class="form-control" name="Account" id="s_Account" value="@criteria.Account" placeholder="會員帳號">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" name="ProblemStatement" id="s_Statement" value="@criteria.ProblemStatement" placeholder="問題敘述">
+            </div>
+            <div class="col">
+                <input type="date" class="form-control" name="CreatedTime" id="s_CreatedTime" value="@criteria.CreatedTime">
+            </div>
+            <div class="col align-self-end">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
 
-	<div class="mt-3">
-		<table class="table table-hover">
-			<tr class="bg-yellow">
-				<th>
-					已讀取
-				</th>
-				<th>
-					已回覆
-				</th>
-				<th>
-					使用者
-				</th>
-				<th>
-					信箱
-				</th>
-				<th>
-					問題種類
-				</th>
-				<th>
-					問題敘述
-				</th>
-				<th>
-					發問時間
-				</th>
-			</tr>
+    <div class="mt-3">
+        <table class="table table-hover">
+            <tr class="bg-yellow">
+                <th>
+                    已讀取
+                </th>
+                <th>
+                    已回覆
+                </th>
+                <th>
+                    使用者
+                </th>
+                <th>
+                    信箱
+                </th>
+                <th>
+                    問題種類
+                </th>
+                <th>
+                    問題敘述
+                </th>
+                <th>
+                    發問時間
+                </th>
+            </tr>
 
-			@foreach (var item in Model)
-			{
-				<tr class="mails" data-id="@item.Id" @(item.IsReplied ? "isReplied" : string.Empty)>
-					<td>
-						@Html.DisplayFor(modelItem => item.IsRead)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.IsReplied)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.UserAccount)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.Email)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.ProblemType.Name)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.ProblemStatement)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.CreatedTime)
-					</td>
-					@*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-						@Html.ActionLink("Details", "Details", new { id = item.Id }) |
-						@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
-				</tr>
-			}
-		</table>
-	</div>
+            @foreach (var item in Model)
+            {
+                <tr class="mails" data-id="@item.Id" @(item.IsReplied ? "isReplied" : string.Empty)>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsRead)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsReplied)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserAccount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProblemType.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProblemStatement)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedTime)
+                    </td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                </tr>
+            }
+        </table>
+    </div>
 </div>
 @section scripts{
     @Scripts.Render("~/bundles/jquery")

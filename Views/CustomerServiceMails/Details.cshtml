@@ -4,37 +4,39 @@
     ViewBag.Title = "Details";
 }
 
-<h2>信件內容</h2>
 
-<div class="form-horizontal">
+<div class="container-fluid">
+    <h2>信件內容</h2>
     <hr />
-    <div class="mb-3 col-md-3">
-        <label class="form-label">會員帳號</label>
-        @Html.EditorFor(model => model.UserAccount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
-    </div>
-    <div class="mb-3 col-md-3">
-        <label class="form-label">聯絡信箱</label>
-        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
-    </div>
-    <div class="mb-3 col-md-3">
-        <label class="form-label">問題種類</label>
-        @Html.EditorFor(model => model.ProblemType.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
-    </div>
-    <div class="mb-3 col-md-10">
-        <label class="form-label">問題敘述</label>
-        @Html.EditorFor(model => model.ProblemStatement, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
-    </div>
-    <div class="mb-3 col-md-3">
-        <label class="form-label">發問時間</label>
-        @Html.EditorFor(model => model.CreatedTime, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
-    </div>
-    <div class="mb-3 col-md-3 isReplied" data-id="@Model.Id" data-isReplied="@Model.IsReplied">
-        <label class="form-label">已回覆使用者</label>
+    <div class="row row-cols-1 row-cols-sm-2">
+        <div class="col mt-3">
+            <label class="form-label">會員帳號</label>
+            @Html.EditorFor(model => model.UserAccount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
+        </div>
+        <div class="col mt-3">
+            <label class="form-label">聯絡信箱</label>
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
+        </div>
+        <div class="col mt-3">
+            <label class="form-label">問題種類</label>
+            @Html.EditorFor(model => model.ProblemType.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
+        </div>
+        <div class="col mt-3">
+            <label class="form-label">發問時間</label>
+            @Html.EditorFor(model => model.CreatedTime, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
+        </div>
+        <div class="col-12 col-sm-12 mt-3">
+            <label class="form-label">問題敘述</label>
+            @Html.TextAreaFor(model => model.ProblemStatement, new { @class = "form-control", @rows = 5, @readonly = "readonly", @disabled = "disabled" })
+        </div>
+        <div class="col mt-3 isReplied" data-id="@Model.Id" data-isReplied="@Model.IsReplied">
+            <label class="form-label">已回覆使用者</label>
+        </div>
     </div>
 </div>
-<p>
+@*<p>
     @Html.ActionLink("Back to List", "Index")
-</p>
+</p>*@
 
 @section scripts{
     @Scripts.Render("~/bundles/jquery")

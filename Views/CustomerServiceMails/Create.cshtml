@@ -8,56 +8,48 @@
     var mailContent = ViewBag.MailContent;
 }
 
-<h2>回覆信件</h2>
-
-
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
-<div class="form-horizontal">
+<div class="container-fluid">
+    <h2>回覆信件</h2>
     <hr />
-    <div class="form-group">
-        <div class="col-md-10">
+    <div class="row row-cols-1">
+        <div class="col mt-3">
             <label class="form-label">To.</label>
             @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         </div>
-    </div>
 
-    <div class="form-group">
-		<div class="col-md-10">
-			<label class="form-label">標題</label>
-			@Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-			@Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-			@*<input id="mailTitle" type="text" class="form-control" value="@mailTitle" />*@
-		</div>
-    </div>
+        <div class="col mt-3">
+            <label class="form-label">標題</label>
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            @*<input id="mailTitle" type="text" class="form-control" value="@mailTitle" />*@
+        </div>
 
-    <div class="form-group">
-		<div class="col-md-10">
-			<label class="form-label">內容</label>
-			@Html.TextAreaFor(model => model.Content, new { @class = "form-control" ,@rows = 5})
-			@Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-			@*<textarea id="mailContent" type="text" class="form-control" rows="5">@mailContent</textarea>*@
-		</div>
-    </div>
+        <div class="col mt-3">
+            <label class="form-label">內容</label>
+            @Html.TextAreaFor(model => model.Content, new { @class = "form-control", @rows = 5 })
+            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            @*<textarea id="mailContent" type="text" class="form-control" rows="5">@mailContent</textarea>*@
+        </div>
 
-    <div class="form-group">
-        <div class="mb-3 col-md-10">
+        <div class="mb-3 col mt-3">
             <input type="submit" value="寄出" class="btn btn-primary" />
         </div>
     </div>
 </div>
-}
+    }
 
-@*<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>*@
+    @*<div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>*@
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        
-    </script>
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+
+        </script>
+    }
