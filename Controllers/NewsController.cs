@@ -21,8 +21,8 @@ namespace EBookStore.Site.Controllers
 			var selectListItems = new List<SelectListItem>
 			{
 				new SelectListItem { Text = string.Empty, Value =string.Empty},
-				new SelectListItem { Text = "已發佈", Value ="true"},
-				new SelectListItem { Text = "未發佈", Value ="false"}
+				new SelectListItem { Text = "已發佈", Value ="True"},
+				new SelectListItem { Text = "未發佈", Value ="False"}
 			};
 
 			ViewBag.statusList = new SelectList(selectListItems, "Value", "Text", criteria.Status.ToString());
