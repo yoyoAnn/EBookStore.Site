@@ -1830,6 +1830,29 @@ pre code {
     background-color: rgba(0, 0, 0, .075)
 }
 
+.table-yellow,
+.table-yellow>td,
+.table-yellow>th {
+    background-color: #fcfc4e
+        /* background-color: #f4f5df; */
+}
+
+.table-yellow tbody+tbody,
+.table-yellow td,
+.table-yellow th,
+.table-yellow thead th {
+    border-color: #fcfc4e
+}
+
+.table-hover .table-yellow:hover {
+    background-color: #fcfc4e
+}
+
+.table-hover .table-yellow:hover>td,
+.table-hover .table-yellow:hover>th {
+    background-color: #c8ca40
+}
+
 .table-primary,
 .table-primary>td,
 .table-primary>th {
@@ -12624,4 +12647,8 @@ footer.sticky-footer .copyright {
 
 body.sidebar-toggled footer.sticky-footer {
     width: 100%
+}
+
+.ml-auto {
+    margin-left: auto;
 }
