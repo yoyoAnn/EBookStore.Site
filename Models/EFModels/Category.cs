@@ -18,6 +18,7 @@ namespace EBookStore.Site.Models.EFModels
 
         [Required]
         [StringLength(255)]
+        [Display(Name="書本類別")]
         public string Name { get; set; }
 
         public int DisplayOrder { get; set; }

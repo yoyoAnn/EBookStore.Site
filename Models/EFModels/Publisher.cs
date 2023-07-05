@@ -19,19 +19,20 @@ namespace EBookStore.Site.Models.EFModels
 
         [Required]
         [StringLength(255)]
+        [Display(Name = "出版商")]
         public string Name { get; set; }
 
-        [Required]
+       
         [StringLength(255)]
-        public string Address { get; set; }
+        public string Address { get; set; } = "";
 
-        [Required]
+       
         [StringLength(10)]
-        public string Phone { get; set; }
+        public string Phone { get; set; } = "";
 
-        [Required]
+      
         [StringLength(255)]
-        public string Email { get; set; }
+        public string Email { get; set; } = "";
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Book> Books { get; set; }

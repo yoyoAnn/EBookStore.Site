@@ -292,6 +292,10 @@ namespace EBookStore.Site.Models.EFModels
                 .WillCascadeOnDelete(false);
         }
 
+        public System.Data.Entity.DbSet<EBookStore.Site.Models.BooksViewsModel.BooksDapperVM> BooksDapperVMs { get; set; }
+
+        public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewsModel.BooksVM> BooksVMs { get; set; }
+
         public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewModels.EmployeeIndexVM> EmployeeIndexVms { get; set; }
 
         public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewModels.EmployeeCreateVM> EmployeeCreateVMs { get; set; }
@@ -300,7 +304,5 @@ namespace EBookStore.Site.Models.EFModels
 
         public System.Data.Entity.DbSet<EBookStore.Site.Models.Infra.OrdersItemDapperVM> OrdersItemDapperVMs { get; set; }
     }
-
-
 }
 

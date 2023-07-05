@@ -6,138 +6,133 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using EBookStore.Site.Models.DTOs;
 using EBookStore.Site.Models.EFModels;
-using EBookStore.Site.Models.ViewModels;
+using EBookStore.Site.Models.Servives;
+using EBookStore.Site.Models.ViewsModel;
 
 namespace EBookStore.Site.Controllers
 {
-	public class UsersController : Controller
+	public class CategoriesController : Controller
 	{
+		private readonly CategoriesServer _server;
+
 		private AppDbContext db = new AppDbContext();
 
-		// GET: Users
-		public ActionResult Index(UserCriteria criteria)
+
+		public CategoriesController()
 		{
-			ViewBag.Criteria = criteria;
-
-			var query = db.Users.AsQueryable();
-
-			if (!string.IsNullOrEmpty(criteria.Name))
-			{
-				query = query.Where(u => u.Name.Contains(criteria.Name));
-			}
-			if (!string.IsNullOrEmpty(criteria.Address))
-			{
-				query = query.Where(u => u.Address.Contains(criteria.Address));
-			}
-
-			var users = query.ToList().Select(u => u.ToIndexVM());
-			return View(users);
+			_server = new CategoriesServer(db);
 		}
 
+		// GET: Categories
+		public ActionResult Index()
+		{
+			if (TempData.ContainsKey("SuccessMessage"))
+			{
+				ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
+			}
+			var categories = _server.GetCategories();
+			return View(categories);
+		}
 
-		//public ActionResult Index(EmployeeCriteria criteria)
-		//{
-		//    ViewBag.Criteria = criteria;
-
-		//    return View(db.Users.ToList());
-		//    var users = db.Users.ToList().Select(u => u.ToIndexVM());
-		//    return View(users);
-		//}
-
-
-		// GET: Users/Details/5
+		// GET: Categories/Details/5
 		public ActionResult Details(int? id)
 		{
 			if (id == null)
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			User user = db.Users.Find(id);
-			if (user == null)
+			Category category = db.Categories.Find(id);
+
+			if (category == null)
 			{
 				return HttpNotFound();
 			}
-			return View(user);
+			return View(category);
 		}
 
-		// GET: Users/Create
+		// GET: Categories/Create
 		public ActionResult Create()
 		{
 			return View();
 		}
 
-		// POST: Users/Create
+		// POST: Categories/Create
 		// 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，
 		// 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Create([Bind(Include = "Id,Account,Password,Email,Name,Phone,Address,Gender,Photo,CreatedTime,IsConfirmed,ConfirmCode")] User user)
+		public ActionResult Create([Bind(Include = "Id,Name,DisplayOrder")] CategoriesVM vm)
 		{
-			if (ModelState.IsValid)
+
+			var dto = vm.ToDto();
+
+			try
 			{
-				db.Users.Add(user);
-				db.SaveChanges();
+				_server.CreateCategory(dto);
+				TempData["SuccessMessage"] = "創建成功";
 				return RedirectToAction("Index");
 			}
-
-			return View(user);
+			catch (Exception ex)
+			{
+				ModelState.AddModelError("", ex.Message);
+				return View(vm);
+			}
 		}
 
-		// GET: Users/Edit/5
+		// GET: Categories/Edit/5
 		public ActionResult Edit(int? id)
 		{
 			if (id == null)
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			User user = db.Users.Find(id);
-			if (user == null)
+			Category category = db.Categories.Find(id);
+			if (category == null)
 			{
 				return HttpNotFound();
 			}
-			return View(user);
+			return View(category);
 		}
 
-		// POST: Users/Edit/5
+		// POST: Categories/Edit/5
 		// 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，
 		// 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit([Bind(Include = "Id,Account,Password,Email,Name,Phone,Address,Gender,Photo,CreatedTime,IsConfirmed,ConfirmCode")] User user)
+		public ActionResult Edit([Bind(Include = "Id,Name,DisplayOrder")] Category category)
 		{
 			if (ModelState.IsValid)
 			{
-				db.Entry(user).State = EntityState.Modified;
+				db.Entry(category).State = EntityState.Modified;
 				db.SaveChanges();
 				return RedirectToAction("Index");
 			}
-			return View(user);
+			return View(category);
 		}
 
-		// GET: Users/Delete/5
+		// GET: Categories/Delete/5
 		public ActionResult Delete(int? id)
 		{
 			if (id == null)
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			User user = db.Users.Find(id);
-			if (user == null)
+			Category category = db.Categories.Find(id);
+			if (category == null)
 			{
 				return HttpNotFound();
 			}
-			return View(user);
+			return View(category);
 		}
 
-		// POST: Users/Delete/5
+		// POST: Categories/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
 		public ActionResult DeleteConfirmed(int id)
 		{
-			User user = db.Users.Find(id);
-			db.Users.Remove(user);
-			db.SaveChanges();
+			_server.DeleteCategory(id);
 			return RedirectToAction("Index");
 		}
 
