@@ -5,7 +5,7 @@
 
     var statusList = ViewBag.statusList as SelectList;
     var criteria = ViewBag.Criteria as EBookStore.Site.Models.ViewModels.NewsCriteria;
-    string s_status = criteria.Status.HasValue ? criteria.Status.ToString() : "";
+    string s_status = criteria.Status==true || criteria.Status==false ? criteria.Status.ToString() : "";
 
 }
 
@@ -34,12 +34,13 @@
                     <select name="status" id="s_status" class="form-select" style="width:200px; height:32px ;">
                         @foreach (var item in statusList)
                         {
-                            <option value="@item.Value" @(item.Value == s_status ? "selected" : "") >@item.Text</option>
+                            
+                            <option value="@item.Value"  @(item.Value == s_status ? "Selected" : "") >@item.Text</option>
                         }
 
                     </select>
-                    </div>
-                </div>
+                 </div>
+            </div>
             <div class="mb-3 col-md-4">
                 <label for="s_startDateTime" style="display: block">日期</label>
                 @{
@@ -54,12 +55,9 @@
                 <div class="mb-3 col-md-2 align-self-end" style="padding-bottom:15px;">
                     <button class="btn btn-outline-secondary">搜尋</button>
                 </div>
-            </div>
+        </div>
     </form>
 </section>
-
-
-
 
 
 <table class="table">

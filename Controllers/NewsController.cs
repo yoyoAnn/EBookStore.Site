@@ -58,18 +58,6 @@ namespace EBookStore.Site.Controllers
 
 			}
 
-			//var news= db.News.ToList().Select(x => new NewsIndexVm
-			//{
-			//	Id = x.Id,
-			//	Title = x.Title,
-			//	Content = x.Content,
-			//	PageViews = x.PageViews,
-			//	Status = x.Status,
-			//	Image = x.Image,
-			//	CreatedTime = x.CreatedTime,
-
-			//});
-
 			var news = query.ToList().Select(x => new NewsIndexVm
 			{
 				Id = x.Id,
