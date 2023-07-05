@@ -12,9 +12,17 @@ namespace EBookStore.Site.Models.EFModels
 
         public int CSId { get; set; }
 
-        [Required]
+		[Required]
+		[StringLength(255)]
+		public string Email { get; set; }
+
+		[Required]
+		[StringLength(20)]
+		public string Title { get; set; }
+
+		[Required]
         [StringLength(500)]
-        public string RepliedContent { get; set; }
+        public string Content { get; set; }
 
         public DateTime CreatedTime { get; set; }
 

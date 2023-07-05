@@ -10,7 +10,7 @@ namespace EBookStore.Site.Models.EFModels
     {
         public int Id { get; set; }
 
-        public int OrderId { get; set; }
+        public long OrderId { get; set; }
 
         public int BookId { get; set; }
 

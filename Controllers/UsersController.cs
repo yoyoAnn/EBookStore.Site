@@ -7,119 +7,136 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.ViewModels;
 
 namespace EBookStore.Site.Controllers
 {
-    public class BooksController : Controller
+    public class UsersController : Controller
     {
         private AppDbContext db = new AppDbContext();
 
-        // GET: Books
-        public ActionResult Index()
+        // GET: Users
+        public ActionResult Index(UserCriteria criteria)
         {
-            var books = db.Books.Include(b => b.Category).Include(b => b.Publisher);
-            return View(books.ToList());
+            ViewBag.Criteria = criteria;
+
+            var query = db.Users.AsQueryable();
+
+            if (!string.IsNullOrEmpty(criteria.Name))
+            {
+                query = query.Where(u => u.Name.Contains(criteria.Name));
+            }
+            if (!string.IsNullOrEmpty(criteria.Address))
+            {
+                query = query.Where(u => u.Address.Contains(criteria.Address));
+            }
+
+            var users = query.ToList().Select(u => u.ToIndexVM());
+            return View(users);
         }
 
-        // GET: Books/Details/5
+
+        //public ActionResult Index(EmployeeCriteria criteria)
+        //{
+        //    ViewBag.Criteria = criteria;
+
+        //    return View(db.Users.ToList());
+        //    var users = db.Users.ToList().Select(u => u.ToIndexVM());
+        //    return View(users);
+        //}
+
+
+        // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
-            if (book == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(book);
+            return View(user);
         }
 
-        // GET: Books/Create
+        // GET: Users/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
-            ViewBag.PublisherId = new SelectList(db.Publishers, "Id", "Name");
             return View();
         }
 
-        // POST: Books/Create
+        // POST: Users/Create
         // 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,CategoryId,PublisherId,PublishDate,Summary,ISBN,EISBN,Stock,Status,Price,Discount")] Book book)
+        public ActionResult Create([Bind(Include = "Id,Account,Password,Email,Name,Phone,Address,Gender,Photo,CreatedTime,IsConfirmed,ConfirmCode")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Books.Add(book);
+                db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", book.CategoryId);
-            ViewBag.PublisherId = new SelectList(db.Publishers, "Id", "Name", book.PublisherId);
-            return View(book);
+            return View(user);
         }
 
-        // GET: Books/Edit/5
+        // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
-            if (book == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", book.CategoryId);
-            ViewBag.PublisherId = new SelectList(db.Publishers, "Id", "Name", book.PublisherId);
-            return View(book);
+            return View(user);
         }
 
-        // POST: Books/Edit/5
+        // POST: Users/Edit/5
         // 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,CategoryId,PublisherId,PublishDate,Summary,ISBN,EISBN,Stock,Status,Price,Discount")] Book book)
+        public ActionResult Edit([Bind(Include = "Id,Account,Password,Email,Name,Phone,Address,Gender,Photo,CreatedTime,IsConfirmed,ConfirmCode")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(book).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", book.CategoryId);
-            ViewBag.PublisherId = new SelectList(db.Publishers, "Id", "Name", book.PublisherId);
-            return View(book);
+            return View(user);
         }
-
-        // GET: Books/Delete/5
+        
+        // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
-            if (book == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(book);
+            return View(user);
         }
 
-        // POST: Books/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Book book = db.Books.Find(id);
-            db.Books.Remove(book);
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

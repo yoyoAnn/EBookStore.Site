@@ -1,0 +1,62 @@
+﻿@model IEnumerable<EBookStore.Site.Models.ViewModels.CommentIndexVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div style="margin-left:40px">
+    <h2>會員書籍評論</h2>
+
+</div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookName)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.CategoryName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserAccount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Scores)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContentText)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserAccount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Scores)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContentText)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Delete", new { id = item.Id })">
+                            <button class="btn btn-sm btn-secondary">詳細</button>
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>

@@ -36,7 +36,6 @@ namespace EBookStore.Site.Models.EFModels
 		public virtual DbSet<RolePermission> RolePermissions { get; set; }
 		public virtual DbSet<Role> Roles { get; set; }
 		public virtual DbSet<ShippingStatus> ShippingStatuses { get; set; }
-		public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 		public virtual DbSet<UserArticleCollection> UserArticleCollections { get; set; }
 		public virtual DbSet<User> Users { get; set; }
 		public virtual DbSet<Writer> Writers { get; set; }
@@ -187,11 +186,6 @@ namespace EBookStore.Site.Models.EFModels
 				.HasPrecision(18, 0);
 
 			modelBuilder.Entity<Order>()
-				.HasMany(e => e.Comments)
-				.WithRequired(e => e.Order)
-				.WillCascadeOnDelete(false);
-
-			modelBuilder.Entity<Order>()
 				.HasMany(e => e.OrderItems)
 				.WithRequired(e => e.Order)
 				.WillCascadeOnDelete(false);
@@ -297,6 +291,13 @@ namespace EBookStore.Site.Models.EFModels
 				.WithRequired(e => e.Writer)
 				.WillCascadeOnDelete(false);
 		}
+
+        public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewModels.EmployeeIndexVM> EmployeeIndexVms { get; set; }
+
+        public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewModels.EmployeeCreateVM> EmployeeCreateVMs { get; set; }
+
+        public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewModels.UserIndexVM> UserIndexVMs { get; set; }
+    }
 
         public System.Data.Entity.DbSet<EBookStore.Site.Models.Infra.OrdersItemDapperVM> OrdersItemDapperVMs { get; set; }
     }
