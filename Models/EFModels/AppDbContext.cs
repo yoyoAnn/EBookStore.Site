@@ -297,5 +297,11 @@ namespace EBookStore.Site.Models.EFModels
 				.WithRequired(e => e.Writer)
 				.WillCascadeOnDelete(false);
 		}
-	}
+
+        public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewModels.EmployeeIndexVM> EmployeeIndexVms { get; set; }
+
+        public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewModels.EmployeeCreateVM> EmployeeCreateVMs { get; set; }
+
+        public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewModels.UserIndexVM> UserIndexVMs { get; set; }
+    }
 }
