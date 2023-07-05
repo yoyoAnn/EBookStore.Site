@@ -134,7 +134,6 @@ namespace EBookStore.Site.Controllers
 			return View(news);
 		}
 
-		// POST: News1/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
 		public ActionResult DeleteConfirmed(int id)
@@ -185,10 +184,6 @@ namespace EBookStore.Site.Controllers
 
             };
 		}
-
-
-		
-
 
 		private string SaveUploadedFile(string path, HttpPostedFileBase file1)
 		{

@@ -224,7 +224,6 @@
     <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BooksDapperVMsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
-    <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\CustomerServiceMailsController.cs" />
@@ -429,7 +428,6 @@
     <Content Include="Views\BooksDapperVMs\CreateFromExcel.cshtml" />
     <Content Include="Views\Articles\Create.cshtml" />
     <Content Include="Views\Articles\Delete.cshtml" />
-    <Content Include="Views\Articles\Details.cshtml" />
     <Content Include="Views\Articles\Edit.cshtml" />
     <Content Include="Views\Articles\Index.cshtml" />
   </ItemGroup>

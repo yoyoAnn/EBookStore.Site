@@ -29,8 +29,8 @@ namespace EBookStore.Site.Models.ViewModels
 		[Required]
 		public string Content { get; set; }
 
-		//[Display(Name ="瀏覽量")]
-		//public int PageViews { get; set; }
+		[Display(Name ="瀏覽量")]
+		public int PageViews { get; set; }
 
 		[Display(Name = "狀態")]
 		//已發佈,未發佈

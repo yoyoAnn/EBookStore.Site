@@ -1,79 +1,106 @@
 ﻿@model EBookStore.Site.Models.ViewModels.ArticleCreateVm
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "新增專欄";
 }
 
-<h2>Create</h2>
 
-@using (Html.BeginForm()) 
+<style>
+    .form-label {
+        padding: 0px;
+        padding-left: 48px;
+        width: 130px;
+        margin-right: 0px;
+        margin-top: 5px;
+    }
+
+   
+</style>
+
+<div style="margin-left:38px">
+    <h2>新增專欄</h2>
+</div>
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Article</h4>
+
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.BookId, "BookId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("BookId", null, htmlAttributes: new { @class = "form-select" })
-                @Html.ValidationMessageFor(model => model.BookId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="row mb-3">
+  
+    <label class="form-label" for="@Html.NameFor(model => model.BookId)">@Html.DisplayNameFor(model => model.BookId)</label>
+    @Html.DropDownList("BookId", null, htmlAttributes: new { @class = "form-control", style = "width: 500px;" })
+    @Html.ValidationMessageFor(model => model.BookId, "", new { @class = "text-danger" })
+</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.WriterId, "WriterId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("WriterId", null, htmlAttributes: new { @class = "form-select" })
-                @Html.ValidationMessageFor(model => model.WriterId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="row mb-3">
+    
+    <label class="form-label" for="@Html.NameFor(model => model.WriterId)">@Html.DisplayNameFor(model => model.WriterId)</label>
+    @Html.DropDownList("WriterId", null, htmlAttributes: new { @class = "form-control", style = "width: 500px;" })
+    @Html.ValidationMessageFor(model => model.WriterId, "", new { @class = "text-danger" })
+</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-select" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="row mb-3">
+    
+    <label class="form-label" for="@Html.NameFor(model => model.Title)">@Html.DisplayNameFor(model => model.Title)</label>
+    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", style = "width: 500px;" } })
+    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-select" } })
-                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="row mb-3">
 
-      
+    <label class="form-label" for="@Html.NameFor(model => model.Content)">@Html.DisplayNameFor(model => model.Content)</label>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Status)
-                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
+    @Html.TextAreaFor(model => model.Content, new { @class = "form-control", style = "width:  500px; max-width: 100%; max-height:300px; overflow-y: auto;", rows = "18", cols = "50" })
+    @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedTime, new { htmlAttributes = new { @class = "form-select" } })
-                @Html.ValidationMessageFor(model => model.CreatedTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+
+<div class="row mb-3">
+    
+    <label class="form-label" for="@Html.NameFor(model => model.Status)">@Html.DisplayNameFor(model => model.Status)</label>
+    <div class="form-check">
+        @Html.EditorFor(model => model.Status)
+        <label id="statusLabel" style="margin-top:2px;"></label>
+        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
     </div>
+</div>
+
+<div class="row mb-3">
+
+    <label class="form-label" for="@Html.NameFor(model => model.CreatedTime)">@Html.DisplayNameFor(model => model.CreatedTime)</label>
+    @Html.TextBoxFor(model => model.CreatedTime, "{0:yyyy-MM-dd}", new { @class = "form-control", style = "width: 160px;", type = "date" })
+    @Html.ValidationMessageFor(model => model.CreatedTime, "", new { @class = "text-danger" })
+</div>
+
+        <div class="row mb-3" style="margin-left:450px">
+            <a href="@Url.Action("Index")" class="btn btn-outline-secondary" style="margin-right:20px">返回清單</a>
+            <input type="submit" value="新增" class="btn btn-outline-primary" />
+        </div>
+
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+    var statusCheckbox = document.getElementById("Status");
+    var statusLabel = document.getElementById("statusLabel");
+        if (this.checked) {
+            statusLabel.innerHTML = "發布";
+        } else {
+            statusLabel.innerHTML = "不發布";
+        }
+
+    statusCheckbox.addEventListener("change", function() {
+        if (this.checked) {
+            statusLabel.innerHTML = "發布";
+        } else {
+            statusLabel.innerHTML = "不發布";
+        }
+    });
+    </script>
+}

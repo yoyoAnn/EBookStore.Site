@@ -7,118 +7,207 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.Infra;
+using EBookStore.Site.Models.ViewModels;
+using Microsoft.Ajax.Utilities;
 
 namespace EBookStore.Site.Controllers
 {
     public class ArticlesController : Controller
     {
-        private AppDbContext db = new AppDbContext();
+        //private AppDbContext db = new AppDbContext();
 
-        // GET: Articles
+       
         public ActionResult Index()
         {
-            var articles = db.Articles.Include(a => a.Book).Include(a => a.Writer);
-            return View(articles.ToList());
-        }
+			IEnumerable<ArticleIndexVm> articles = GetArticleList();
 
-        // GET: Articles/Details/5
-        public ActionResult Details(int? id)
+			return View(articles);
+		}
+
+		public ActionResult Create()
+		{
+
+            PrepareBookDataSource(null);
+            PrepareWriterDataSource(null);
+			return View();
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Create(ArticleCreateVm vm)
+		{
+			if (ModelState.IsValid==false)
+			{
+				PrepareBookDataSource(vm.BookId);
+				PrepareWriterDataSource(vm.WriterId);
+				return View(vm);
+			}
+
+            CreateArticle(vm);
+			return RedirectToAction("Index");
+		}
+
+		
+		public ActionResult Edit(int id)
+		{
+			if (id == 0)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			ArticleEditVm article = GetArticleInfo(id);		
+	
+			if (article == null)
+			{
+				return HttpNotFound();
+			}
+
+			PrepareBookDataSource(article.BookId);
+			PrepareWriterDataSource(article.WriterId);
+			return View(article);
+		}
+
+
+		
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Edit( ArticleEditVm vm)
+		{
+			if (ModelState.IsValid == false)
+			{
+				PrepareBookDataSource(vm.BookId);
+				PrepareWriterDataSource(vm.WriterId);
+				return View(vm);
+			}
+			var result=UpdateArticleProfile(vm);
+			if (result.IsFail)
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				//這裡應該還要加，如果選了空白以後會跳出什麼錯誤。
+				return View(vm);
+			}
+			return RedirectToAction("Index");
+		}
+
+		private Result UpdateArticleProfile(ArticleEditVm vm)
+		{
+			if(vm.WriterId==0||vm.BookId ==0) return Result.Fail("找不到此筆專欄");
+
+			var db = new AppDbContext();
+			var articleInDb = db.Articles.FirstOrDefault(x => x.Id == vm.Id);
+
+			if (articleInDb == null) return Result.Fail("找不到此筆專欄");
+			articleInDb.BookId = vm.BookId;
+			articleInDb.WriterId = vm.WriterId;
+			articleInDb.Title = vm.Title;
+			articleInDb.Content	= vm.Content;
+			articleInDb.Status = vm.Status;
+			articleInDb.CreatedTime = vm.CreatedTime;
+
+			db.SaveChanges();
+			return Result.Success();
+		}
+
+		private ArticleEditVm GetArticleInfo(int id)
+		{
+			var db = new AppDbContext();
+			var articleInDb = db.Articles.Find(id);
+
+			if (articleInDb == null) return null;
+
+			return new ArticleEditVm
+			{
+				Id = articleInDb.Id,
+				BookId = articleInDb.BookId,
+				WriterId = articleInDb.WriterId,
+				Title = articleInDb.Title,
+				Content = articleInDb.Content,
+				PageViews = articleInDb.PageViews,
+				Status = articleInDb.Status,
+				CreatedTime = articleInDb.CreatedTime
+			};
+
+
+		}
+
+
+		private void CreateArticle(ArticleCreateVm vm)
+		{
+			Article entity = new Article()
+			{
+				BookId = vm.BookId,
+				WriterId = vm.WriterId,
+				Title = vm.Title,
+				Content = vm.Content,
+				Status = vm.Status,
+				CreatedTime = vm.CreatedTime
+			};
+            var db = new AppDbContext();
+			db.Articles.Add(entity);
+			db.SaveChanges();
+		
+		}
+
+		private void PrepareBookDataSource(int? id)
+		{
+			var books = new AppDbContext().Books.ToList().Prepend(new Book());
+			ViewBag.BookId = new SelectList(books, "Id", "Name", id);
+		}
+
+        private void PrepareWriterDataSource(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Article article = db.Articles.Find(id);
-            if (article == null)
-            {
-                return HttpNotFound();
-            }
-            return View(article);
-        }
 
-        // GET: Articles/Create
-        public ActionResult Create()
-        {
-            ViewBag.BookId = new SelectList(db.Books, "Id", "Name");
-            ViewBag.WriterId = new SelectList(db.Writers, "Id", "Name");
-            return View();
-        }
+			var writers = new AppDbContext().Writers.ToList().Prepend(new Writer());
+			ViewBag.WriterId = new SelectList(writers, "Id", "Name", id);
+		}
+	
 
-        // POST: Articles/Create
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,BookId,WriterId,Title,Content,PageViews,Status,CreatedTime")] Article article)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Articles.Add(article);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+		private IEnumerable<ArticleIndexVm> GetArticleList()
+		{
+			var db = new AppDbContext();
+			return db.Articles.Include(x => x.Book).Include(x => x.Writer).OrderBy(x => x.CreatedTime).Select(x => new ArticleIndexVm
+			{
+				Id = x.Id,
+				BookName = x.Book.Name,
+				WriterName = x.Writer.Name,
+				Title = x.Title,
+				Content = x.Content,
+				PageViews = x.PageViews,
+				Status = x.Status,
+				CreatedTime = x.CreatedTime
 
-            ViewBag.BookId = new SelectList(db.Books, "Id", "Name", article.BookId);
-            ViewBag.WriterId = new SelectList(db.Writers, "Id", "Name", article.WriterId);
-            return View(article);
-        }
+			});
+		}
 
-        // GET: Articles/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Article article = db.Articles.Find(id);
-            if (article == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.BookId = new SelectList(db.Books, "Id", "Name", article.BookId);
-            ViewBag.WriterId = new SelectList(db.Writers, "Id", "Name", article.WriterId);
-            return View(article);
-        }
-
-        // POST: Articles/Edit/5
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,BookId,WriterId,Title,Content,PageViews,Status,CreatedTime")] Article article)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(article).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.BookId = new SelectList(db.Books, "Id", "Name", article.BookId);
-            ViewBag.WriterId = new SelectList(db.Writers, "Id", "Name", article.WriterId);
-            return View(article);
-        }
+   
+		       
 
         // GET: Articles/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Article article = db.Articles.Find(id);
-            if (article == null)
-            {
-                return HttpNotFound();
-            }
-            return View(article);
-        }
+
+			var db = new AppDbContext();
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Article article = db.Articles.Find(id);
+			if (article == null)
+			{
+				return HttpNotFound();
+			}
+			return View(article);
+		}
 
         // POST: Articles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Article article = db.Articles.Find(id);
+			var db = new AppDbContext();
+			Article article = db.Articles.Find(id);
             db.Articles.Remove(article);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -126,8 +215,10 @@ namespace EBookStore.Site.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+			var db = new AppDbContext();
+			if (disposing)
             {
+
                 db.Dispose();
             }
             base.Dispose(disposing);
