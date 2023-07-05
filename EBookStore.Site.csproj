@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Dapper.2.0.143\lib\net461\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -166,6 +169,9 @@
     <Compile Include="Models\EFModels\Writer.cs" />
     <Compile Include="Models\Infra\EmailHelper.cs" />
     <Compile Include="Models\Infra\HashUtility.cs" />
+    <Compile Include="Models\Infra\OrderDapperRepository.cs" />
+    <Compile Include="Models\Infra\OrderEditDapperRepository.cs" />
+    <Compile Include="Models\Infra\OrderItemDapperRepository.cs" />
     <Compile Include="Models\Infra\Result.cs" />
     <Compile Include="Models\ViewModels\ProductCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -238,6 +244,7 @@
     <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Orders\OrderItemDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

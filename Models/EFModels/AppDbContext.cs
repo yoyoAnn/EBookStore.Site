@@ -297,5 +297,7 @@ namespace EBookStore.Site.Models.EFModels
 				.WithRequired(e => e.Writer)
 				.WillCascadeOnDelete(false);
 		}
-	}
+
+        public System.Data.Entity.DbSet<EBookStore.Site.Models.Infra.OrdersItemDapperVM> OrdersItemDapperVMs { get; set; }
+    }
 }
