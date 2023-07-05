@@ -286,21 +286,15 @@ namespace EBookStore.Site.Models.EFModels
                 .Property(e => e.Email)
                 .IsUnicode(false);
 
-			modelBuilder.Entity<Writer>()
-				.HasMany(e => e.Articles)
-				.WithRequired(e => e.Writer)
-				.WillCascadeOnDelete(false);
-		}
-
-        public System.Data.Entity.DbSet<EBookStore.Site.Models.BooksViewsModel.BooksDapperVM> BooksDapperVMs { get; set; }
-
-        public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewsModel.BooksVM> BooksVMs { get; set; }
-    }
             modelBuilder.Entity<Writer>()
                 .HasMany(e => e.Articles)
                 .WithRequired(e => e.Writer)
                 .WillCascadeOnDelete(false);
         }
+
+        public System.Data.Entity.DbSet<EBookStore.Site.Models.BooksViewsModel.BooksDapperVM> BooksDapperVMs { get; set; }
+
+        public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewsModel.BooksVM> BooksVMs { get; set; }
 
         public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewModels.EmployeeIndexVM> EmployeeIndexVms { get; set; }
 
@@ -310,7 +304,5 @@ namespace EBookStore.Site.Models.EFModels
 
         public System.Data.Entity.DbSet<EBookStore.Site.Models.Infra.OrdersItemDapperVM> OrdersItemDapperVMs { get; set; }
     }
-
-
 }
 
