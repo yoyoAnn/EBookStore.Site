@@ -11,7 +11,7 @@ namespace EBookStore.Site.Models.Infra
 {
 	public class EmailHelper
 	{
-		private string senderEmail = "g01.webapp@gmail.com"; // 寄件者
+		private string senderEmail = "yoyoann2023@gmail.com"; // 寄件者
 
 		public void SendForgetPasswordEmail(string url, string name, string email)
 		{
@@ -41,23 +41,24 @@ namespace EBookStore.Site.Models.Infra
 
 		public virtual void SendFromGmail(string from, string to, string subject, string body)
 		{
+			//from = senderEmail;
 			// todo 以下是開發時,測試之用, 只是建立text file, 不真的寄出信
-			var path = HttpContext.Current.Server.MapPath("~/files/");
-			CreateTextFile(path, from, to, subject, body);
-			return;
+			//var path = HttpContext.Current.Server.MapPath("~/files/");
+			//CreateTextFile(path, from, to, subject, body);
+			//return;
 
 			// 以下是實作程式, 可以視需要真的寄出信, 或者只是單純建立text file,供開發時使用
 			// ref https://dotblogs.com.tw/chichiblog/2018/04/20/122816
-			var smtpAccount = from;
+			var smtpAccount = senderEmail;
 
 			// TODO 請在這裡填入密碼,或從web.config裡讀取
-			var smtpPassword = "";
+			var smtpPassword = "jcstqetsjfmioegz";
 
 			var smtpServer = "smtp.gmail.com";
 			var SmtpPort = 587;
 
 			var mms = new MailMessage();
-			mms.From = new MailAddress(smtpAccount);
+			mms.From = new MailAddress(smtpAccount,"EBookStore.Site");
 			mms.Subject = subject;
 			mms.Body = body;
 			mms.IsBodyHtml = true;
@@ -70,6 +71,7 @@ namespace EBookStore.Site.Models.Infra
 				client.Credentials = new NetworkCredential(smtpAccount, smtpPassword);//寄信帳密 
 				client.Send(mms); //寄出信件
 			}
+			mms.Dispose();
 		}
 
 		private void CreateTextFile(string path, string from, string to, string subject, string body)
