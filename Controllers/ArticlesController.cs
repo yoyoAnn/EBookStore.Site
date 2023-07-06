@@ -17,8 +17,42 @@ namespace EBookStore.Site.Controllers
     {
         //private AppDbContext db = new AppDbContext();
 
-       
-        public ActionResult Index()
+		public ActionResult WriterIndex()
+		{
+			IEnumerable<WriterIndexVm> vm =GetWriterList();
+			return PartialView(vm);
+
+
+		}
+
+		public ActionResult GetWriterId(int writerId)
+		{
+			ViewBag.WriterId = writerId;
+			return new EmptyResult();
+
+		}
+
+
+
+		private IEnumerable<WriterIndexVm> GetWriterList()
+		{
+			var db = new AppDbContext();
+			return db.Writers.ToList().Select(x=>new WriterIndexVm
+			{
+				Id = x.Id,
+				Name = x.Name,
+				Photo = x.Photo,
+				Profile = x.Profile,	
+				Email	= x.Email,
+
+			});
+
+
+
+
+		}
+
+		public ActionResult Index()
         {
 			IEnumerable<ArticleIndexVm> articles = GetArticleList();
 
