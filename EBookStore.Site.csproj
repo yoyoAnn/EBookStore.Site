@@ -437,7 +437,6 @@
     <Content Include="Views\Writers\Details.cshtml" />
     <Content Include="Views\Writers\Edit.cshtml" />
     <Content Include="Views\Writers\Index.cshtml" />
-    <Content Include="Views\Articles\_WriterSearch.cshtml" />
     <Content Include="Views\Articles\WriterIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
