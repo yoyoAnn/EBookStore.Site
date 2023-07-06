@@ -2,6 +2,7 @@
 using Dapper;
 using EBookStore.Site.Models.BooksViewsModel;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.Servives;
 using EBookStore.Site.Models.ViewsModel;
 using System;
 using System.Collections.Generic;
@@ -224,7 +225,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                             var isbn = row.Cell(5).Value.ToString();
                             var price = row.Cell(6).GetValue<decimal>();
                             var summary = row.Cell(7).Value.ToString();
-                            int publisherId = GetOrCreatePublisherId(publisherName);
+                            int publisherId = GetOrCreatePublisherId(excelFiles,publisherName, CategoryName);
                             int categoryId = GetCategoryIdByName(CategoryName);
 
                             var bookVm = new BooksDapperVM
@@ -266,14 +267,15 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
         }
 
 
-        private int GetOrCreatePublisherId(string publisherName)
+        private int GetOrCreatePublisherId(IEnumerable<HttpPostedFileBase> excelFiles,string publisherName,string CategoryName)
         {
             string sql = "SELECT Id FROM Publishers WHERE Name = @PublisherName";
             int publisherId = _connection.QuerySingleOrDefault<int>(sql, new { PublisherName = publisherName });
 
             if (publisherId == 0)
             {
-
+                var publisher = new PublishersServices(_db);
+                publisher.CreatePublishersFromExcel(excelFiles, CategoryName);
                 string insertSql = "INSERT INTO Publishers (Name) VALUES (@PublisherName);";
                 publisherId = _connection.ExecuteScalar<int>(insertSql, new { PublisherName = publisherName });
             }

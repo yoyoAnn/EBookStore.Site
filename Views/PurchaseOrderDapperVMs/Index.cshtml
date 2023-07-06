@@ -90,7 +90,7 @@
                         using (Ajax.BeginForm("UpdateBookStock", "PurchaseOrderDapperVMs", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "result" }))
                         {
                             @Html.AntiForgeryToken()
-                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="hidden" name="id" value="@item" />
                             <button type="submit" class="btn btn-primary">進貨數量加入庫存</button>
                         }
                     }
