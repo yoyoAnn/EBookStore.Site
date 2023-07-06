@@ -15,42 +15,52 @@ namespace EBookStore.Site.Controllers
 {
     public class ArticlesController : Controller
     {
-        //private AppDbContext db = new AppDbContext();
+		//private AppDbContext db = new AppDbContext();
 
-		public ActionResult WriterIndex()
+		public PartialViewResult WriterIndex(string writerName)
 		{
-			IEnumerable<WriterIndexVm> vm =GetWriterList();
-			return PartialView(vm);
+			//IEnumerable<WriterIndexVm> vm = GetWriterList();
+			//return PartialView(vm);
 
+			AppDbContext db = new AppDbContext();
 
+			IQueryable<Writer> query = db.Writers;
+
+			if (string.IsNullOrEmpty(writerName) == false)
+			{
+				//如果Name有值
+				query = query.Where(p => p.Name.Contains(writerName));
+			}
+
+			List<WriterIndexVm> writer = query.Select(x => new WriterIndexVm
+			{
+				Id = x.Id,
+				Name = x.Name,
+				Photo = x.Photo,
+				Profile = x.Profile,
+				Email = x.Email,
+			}).ToList();
+
+			PrepareBookDataSource(null);
+			//ViewBag.WriterList = writer;
+			return PartialView(writer);
 		}
-
-		public ActionResult GetWriterId(int writerId)
-		{
-			ViewBag.OneWriterId = writerId;
-			return new EmptyResult();
-
-		}
-
 
 
 		private IEnumerable<WriterIndexVm> GetWriterList()
 		{
 			var db = new AppDbContext();
-			return db.Writers.ToList().Select(x=>new WriterIndexVm
+			return db.Writers.ToList().Select(x => new WriterIndexVm
 			{
 				Id = x.Id,
 				Name = x.Name,
 				Photo = x.Photo,
-				Profile = x.Profile,	
-				Email	= x.Email,
+				Profile = x.Profile,
+				Email = x.Email,
 
 			});
-
-
-
-
 		}
+
 
 		public ActionResult Index()
         {
@@ -64,6 +74,11 @@ namespace EBookStore.Site.Controllers
 
             PrepareBookDataSource(null);
             PrepareWriterDataSource(null);
+
+
+
+			//ViewBag.WriterList = new List<WriterIndexVm>();
+
 			return View();
 		}
 
@@ -124,6 +139,10 @@ namespace EBookStore.Site.Controllers
 			}
 			return RedirectToAction("Index");
 		}
+
+
+
+
 
 		private Result UpdateArticleProfile(ArticleEditVm vm)
 		{
@@ -213,6 +232,11 @@ namespace EBookStore.Site.Controllers
 				CreatedTime = x.CreatedTime
 
 			});
+
+
+
+
+
 		}
 
    
@@ -247,15 +271,15 @@ namespace EBookStore.Site.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-			var db = new AppDbContext();
-			if (disposing)
-            {
+   //     protected override void Dispose(bool disposing)
+   //     {
+			//var db = new AppDbContext();
+			//if (disposing)
+   //         {
 
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+   //             db.Dispose();
+   //         }
+   //         base.Dispose(disposing);
+   //     }
     }
 }

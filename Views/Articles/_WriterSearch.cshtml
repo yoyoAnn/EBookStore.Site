@@ -1,0 +1,17 @@
+﻿
+@*@model List<EBookStore.Site.Models.ViewModels.WriterIndexVm>
+
+@foreach (var item in Model)
+{
+    <tr class="writer" data-id="@item.Id" data-name="@item.Name">
+        <td>
+            <span>@item.Id</span>
+        </td>
+        <td>
+            <span>@item.Name</span>
+        </td>
+        <td>
+            <span>@item.Email</span>
+        </td>
+    </tr>
+}*@

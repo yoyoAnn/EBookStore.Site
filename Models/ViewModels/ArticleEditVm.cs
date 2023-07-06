@@ -39,5 +39,7 @@ namespace EBookStore.Site.Models.ViewModels
 		[Display(Name = "日期")]
 		public DateTime CreatedTime { get; set; }
 
+
+
 	}
 }
