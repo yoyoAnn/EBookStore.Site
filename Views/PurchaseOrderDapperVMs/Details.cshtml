@@ -1,0 +1,90 @@
+﻿@model EBookStore.Site.Models.BooksViewsModel.PurchaseOrderDapperVM
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>PurchaseOrderDapperVM</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.BookId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.BookId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.BookName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.BookName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PublisherId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PublisherId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PublisherName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PublisherName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CreateTime)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CreateTime)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Qty)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Qty)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Detail)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Detail)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PurchasePrice)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PurchasePrice)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

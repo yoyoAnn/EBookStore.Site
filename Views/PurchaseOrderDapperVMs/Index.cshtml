@@ -1,0 +1,106 @@
+﻿@model IEnumerable<EBookStore.Site.Models.BooksViewsModel.PurchaseOrderDapperVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.BookId)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.BookName)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.PublisherId)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.PublisherName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Qty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Detail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchasePrice)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.BookId)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookName)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.PublisherId)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublisherName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Qty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Detail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchasePrice)
+                </td>
+                <td>
+                    @if (ViewBag.SelectedItemId == item.Id)
+                    {
+                        @Html.ActionLink("Details", "Details", new { id = item.Id })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Details", "Details", new { id = item.Id })
+                        <span> | </span>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                        <span> | </span>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        <span> | </span>
+                    }
+                    @if (ViewBag.SelectedItemId != item.Id)
+                    {
+                        using (Ajax.BeginForm("UpdateBookStock", "PurchaseOrderDapperVMs", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "result" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-primary">進貨數量加入庫存</button>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js"></script>
+</body>
+</html>

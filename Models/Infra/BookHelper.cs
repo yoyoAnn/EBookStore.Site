@@ -42,10 +42,7 @@ namespace EBookStore.Site.Models.Infra
         /// <returns></returns>
         public static bool IsBooksNameExists(AppDbContext db, string name)
         {
-            //string query = "SELECT COUNT(*) FROM Books WHERE Name = @Name";
-            //int count = db.Connection.ExecuteScalar<int>(query, new { Name = name });
-
-            //return count > 0;
+ 
             return db.Books.Any(p => p.Name == name);
         }
 

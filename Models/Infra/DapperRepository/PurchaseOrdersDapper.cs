@@ -1,5 +1,9 @@
-﻿using EBookStore.Site.Models.DTOs;
+﻿using Dapper;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using EBookStore.Site.Models.BooksViewsModel;
+using EBookStore.Site.Models.DTOs;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.ViewsModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,14 +27,105 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
         }
 
 
-        public void Create(PurchaseOrderDto dto)
+        public void Create(PurchaseOrderDapperVM vm)
         {
-            throw new NotImplementedException();
+
+
+            var purchaseOrder = new PurchaseOrderDapperVM
+            {
+                BookId = vm.BookId,
+                PublisherId = vm.PublisherId,
+                Qty = vm.Qty,
+                Detail = vm.Detail,
+                PurchasePrice = vm.PurchasePrice
+            };
+
+            string sql = @"
+            INSERT INTO PurchaseOrders (BookId, PublisherId, Qty, Detail, PurchasePrice)
+            VALUES (@BookId, @PublisherId, @Qty, @Detail, @PurchasePrice);
+        ";
+
+            _connection.Execute(sql, purchaseOrder);
         }
+
+
+        public int GetOrCreatePublisherId(string publisherName)
+        {
+            string publisherIdQuery = "SELECT Id FROM Publishers WHERE Name = @PublisherName";
+            int publisherId = _connection.QuerySingleOrDefault<int>(publisherIdQuery, new { PublisherName = publisherName });
+
+            return publisherId;
+        }
+
+
+        public int GetOrCreateBookId(string bookName)
+        {
+            string bookIdQuery = "SELECT Id FROM Books WHERE Name = @BookName";
+            int bookId = _connection.QuerySingleOrDefault<int>(bookIdQuery, new { BookName = bookName });
+
+            return bookId;
+        }
+
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            string sql = @"
+            DELETE FROM PurchaseOrders
+            WHERE Id = @PurchaseOrderId;
+        ";
+
+            _connection.Execute(sql, new { PurchaseOrderId = id });
+        }
+
+
+        public void ConfirmOrder(int POid, int bookid)
+        {
+            string sql = @"
+            UPDATE Books
+            SET Stock = Stock + (SELECT Qty FROM PurchaseOrders WHERE Id = @Id)WHERE Id = @BookId
+        ";
+
+            _connection.Execute(sql, new { Id = POid, BookId = bookid });
+        }
+
+
+
+        public PurchaseOrderDapperVM GetById(int id)
+        {
+            string sql = @"SELECT PO.Id as Id,B.Id as BookId,B.Name as BookName,P.Name as PublisherName,
+                         P.Id as PublisherId,PO.Qty,PO.Detail as Detail,
+                         PO.CreatedTime as CreateTime,PO.PurchasePrice as PurchasePrice
+                         FROM PurchaseOrders AS PO
+                         left JOIN Books as B ON B.Id = PO.BookId
+                         JOIN Publishers as P ON P.Id = PO.PublisherId where PO.Id = @Id";
+
+            return _connection.QuerySingleOrDefault<PurchaseOrderDapperVM>(sql, new { Id = id });
+        }
+
+        public List<PurchaseOrderDapperVM> GetAll()
+        {
+            string sql = @"SELECT PO.Id as Id,B.Id as BookId,B.Name as BookName,P.Name as PublisherName,
+                         P.Id as PublisherId,PO.Qty,PO.Detail as Detail,
+                         PO.CreatedTime as CreateTime,PO.PurchasePrice as PurchasePrice
+                         FROM PurchaseOrders AS PO
+                         left JOIN Books as B ON B.Id = PO.BookId
+                         JOIN Publishers as P ON P.Id = PO.PublisherId";
+
+
+            IEnumerable<PurchaseOrderDapperVM> purchaseOrders = _connection.Query<PurchaseOrderDapperVM>(sql);
+
+            return purchaseOrders.ToList();
+        }
+
+        public void UpdateBookStock(PurchaseOrderDapperVM vm)
+        {
+            string sql = @"
+            UPDATE Books
+            SET Stock = Stock + @Qty
+            WHERE Id = @BookId;
+        ";
+
+            _connection.Execute(sql, new { BookId = vm.BookId, Qty = vm.Qty });
         }
     }
 }

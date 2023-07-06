@@ -227,17 +227,18 @@
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\CustomerServiceMailsController.cs" />
-    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PublishersController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\PurchaseOrderDapperVMsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BooksViewsModel\BooksDapperVM.cs" />
+    <Compile Include="Models\BooksViewsModel\PurchaseOrderDapperVM.cs" />
     <Compile Include="Models\DTOs\AuthorDto.cs" />
     <Compile Include="Models\DTOs\BooksDto.cs" />
     <Compile Include="Models\DTOs\CategoriesDto.cs" />
@@ -273,10 +274,12 @@
     <Compile Include="Models\Infra\AuthorHelper.cs" />
     <Compile Include="Models\Infra\BookHelper.cs" />
     <Compile Include="Models\Infra\DapperRepository\BookDapperRepository.cs" />
+    <Compile Include="Models\Infra\DapperRepository\PurchaseOrdersDapper.cs" />
     <Compile Include="Models\Infra\StringHelper.cs" />
     <Compile Include="Models\interface\IBooks.cs" />
     <Compile Include="Models\interface\ICategories.cs" />
     <Compile Include="Models\interface\IPublisher.cs" />
+    <Compile Include="Models\interface\IPurchaseOrders.cs" />
     <Compile Include="Models\Servives\AuthorService.cs" />
     <Compile Include="Models\Servives\BooksService.cs" />
     <Compile Include="Models\Servives\CategoriesServer.cs" />
@@ -419,6 +422,11 @@
     <Content Include="Views\BooksDapperVMs\Index.cshtml" />
     <Content Include="Views\BooksDapperVMs\CreateBook.cshtml" />
     <Content Include="Views\BooksDapperVMs\CreateFromExcel.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\Create.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\Delete.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\Details.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\Edit.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
