@@ -1,45 +1,44 @@
-﻿@*@model EBookStore.Site.Models.EFModels.CustomerServiceMail*@
-@model EBookStore.Site.Models.ViewModels.ReplyMailVM
+﻿@model EBookStore.Site.Models.ViewModels.ReplyMailVM
 
 @{
-    //ViewBag.Title = "Create";
-    var csmail = ViewBag.CSMail as EBookStore.Site.Models.EFModels.CustomerServiceMail;
-    var mailTitle = ViewBag.MailTitle;
-    var mailContent = ViewBag.MailContent;
+    ViewBag.Title = "Create";
 }
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="container-fluid">
     <h2>回覆信件</h2>
     <hr />
-    <div class="row row-cols-1">
-        <div class="col mt-3">
-            <label class="form-label">To.</label>
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-        </div>
+    @Html.HiddenFor(model => model.CSId)
+    <form>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row row-cols-1">
+            <div class="col mt-3">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label" })
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "mailtext form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
 
-        <div class="col mt-3">
-            <label class="form-label">標題</label>
-            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            @*<input id="mailTitle" type="text" class="form-control" value="@mailTitle" />*@
-        </div>
+            <div class="col mt-3">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "form-label" })
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "titletext form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
 
-        <div class="col mt-3">
-            <label class="form-label">內容</label>
-            @Html.TextAreaFor(model => model.Content, new { @class = "form-control", @rows = 5 })
-            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-            @*<textarea id="mailContent" type="text" class="form-control" rows="5">@mailContent</textarea>*@
-        </div>
+            <div class="col mt-3">
+                @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "form-label" })
+                @Html.TextAreaFor(model => model.Content, new { @class = "contenttext form-control", @rows = 5 })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
 
-        <div class="mb-3 col mt-3">
-            <input type="submit" value="寄出" class="btn btn-primary" />
+            <div class="mb-3 col mt-3">
+                <input type="submit" value="寄出" class="btn btn-primary" />
+                <input type="reset" value="清除" class="btn btn-info reset" />
+            </div>
         </div>
-    </div>
+    </form>
 </div>
     }
 
@@ -50,6 +49,20 @@
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
         <script>
+            $(function () {
+                var emailText = `@ViewBag.Email`;
+                var titleText = `@ViewBag.MailTitle`;
+                var contentText = `@ViewBag.MailContent`;
+                $(".mailtext").val(emailText);
+                $(".titletext").val(titleText);
+                $(".contenttext").val(contentText);
 
+
+                $(".reset").on("click", function () {
+                    $(".form-control").each(function () {
+                        $(this).val("");
+                    });
+                });
+            });
         </script>
     }

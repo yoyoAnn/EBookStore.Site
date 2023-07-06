@@ -7,7 +7,10 @@ using System.Net;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
+using DocumentFormat.OpenXml.Math;
+using DocumentFormat.OpenXml.Wordprocessing;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.Infra;
 using EBookStore.Site.Models.ViewModels;
 
 namespace EBookStore.Site.Controllers
@@ -67,7 +70,7 @@ namespace EBookStore.Site.Controllers
             }
             #endregion
 
-            return View(query.ToList());
+            return View(query.OrderByDescending(p => p.CreatedTime).ToList());
         }
 
         // GET: CustomerServiceMails/Details/5
@@ -82,11 +85,14 @@ namespace EBookStore.Site.Controllers
             {
                 return HttpNotFound();
             }
-            return View(customerServiceMail);
-        }
 
-        // GET: CustomerServiceMails/Create
-        public ActionResult Create(int? id)
+			customerServiceMail.IsRead = true;
+			db.SaveChanges();
+
+			return View(customerServiceMail);
+		}
+		// GET: CustomerServiceMails/Create
+		public ActionResult Create(int? id)
         {
 			if (id == null)
 			{
@@ -103,11 +109,14 @@ namespace EBookStore.Site.Controllers
 			{
                 CSId = customerServiceMail.Id,
                 Account = customerServiceMail.UserAccount,
-                Email = customerServiceMail.Email,
-                ProblemTypeId = customerServiceMail.ProblemTypeId,
-                Title = $"回覆問題:[{customerServiceMail.ProblemType.Name}]",
-                Content = $"親愛的{customerServiceMail.UserAccount}用戶您好，針對您於提出關於{customerServiceMail.ProblemType.Name}的提問，客服人員在此回覆您："
+                //Email = customerServiceMail.Email,
+                ProblemTypeId = customerServiceMail.ProblemTypeId
+                //Title = $"回覆問題:[{customerServiceMail.ProblemType.Name}]",
+                //Content = $"親愛的{customerServiceMail.UserAccount}用戶您好，針對您於提出關於{customerServiceMail.ProblemType.Name}的提問，客服人員在此回覆您："
 		    };
+            ViewBag.Email = customerServiceMail.Email;
+            ViewBag.MailTitle = $"回覆問題:[{customerServiceMail.ProblemType.Name}]";
+            ViewBag.MailContent = $"親愛的{customerServiceMail.UserAccount}用戶您好，針對您於提出關於{customerServiceMail.ProblemType.Name}的提問，客服人員在此回覆您：";
 
 			return View(mail);
 		}
@@ -117,24 +126,60 @@ namespace EBookStore.Site.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserAccount,Email,ProblemTypeId,ProblemStatement,OrderId,IsRead,IsReplied,CreatedTime")] CustomerServiceMail customerServiceMail)
+        public ActionResult Create(ReplyMailVM vm)
         {
-            if (ModelState.IsValid)
-            {
-                db.CustomerServiceMails.Add(customerServiceMail);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ReplyMailVM vm = new ReplyMailVM();
+			if (ModelState.IsValid == false) return View(vm);
 
+            Result result = SaveRepliedMail(vm);
 
-			ViewBag.OrderId = new SelectList(db.Orders, "Id", "ReceiverName", customerServiceMail.OrderId);
-            ViewBag.ProblemTypeId = new SelectList(db.ProblemTypes, "Id", "Name", customerServiceMail.ProblemTypeId);
-            return View(customerServiceMail);
+			if (result.IsSuccess)
+			{
+				// 若成功，轉到 SuccessReplied 頁
+				return View("SuccessReplied");
+			}
+			else
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
+
+			//return RedirectToAction("Index");
         }
 
-        // GET: CustomerServiceMails/Edit/5
-        public ActionResult Edit(int? id)
+		private Result SaveRepliedMail(ReplyMailVM vm)
+		{
+			var db = new AppDbContext();
+			var repliedMail = new RepliedMail
+            {
+                CSId = vm.CSId,
+                Email = vm.Email,
+                Title = vm.Title,
+                Content = vm.Content,
+                CreatedTime = DateTime.Now
+            };
+            db.RepliedMails.Add(repliedMail);
+            db.SaveChanges();
+
+            // to do 寄發 email
+			SendRepliedMail(vm);
+
+			// 發完email後更新客服信件之是否回復狀態
+			var csInDb = db.CustomerServiceMails.FirstOrDefault(m => m.Id == vm.CSId);
+			csInDb.IsReplied = true;
+			db.SaveChanges();
+
+			return Result.Success();
+        }
+
+		private Result SendRepliedMail(ReplyMailVM vm)
+		{
+			// 發email
+            new EmailHelper().SendFromGmail(null, vm.Email, vm.Title, vm.Content);
+            return Result.Success();
+		}
+
+		// GET: CustomerServiceMails/Edit/5
+		public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -147,6 +192,7 @@ namespace EBookStore.Site.Controllers
             }
             ViewBag.OrderId = new SelectList(db.Orders, "Id", "ReceiverName", customerServiceMail.OrderId);
             ViewBag.ProblemTypeId = new SelectList(db.ProblemTypes, "Id", "Name", customerServiceMail.ProblemTypeId);
+
             return View(customerServiceMail);
         }
 

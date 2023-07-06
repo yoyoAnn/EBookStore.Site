@@ -430,9 +430,11 @@
     <Content Include="Views\Articles\Delete.cshtml" />
     <Content Include="Views\Articles\Edit.cshtml" />
     <Content Include="Views\Articles\Index.cshtml" />
+    <Content Include="Views\CustomerServiceMails\SuccessReplied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="files\" />
     <Folder Include="Uploads\NewsImage\" />
   </ItemGroup>
   <ItemGroup>
