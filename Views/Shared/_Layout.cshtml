@@ -165,10 +165,18 @@
 
             <!-- Nav Item - CustomerService  -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="~/CustomerServiceMails/Index">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomerService"
+                   aria-expanded="true" aria-controls="collapseCustomerService">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>客服管理</span>
                 </a>
+                <div id="collapseCustomerService" class="collapse" aria-labelledby="headingTwo"
+                     data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="~/CustomerServiceMails/Index">信件列表</a>
+                        <a class="collapse-item" href="#">已回信件</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->

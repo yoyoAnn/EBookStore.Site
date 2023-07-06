@@ -423,9 +423,11 @@
     <Content Include="Views\BooksDapperVMs\Index.cshtml" />
     <Content Include="Views\BooksDapperVMs\CreateBook.cshtml" />
     <Content Include="Views\BooksDapperVMs\CreateFromExcel.cshtml" />
+    <Content Include="Views\CustomerServiceMails\SuccessReplied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="files\" />
     <Folder Include="Uploads\NewsImage\" />
     <Folder Include="Views\Article\" />
   </ItemGroup>
