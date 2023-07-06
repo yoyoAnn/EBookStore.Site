@@ -27,7 +27,7 @@ namespace EBookStore.Site.Controllers
 
 		public ActionResult GetWriterId(int writerId)
 		{
-			ViewBag.WriterId = writerId;
+			ViewBag.OneWriterId = writerId;
 			return new EmptyResult();
 
 		}
