@@ -105,7 +105,7 @@ namespace EBookStore.Site.Controllers
 				return HttpNotFound();
 			}
 
-            ReplyMailVM mail = new ReplyMailVM
+            ReplyMailCreateVM mail = new ReplyMailCreateVM
 			{
                 CSId = customerServiceMail.Id,
                 Account = customerServiceMail.UserAccount,
@@ -126,7 +126,7 @@ namespace EBookStore.Site.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ReplyMailVM vm)
+        public ActionResult Create(ReplyMailCreateVM vm)
         {
 			if (ModelState.IsValid == false) return View(vm);
 
@@ -146,7 +146,7 @@ namespace EBookStore.Site.Controllers
 			//return RedirectToAction("Index");
         }
 
-		private Result SaveRepliedMail(ReplyMailVM vm)
+		private Result SaveRepliedMail(ReplyMailCreateVM vm)
 		{
 			var db = new AppDbContext();
 			var repliedMail = new RepliedMail
@@ -171,7 +171,7 @@ namespace EBookStore.Site.Controllers
 			return Result.Success();
         }
 
-		private Result SendRepliedMail(ReplyMailVM vm)
+		private Result SendRepliedMail(ReplyMailCreateVM vm)
 		{
 			// 發email
             new EmailHelper().SendFromGmail(null, vm.Email, vm.Title, vm.Content);

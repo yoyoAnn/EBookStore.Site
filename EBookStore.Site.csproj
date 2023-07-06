@@ -232,6 +232,7 @@
     <Compile Include="Controllers\PublishersController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\RepliedMailsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -299,7 +300,7 @@
     <Compile Include="Models\ViewModels\NewsEditVm.cs" />
     <Compile Include="Models\ViewModels\NewsIndexVm.cs" />
     <Compile Include="Models\ViewModels\CSMailCriteria.cs" />
-    <Compile Include="Models\ViewModels\ReplyMailVM.cs" />
+    <Compile Include="Models\ViewModels\ReplyMailCreateVM.cs" />
     <Compile Include="Models\ViewModels\EmployeeCreateVM.cs" />
     <Compile Include="Models\ViewModels\EmployeeCriteria.cs" />
     <Compile Include="Models\ViewModels\EmployeeEditVM.cs" />
@@ -431,6 +432,11 @@
     <Content Include="Views\Articles\Edit.cshtml" />
     <Content Include="Views\Articles\Index.cshtml" />
     <Content Include="Views\CustomerServiceMails\SuccessReplied.cshtml" />
+    <Content Include="Views\RepliedMails\Create.cshtml" />
+    <Content Include="Views\RepliedMails\Delete.cshtml" />
+    <Content Include="Views\RepliedMails\Details.cshtml" />
+    <Content Include="Views\RepliedMails\Edit.cshtml" />
+    <Content Include="Views\RepliedMails\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

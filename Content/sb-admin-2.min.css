@@ -1833,7 +1833,7 @@ pre code {
 .table-yellow,
 .table-yellow>td,
 .table-yellow>th {
-    background-color: #fcfc4e
+    background-color: #FFFFCC
         /* background-color: #f4f5df; */
 }
 
@@ -1841,7 +1841,7 @@ pre code {
 .table-yellow td,
 .table-yellow th,
 .table-yellow thead th {
-    border-color: #fcfc4e
+    border-color: #FFFFCC
 }
 
 .table-hover .table-yellow:hover {
