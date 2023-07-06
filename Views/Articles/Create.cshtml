@@ -25,14 +25,7 @@
 {
     @Html.AntiForgeryToken()
 
-    <section>
-        @Html.Action("WriterIndex")
-
-    </section>
-
-
-
-
+  
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
