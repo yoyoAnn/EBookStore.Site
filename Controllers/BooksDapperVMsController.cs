@@ -130,7 +130,8 @@ namespace EBookStore.Site.Controllers
             {
                 return HttpNotFound();
             }
-
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
+            ViewBag.PublisherId = new SelectList(db.Publishers, "Id", "Name");
             return View(book);
         }
 

@@ -39,7 +39,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PublisherName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PublisherName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownList("PublisherId", null, htmlAttributes: new { @class = "form-control" })
+                @*@Html.EditorFor(model => model.PublisherName, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.PublisherName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -47,7 +48,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -55,7 +56,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                @*@Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
             </div>
         </div>
