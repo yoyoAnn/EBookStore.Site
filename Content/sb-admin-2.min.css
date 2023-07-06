@@ -158,7 +158,7 @@ small {
 sub,
 sup {
     position: relative;
-    font-size: 75%;
+    font-size: 25%;
     line-height: 0;
     vertical-align: baseline
 }
@@ -11630,7 +11630,8 @@ a:focus {
     padding: .5rem 1rem;
     margin: 0 .5rem;
     display: block;
-    color: #3a3b45;
+    color: gray;
+    font-size: 1rem;
     text-decoration: none;
     border-radius: .35rem;
     white-space: nowrap
@@ -11787,28 +11788,28 @@ a:focus {
     }
 
     .sidebar .nav-item .nav-link i {
-        font-size: .85rem;
+        font-size: 1.25rem;
         margin-right: .25rem
     }
 
     .sidebar .nav-item .nav-link span {
-        font-size: .85rem;
+        font-size: 1.25rem;
         display: inline
     }
 
     .sidebar .nav-item .nav-link[data-toggle=collapse]::after {
-        width: 1rem;
+        width: 0.75rem;
         text-align: center;
         float: right;
         vertical-align: 0;
         border: 0;
         font-weight: 900;
-        content: '\f107';
+        content: '\f106';
         font-family: 'Font Awesome 5 Free'
     }
 
     .sidebar .nav-item .nav-link[data-toggle=collapse].collapsed::after {
-        content: '\f105'
+        content: '\f107'
     }
 
     .sidebar .sidebar-brand .sidebar-brand-icon i {
@@ -11897,7 +11898,8 @@ a:focus {
 }
 
 .sidebar-light hr.sidebar-divider {
-    border-top: 1px solid #eaecf4
+    border-top: 1px solid #000000
+        /*#eaecf4*/
 }
 
 .sidebar-light .sidebar-heading {
@@ -11953,7 +11955,8 @@ a:focus {
 }
 
 .sidebar-dark hr.sidebar-divider {
-    border-top: 1px solid rgba(255, 255, 255, .15)
+    border-top: 1px solid gray
+        /*rgba(255, 255, 255, .15)*/
 }
 
 .sidebar-dark .sidebar-heading {
@@ -11965,7 +11968,7 @@ a:focus {
 }
 
 .sidebar-dark .nav-item .nav-link i {
-    color: rgba(200, 200, 100, .3)
+    color: rgba(200, 200, 100, 1)
 }
 
 .sidebar-dark .nav-item .nav-link:active,
@@ -11977,11 +11980,12 @@ a:focus {
 .sidebar-dark .nav-item .nav-link:active i,
 .sidebar-dark .nav-item .nav-link:focus i,
 .sidebar-dark .nav-item .nav-link:hover i {
-    color: #CCCCCC
+    color: gray
 }
 
 .sidebar-dark .nav-item .nav-link[data-toggle=collapse]::after {
-    color: rgba(255, 255, 255, .5)
+    color: rgba(200, 200, 100, 1)
+        /*rgba(255, 255, 255, .5)*/
 }
 
 .sidebar-dark .nav-item.active .nav-link {
