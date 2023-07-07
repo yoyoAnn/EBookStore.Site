@@ -1,7 +1,7 @@
 ﻿@model EBookStore.Site.Models.BooksViewsModel.PurchaseOrderDapperVM
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "UpdateBookStock";
 }
 
 <!DOCTYPE html>
@@ -9,67 +9,98 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
+    <title>UpdateBookStock</title>
 </head>
 <body>
     <div>
         <h4>PurchaseOrderDapperVM</h4>
         <hr />
         <dl class="dl-horizontal">
-   
+
             <dt>
                 @Html.DisplayNameFor(model => model.BookName)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.BookName)
             </dd>
-    
+
+   
             <dt>
                 @Html.DisplayNameFor(model => model.PublisherName)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.PublisherName)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.CreateTime)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.CreateTime)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Qty)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Qty)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Detail)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Detail)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.PurchasePrice)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.PurchasePrice)
             </dd>
-    
+
         </dl>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        <button type="button" onclick="updateBookStock('@Model.Id','@Model.BookId','@Model.PublisherId','@Model.BookName', '@Model.PublisherName', '@Model.CreateTime',
+                                                        '@Model.Qty','@Model.Detail','@Model.PurchasePrice')">確認入庫</button> |
         @Html.ActionLink("Back to List", "Index")
     </p>
+
+
+    <script>
+        function updateBookStock(itemId,BookId,PublisherId,BookName,PublisherName,CreateTime,Qty,Detail,PurchasePrice) {
+            $.ajax({
+                url: '/PurchaseOrderDapperVMs/UpdateBookStock',
+                type: 'POST',
+                data: {
+                    Id: itemId,
+                    BookName: BookName,
+                    BookId: BookId,
+                    PublisherId:PublisherId,
+                    PublisherName: PublisherName,
+                    CreateTime: CreateTime,
+                    Qty: Qty,
+                    Detail: Detail,
+                    PurchasePrice: PurchasePrice
+                },
+                success: function (result) {
+                    window.location.href = '/PurchaseOrderDapperVMs/Index';
+                },
+                error: function (xhr, status, error) {
+                    // 錯誤處理邏輯
+                }
+            });
+        }
+    </script>
 </body>
+
+
 </html>

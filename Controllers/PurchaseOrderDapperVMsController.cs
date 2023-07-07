@@ -35,13 +35,9 @@ namespace EBookStore.Site.Controllers
         }
 
         // GET: PurchaseOrderDapperVMs/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PurchaseOrderDapperVM purchaseOrderDapperVM = db.PurchaseOrderDapperVMs.Find(id);
+        public ActionResult Details(int id)
+        {       
+            PurchaseOrderDapperVM purchaseOrderDapperVM = _repository.GetById(id);
             if (purchaseOrderDapperVM == null)
             {
                 return HttpNotFound();
@@ -92,11 +88,18 @@ namespace EBookStore.Site.Controllers
         }
 
 
+        public ActionResult UpdateBookStock(int id)
+        {
+            var getdetail = _repository.GetById(id);
+            return View(getdetail);
+        }
+
+
         [HttpPost]
         public ActionResult UpdateBookStock(PurchaseOrderDapperVM vm)
         {
-            _repository.UpdateBookStock(vm);
-            ViewBag.SelectedItemId = vm.Id;
+            _repository.ConfirmOrder(vm);
+            _repository.CreateInHistory(vm);
             return RedirectToAction("Index");
         }
 

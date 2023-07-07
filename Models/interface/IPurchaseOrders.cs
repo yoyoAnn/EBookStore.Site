@@ -22,7 +22,7 @@ namespace EBookStore.Site.Models
         /// <summary>
         /// 確認送出訂單，會把數量加進書本庫存裡
         /// </summary>
-        void ConfirmOrder(int POid,int bookid);
+        void ConfirmOrder(PurchaseOrderDapperVM vm);
       
         /// <summary>
         /// 取得所有進貨訂單

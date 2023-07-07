@@ -121,7 +121,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                 Name = vm.Name,
                 CategoryId = vm.CategoryId,
                 PublisherId = vm.PublisherId,
-                PublishDate = vm.PublishDate,
+                PublishDate = DateTime.Parse(vm.PublishDatetxt),
                 Summary = vm.Summary,
                 ISBN = vm.ISBN,
                 EISBN = vm.EISBN,
@@ -131,17 +131,16 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                 Discount = vm.Discount
             };
         }
-        public void UpdateBook(BooksDapperVM vm,string categoryName,string PublisherName)
+        public void UpdateBook(BooksDapperVM vm,int categoryId,int PublisherId)
         {
-            var categoryid = GetCategoryIdByName(categoryName);
-            var publisherid = GetOrCreatePublisherId(PublisherName);
 
-            var book = new Book
+
+            var book = new BooksDapperVM
             {
                 Id = vm.Id,
                 Name = vm.Name,
-                CategoryId = categoryid,
-                PublisherId = publisherid,
+                CategoryId = categoryId,
+                PublisherId = PublisherId,
                 PublishDate = vm.PublishDate,
                 Summary = vm.Summary,
                 ISBN = vm.ISBN,
@@ -291,11 +290,24 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             return publisherId;
         }
 
+        private int GetPublisherIdByName(int Id)
+        {
+            string sql = "SELECT Name FROM Publishers WHERE Id = @Id";
+            int publisherId = _connection.QuerySingleOrDefault<int>(sql, new { PublisherName = Id });
+
+            return publisherId;
+        }
 
         private int GetCategoryIdByName(string categoryName)
         {
             string sql = "SELECT Id FROM Categories WHERE Name = @CategoryName";
             return _connection.QuerySingleOrDefault<int>(sql, new { CategoryName = categoryName });
+        }
+
+        private int GetCategoryNameById(int categoryId)
+        {
+            string sql = "SELECT Name FROM Categories WHERE Id = @Id";
+            return _connection.QuerySingleOrDefault<int>(sql, new { Id = categoryId });
         }
     }
 }

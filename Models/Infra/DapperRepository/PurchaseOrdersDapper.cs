@@ -78,14 +78,38 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
         }
 
 
-        public void ConfirmOrder(int POid, int bookid)
+        public void ConfirmOrder(PurchaseOrderDapperVM vm)
         {
             string sql = @"
             UPDATE Books
-            SET Stock = Stock + (SELECT Qty FROM PurchaseOrders WHERE Id = @Id)WHERE Id = @BookId
+            SET Stock = Stock + @Qty
+            WHERE Id = @BookId;
         ";
 
-            _connection.Execute(sql, new { Id = POid, BookId = bookid });
+            _connection.Execute(sql, new { BookId = vm.BookId, Qty = vm.Qty });
+
+        }
+
+        public void CreateInHistory(PurchaseOrderDapperVM vm)
+        {
+            var purchaseOrder = new PurchaseOrderDapperVM
+            {
+                Id = vm.Id,
+                BookName = vm.BookName,
+                BookId = vm.BookId,
+                PublisherId = vm.PublisherId,
+                PublisherName = vm.PublisherName,
+                Qty = vm.Qty,
+                Detail = vm.Detail,
+                PurchasePrice = vm.PurchasePrice
+            };
+
+            string sql = @"
+            INSERT INTO PurchaseOrderHistory (BookId, PublisherId, Qty, Detail, PurchasePrice)
+            VALUES (@BookId, @PublisherId, @Qty, @Detail, @PurchasePrice);
+        ";
+
+            _connection.Execute(sql, purchaseOrder);
         }
 
 
@@ -117,15 +141,5 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             return purchaseOrders.ToList();
         }
 
-        public void UpdateBookStock(PurchaseOrderDapperVM vm)
-        {
-            string sql = @"
-            UPDATE Books
-            SET Stock = Stock + @Qty
-            WHERE Id = @BookId;
-        ";
-
-            _connection.Execute(sql, new { BookId = vm.BookId, Qty = vm.Qty });
-        }
     }
 }

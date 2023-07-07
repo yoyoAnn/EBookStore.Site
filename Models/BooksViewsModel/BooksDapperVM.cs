@@ -32,9 +32,10 @@ namespace EBookStore.Site.Models.BooksViewsModel
 
         [Column(TypeName = "date")]
         [Display(Name = "出版日期")]
-        public DateTime PublishDate { get; set; }
+        public DateTime PublishDate { get; set ; }
 
         public string PublishDatetxt => PublishDate.ToString("yyyy/MM/dd");
+
 
         [Display(Name = "內容摘要")]
         public string Summary { get; set; }

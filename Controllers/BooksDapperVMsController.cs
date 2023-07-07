@@ -132,6 +132,7 @@ namespace EBookStore.Site.Controllers
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
             ViewBag.PublisherId = new SelectList(db.Publishers, "Id", "Name");
+
             return View(book);
         }
 
@@ -144,9 +145,8 @@ namespace EBookStore.Site.Controllers
             {
                 try
                 {
-  
                     // 更新書籍資訊
-                    _repository.UpdateBook(vm,vm.CategoryName,vm.PublisherName);
+                    _repository.UpdateBook(vm,vm.CategoryId,vm.PublisherId);
 
                     return RedirectToAction("Index");
                 }
