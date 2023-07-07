@@ -34,6 +34,17 @@ namespace EBookStore.Site.Controllers
             return View(purchaseOrders);
         }
 
+
+        public ActionResult HistoryIndex()
+        {
+            var purchaseOrders = _repository.GetHistory();
+            if (TempData.ContainsKey("SuccessMessage"))
+            {
+                ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
+            }
+            return View(purchaseOrders);
+        }
+
         // GET: PurchaseOrderDapperVMs/Details/5
         public ActionResult Details(int id)
         {       
@@ -100,6 +111,7 @@ namespace EBookStore.Site.Controllers
         {
             _repository.ConfirmOrder(vm);
             _repository.CreateInHistory(vm);
+            _repository.Delete(vm.Id);
             return RedirectToAction("Index");
         }
 

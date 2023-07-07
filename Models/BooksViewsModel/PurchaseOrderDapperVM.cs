@@ -24,6 +24,7 @@ namespace EBookStore.Site.Models.BooksViewsModel
         [Display(Name = "出版商名稱")]
         public string PublisherName { get; set; }
 
+        [Display(Name = "創建日期")]
         public DateTime CreateTime { get; set; }
 
         public string CreateTimetxt => CreateTime.ToString("yyyy/MM/dd");

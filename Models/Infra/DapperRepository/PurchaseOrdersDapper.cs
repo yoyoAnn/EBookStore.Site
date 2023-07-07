@@ -97,6 +97,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                 Id = vm.Id,
                 BookName = vm.BookName,
                 BookId = vm.BookId,
+                CreateTime = vm.CreateTime,
                 PublisherId = vm.PublisherId,
                 PublisherName = vm.PublisherName,
                 Qty = vm.Qty,
@@ -132,6 +133,21 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                          P.Id as PublisherId,PO.Qty,PO.Detail as Detail,
                          PO.CreatedTime as CreateTime,PO.PurchasePrice as PurchasePrice
                          FROM PurchaseOrders AS PO
+                         left JOIN Books as B ON B.Id = PO.BookId
+                         JOIN Publishers as P ON P.Id = PO.PublisherId";
+
+
+            IEnumerable<PurchaseOrderDapperVM> purchaseOrders = _connection.Query<PurchaseOrderDapperVM>(sql);
+
+            return purchaseOrders.ToList();
+        }
+
+        public List<PurchaseOrderDapperVM> GetHistory()
+        {
+            string sql = @"SELECT PO.Id as Id,B.Id as BookId,B.Name as BookName,P.Name as PublisherName,
+                         P.Id as PublisherId,PO.Qty,PO.Detail as Detail,
+                         PO.CreateTime as CreateTime,PO.PurchasePrice as PurchasePrice
+                         FROM PurchaseOrderHistory AS PO
                          left JOIN Books as B ON B.Id = PO.BookId
                          JOIN Publishers as P ON P.Id = PO.PublisherId";
 

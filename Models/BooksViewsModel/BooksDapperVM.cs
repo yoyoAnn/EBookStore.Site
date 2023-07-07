@@ -59,5 +59,6 @@ namespace EBookStore.Site.Models.BooksViewsModel
 
         [Display(Name = "折扣")]
         public int Discount { get; set; } = 1;
+
     }
 }

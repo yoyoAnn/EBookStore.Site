@@ -428,6 +428,7 @@
     <Content Include="Views\PurchaseOrderDapperVMs\Edit.cshtml" />
     <Content Include="Views\PurchaseOrderDapperVMs\Index.cshtml" />
     <Content Include="Views\PurchaseOrderDapperVMs\UpdateBookStock.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\HistoryIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
