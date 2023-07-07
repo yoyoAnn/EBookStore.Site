@@ -1,0 +1,110 @@
+﻿@model EBookStore.Site.Models.ViewModels.ArticleEditVm
+
+@{
+    ViewBag.Title = "編輯專欄";
+  
+}
+
+<style>
+    .form-label {
+        padding: 0px;
+        padding-left: 48px;
+        width: 130px;
+        margin-right: 0px;
+        margin-top: 5px;
+    }
+</style>
+
+<div style="margin-left:38px">
+    <h2>編輯專欄</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+<div class="row mb-3">
+    <label class="form-label" for="@Html.NameFor(model => model.BookName)">@Html.DisplayNameFor(model => model.BookName)</label>
+<label class="form-label" style="width: 500px; padding-left: 2px;" >@Html.DisplayFor(model => model.BookName)</label>
+    <input type="hidden" value="@Model.BookId" />
+ 
+</div>
+
+<div class="row mb-3">
+    <label class="form-label" for="@Html.NameFor(model => model.WriterName)">@Html.DisplayNameFor(model => model.WriterName)</label>
+   <label class="form-label" style="width: 500px; padding-left:2px;" >@Html.DisplayFor(model => model.WriterName)</label>
+   <input type="hidden" value="@Model.WriterId" />
+
+</div>
+
+<div class="row mb-3">
+    <label class="form-label" for="@Html.NameFor(model => model.Title)">@Html.DisplayNameFor(model => model.Title)</label>
+        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", style = "width: 500px;" } })
+        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+</div>
+
+<div class="row mb-3">
+    <label class="form-label" for="@Html.NameFor(model => model.Content)">@Html.DisplayNameFor(model => model.Content)</label>
+    @Html.TextAreaFor(model => model.Content, new { @class = "form-control", style = "width:  500px; max-width: 100%; max-height:300px; overflow-y: auto;", rows = "18", cols = "50" })
+    @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+</div>
+
+<div class="row mb-3">
+
+    <label class="form-label" for="@Html.NameFor(model => model.PageViews)">@Html.DisplayNameFor(model => model.PageViews)</label>
+    @Html.DisplayFor(model => model.PageViews, new { htmlAttributes = new { @class = "form-control", style = "width: 500px;" } })
+    @Html.ValidationMessageFor(model => model.PageViews, "", new { @class = "text-danger" })
+</div>
+
+    <div class="row mb-3" style=" ">
+        <label class="form-label" for="@Html.NameFor(model => model.Status)">@Html.DisplayNameFor(model => model.Status)</label>
+        <div class="form-check" style="padding-left: 0px;" >
+            @Html.EditorFor(model => model.Status)
+            <label id="statusLabel" style="margin-top:2px;"></label>
+            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row mb-3">
+
+        <label class="form-label" for="@Html.NameFor(model => model.CreatedTime)">@Html.DisplayNameFor(model => model.CreatedTime)</label>
+        @Html.TextBoxFor(model => model.CreatedTime, "{0:yyyy-MM-dd}", new { @class = "form-control", style = "width: 160px;", type = "date" })
+        @Html.ValidationMessageFor(model => model.CreatedTime, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="row mb-3" style="margin-left:450px">
+        <a href="@Url.Action("Index")" class="btn btn-outline-secondary" style="margin-right:8px">返回清單</a>
+        <input type="submit" value="儲存" class="btn btn-outline-primary" />
+
+
+    </div>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var statusCheckbox = document.getElementById("Status");
+        var statusLabel = document.getElementById("statusLabel");
+        if (this.checked) {
+            statusLabel.innerHTML = "發布";
+        } else {
+            statusLabel.innerHTML = "不發布";
+        }
+
+        statusCheckbox.addEventListener("change", function () {
+            if (this.checked) {
+                statusLabel.innerHTML = "發布";
+            } else {
+                statusLabel.innerHTML = "不發布";
+            }
+        });
+    </script>
+
+}

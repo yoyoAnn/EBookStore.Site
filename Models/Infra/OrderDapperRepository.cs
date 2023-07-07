@@ -85,7 +85,7 @@ LEFT JOIN OrderItems ON Orders.Id = OrderItems.OrderId";
         public string FormattedTotalAmount => Math.Ceiling(TotalAmount).ToString();
 
         [StringLength(255)]
-        [Display(Name = "發票編號")]
+        [Display(Name = "貨運編號")]
         public string ShippingNumber { get; set; }
 
         [Display(Name = "出貨時間")]

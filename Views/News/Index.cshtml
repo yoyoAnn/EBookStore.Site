@@ -31,7 +31,7 @@
             <div class="mb-3 col-md-3">
                 <label for="s_status">狀態</label>
                 <div class="mb-3 col-md-9">
-                    <select name="status" id="s_status" class="form-select" style="width:200px; height:32px ;">
+                    <select name="status" id="s_status" class="form-control" style="width:200px; height:32px ;">
                         @foreach (var item in statusList)
                         {
                             
@@ -61,29 +61,31 @@
 
 
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
+    <thead class="table-light table-secondary">
+        <tr>
+            <th style="width:300px;">
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
 
-        <th>
-            @Html.DisplayNameFor(model => model.ContentText)
-        </th>
-        <th style="width:80px;">
-            @Html.DisplayNameFor(model => model.PageViews)
-        </th>
-        <th style="width:80px;">
-            @Html.DisplayNameFor(model => model.StatusText)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedTime)
-        </th>
-        <th></th>
-    </tr>
+            <th style="width:400px;">
+                @Html.DisplayNameFor(model => model.ContentText)
+            </th>
+            <th style="width:80px;">
+                @Html.DisplayNameFor(model => model.PageViews)
+            </th>
+            <th style="width:80px;">
+                @Html.DisplayNameFor(model => model.StatusText)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>*@
+            <th style="width:150px;">
+                @Html.DisplayNameFor(model => model.CreatedTime)
 
+            </th>
+            <th></th>
+        </tr>
+    </thead>
     @foreach (var item in Model)
     {
         <tr>
@@ -100,9 +102,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.StatusText)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Image)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedTime)
             </td>
