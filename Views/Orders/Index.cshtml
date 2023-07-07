@@ -9,7 +9,6 @@
 
 }
 @section cdn{
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 }
 
@@ -74,7 +73,7 @@
     <form method="get">
         <div class="row">
             <div class="col-md-12 d-flex justify-content-center">
-                <div class="mb-3 col-md-3">
+                <div class="mb-3 col-md-k3">
                     <label for="s_categoryId">訂單狀態</label>
                     <select name="OrderId" id="s_categoryId" class="form-select form-control">
                         <option value="">全部</option>
@@ -92,12 +91,12 @@
 
                 <div class="mb-3 col-md-3" id="Date">
                     <label for="s_date_start">日期:(起)</label>
-                    <input type="text" class="form-control" name="date_start" id="s_date_start" value="@criteria.Date_Start">        
+                    <input type="text" class="form-control" name="date_start" id="s_date_start" value="@criteria.Date_Start">
                 </div>
 
                 <div class="mb-3 col-md-3" id="Date">
                     <label for="s_date_end">日期:(迄)</label>
-                    <input type="text" class="form-control" name="date_end" id="s_date_end" value="@criteria.Date_End">  
+                    <input type="text" class="form-control" name="date_end" id="s_date_end" value="@criteria.Date_End">
                 </div>
 
 
@@ -214,8 +213,8 @@
                         @Html.DisplayFor(modelItem => item.FormattedTotalPayment)
                     </td>
                     <td>
-                        @Html.ActionLink("編輯", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("刪除", "Delete", new { id = item.Id })
+                        @Html.ActionLink("編輯", "Edit", new { id = item.Id }, new { @class = "btn btn-warning " }) |
+                        <button class="deleteButton btn btn-danger" data-orderId="@item.Id">刪除</button>
                     </td>
                 </tr>
             }
@@ -229,6 +228,8 @@
     <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(document).ready(function () {
             $('#orderTable').DataTable({
@@ -257,6 +258,47 @@
                         "sortDescending": ": 降冪"
                     }
                 },
+            });
+
+
+            $(".deleteButton").click(function (event) {
+                event.preventDefault();
+                var orderId = $(this).data('orderid'); // 獲取訂單ID
+
+                // 顯示SweetAlert的確認對話框
+                Swal.fire({
+                    title: '確認',
+                    text: '確定刪除整筆訂單？',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: '確定',
+                    cancelButtonText: '取消'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // 獲取防偽權杖的值
+                        var antiForgeryToken = $('input[name="__RequestVerificationToken"]').val();
+                        //// 創建 FormData 物件
+                        //var formData = new FormData();
+                        //var formData2 = new FormData();
+                        //formData2.append('__RequestVerificationToken', antiForgeryToken);
+                        //formData.append('id', orderId);
+
+                        $.ajax({
+                            url: "/Orders/Delete2",
+                            type: "POST",
+
+                            data: { id: orderId },
+                            success: function (result) {
+                                // 成功處理後的操作，例如重新導向或顯示訊息
+                                location.href = "/Orders";
+                            },
+                            error: function () {
+                                // 錯誤處理，例如顯示錯誤訊息
+                                Swal.fire('錯誤', '發生未知的錯誤！', 'error');
+                            }
+                        });
+                    }
+                });
             });
         });
 
@@ -294,8 +336,11 @@
                 //        '2021-12-25'
                 //    ]
             });
-
         })
+
+
+
+
 
     </script>
 }
