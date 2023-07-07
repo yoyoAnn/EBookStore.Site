@@ -61,7 +61,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-book" style="color: grey;"></i>
                 </div>
-				<div class="sidebar-brand-text mx-3 gray titleSize">布可<sub>  網路書店</sub></div>
+                <div class="sidebar-brand-text mx-3 gray titleSize">布可<sub>  網路書店</sub></div>
             </a>
 
             <!-- Nav Item - Users -->
@@ -74,19 +74,25 @@
 
             <!-- Nav Item - Employees -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEmployees"
-                   aria-expanded="true" aria-controls="collapseEmployees">
+                <a class="nav-link collapsed" href="~/Employees/Index">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>員工管理</span>
                 </a>
-                <div id="collapseEmployees" class="collapse" aria-labelledby="headingUtilities"
-                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="~/Employees/Index">員工管理</a>
-                        <a class="collapse-item" href="#">權限管理</a>
-                    </div>
-                </div>
             </li>
+            @*<li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEmployees"
+               aria-expanded="true" aria-controls="collapseEmployees">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>員工管理</span>
+            </a>
+            <div id="collapseEmployees" class="collapse" aria-labelledby="headingUtilities"
+                 data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="~/Employees/Index">員工管理</a>
+                    <a class="collapse-item" href="#">權限管理</a>
+                </div>
+            </div>
+        </li>*@
 
             <!-- Nav Item - Books -->
             <li class="nav-item">
@@ -113,13 +119,13 @@
                    aria-expanded="true" aria-controls="collapseOrders">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>訂單管理</span>
-                @*</a>*@
-                <div id="collapseOrders" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="~/Orders/Index">訂單明細</a>
-                        <a class="collapse-item" href="#">寄送狀況</a>
+                    @*</a>*@
+                    <div id="collapseOrders" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="~/Orders/Index">訂單明細</a>
+                            <a class="collapse-item" href="#">寄送狀況</a>
+                        </div>
                     </div>
-                </div>
             </li>
 
 

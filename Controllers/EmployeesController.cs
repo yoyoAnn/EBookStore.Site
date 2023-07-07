@@ -164,6 +164,12 @@ namespace EBookStore.Site.Controllers
             base.Dispose(disposing);
         }
 
+        [HttpGet]//返回一个页面：这个页面是用来展示登录的页面
+        public ActionResult Logintest()
+        {
+            return View();
+        }
+
         public ActionResult Login()
         {
             return View();
