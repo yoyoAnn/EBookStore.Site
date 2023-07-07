@@ -83,7 +83,7 @@
         @*<table class="table table-responsive-lg table-light" id="dataTable">
         <thead class="bg-dark">*@
         @*<table class="table table-responsive-lg fixed-cell" id="dataTable">*@
-        <table class="table table-responsive-lg fixed-cell" id="dataTable">
+        <table class="table fixed-cell" id="dataTable" width="100%">
             <thead>
                 <tr>
                     <th>
@@ -106,7 +106,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr class="mails" data-id="@item.Id" @(item.IsReplied ? "isReplied" : string.Empty) @(item.IsRead ? "IsRead" : string.Empty)>
+                    <tr class="mails w" data-id="@item.Id" @(item.IsReplied ? "isReplied" : string.Empty) @(item.IsRead ? "IsRead" : string.Empty)>
                         <td>
                             @Html.DisplayFor(modelItem => item.Email)
                         </td>
@@ -133,9 +133,6 @@
 </div>
 
 
-<!-- Page level custom scripts -->
-@*<script src="~/js/demo/datatables-demo.js"></script>*@
-
 @section scripts{
     @Scripts.Render("~/bundles/jquery")
 
@@ -152,6 +149,17 @@
                 "lengthMenu": [10, 20, 30],  //顯示項目設定:10筆、20筆...
                 "autoWidth": true,
                 language: {
+					"searchPlaceholder": "關鍵字搜尋",
+					"emptyTable": "無資料...",
+					"processing": "處理中...",
+					"loadingRecords": "載入中...",
+					"lengthMenu": "顯示 _MENU_ 筆",
+					"zeroRecords": "無搜尋結果",
+					"info": "_START_ 至 _END_ / 共 _TOTAL_ 筆",
+					"infoEmpty": "尚無資料",
+					"infoFiltered": "(從 _MAX_ 筆資料過濾)",
+					"infoPostFix": "",
+					"search": "",
                     "oPaginate": {
                         "sFirst": "首頁",
                         "sPrevious": "上一頁",
@@ -159,9 +167,21 @@
                         "sLast": "末頁"
                     }
                 },
-                "scrollY": "400px",  //表格内容部分高度设置为170像素
+                "scrollY": "600px",  //表格内容部分高度设置为170像素
                 "scrollX": true,
                 //"scrollCollapse": true,  //表格高度随内容自适应
+            });
+
+			$("#dataTable_length").each(function () {
+				$(this).addClass("d-flex justify-content-start");
+				$("div > label").css("width", "100%");
+				$("div > label > select").css({ "display": "inline-block", "width": "60px" });
+			});
+
+            $("#dataTable_filter").each(function () {
+				$(this).addClass("d-flex justify-content-end");
+				$("div > label").css("width", "150px");
+				$("div > label > input").css({ "display": "inline-block", "width": "100%" });
             });
 
             $('.mails').each(function () {
