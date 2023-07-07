@@ -134,7 +134,7 @@ namespace EBookStore.Site.Controllers
 			if (result.IsFail)
 			{
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
-				//這裡應該還要加，如果選了空白以後會跳出什麼錯誤。
+				
 				return View(vm);
 			}
 			return RedirectToAction("Index");
@@ -146,7 +146,7 @@ namespace EBookStore.Site.Controllers
 
 		private Result UpdateArticleProfile(ArticleEditVm vm)
 		{
-			if(vm.WriterId==0||vm.BookId ==0) return Result.Fail("找不到此筆專欄");
+			//if(vm.WriterId==0||vm.BookId ==0) return Result.Fail("找不到此筆專欄");
 
 			var db = new AppDbContext();
 			var articleInDb = db.Articles.FirstOrDefault(x => x.Id == vm.Id);
@@ -174,7 +174,9 @@ namespace EBookStore.Site.Controllers
 			{
 				Id = articleInDb.Id,
 				BookId = articleInDb.BookId,
+				BookName = articleInDb.Book.Name,
 				WriterId = articleInDb.WriterId,
+				WriterName = articleInDb.Writer.Name,
 				Title = articleInDb.Title,
 				Content = articleInDb.Content,
 				PageViews = articleInDb.PageViews,
