@@ -17,6 +17,36 @@ namespace EBookStore.Site.Controllers
     {
 		//private AppDbContext db = new AppDbContext();
 
+
+		public PartialViewResult BookIndex(string bookName)
+		{
+			AppDbContext db = new AppDbContext();
+
+			IQueryable<Book> query = db.Books;
+
+			if (string.IsNullOrEmpty(bookName) == false)
+			{
+				//如果Name有值
+				query = query.Where(p => p.Name.Contains(bookName));
+			}
+
+			List<BooksIndexForArticleVm> book = query.Select(x => new BooksIndexForArticleVm
+			{
+				Id = x.Id,
+				Name = x.Name,
+				PublisherId = x.PublisherId,
+				PublisherName = x.Publisher.Name,
+				CategoryId = x.CategoryId,
+				CategoryName = x.Category.Name
+				
+			}).ToList();
+
+			return PartialView(book);
+		}
+
+
+
+
 		public PartialViewResult WriterIndex(string writerName)
 		{
 			//IEnumerable<WriterIndexVm> vm = GetWriterList();
