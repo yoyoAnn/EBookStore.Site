@@ -8,12 +8,19 @@
     string s_roleId = criteria.RoleId.HasValue ? criteria.RoleId.Value.ToString() : "";
 }
 
-<h2 style="padding-left: 10px;">員工列表</h2>
+
+@*<h2 style="padding-left: 10px;">員工列表</h2>*@
+<div style="display: flex; align-items: center; ">
+    <h2 style="padding-left: 10px; margin-right: 20px;">員工列表</h2>
+    <button type="button" onclick="location.href='@Url.Action("Create")'">Create New</button>
+</div>
+
 
 @*<p>
         @Html.ActionLink("Create New", "Create")
+</p>*@
 
-    </p>*@
+
 
 
 <section class="container" style="padding-left: 10px; margin-left: 0px;">
@@ -40,51 +47,6 @@
         </div>
     </form>
 </section>
-
-@*<form class="row g-3">
-
-    <div class="col-md-6">
-        <label for="inputCity" class="form-label">City</label>
-        <input type="text" class="form-control" id="inputCity">
-    </div>
-    <div class="col-md-4">
-        <label for="inputState" class="form-label">State</label>
-        <select id="inputState" class="form-select">
-            <option selected>Choose...</option>
-            <option>...</option>
-        </select>
-    </div>
-    
-    <div class="col-12">
-        <button type="submit" class="btn btn-primary">Sign in</button>
-    </div>
-</form>*@
-
-
-@*<section class="container">
-        <form method="get">
-            <div class="row">
-                <div class="mb-3 col-md-3">
-                    <label for="s_name">名字</label>
-                    <input type="text" class="form-control" name="name" id="s_name" value="@criteria.Name">
-                </div>
-
-                <div class="mb-3 col-md-3">
-                <label for="s_roleId">職稱</label>
-                <select name="roleId" id="s_roleId" class="form-select">
-                    @foreach (var item in roles)
-                    {
-                        <option value="@item.Value" @(s_roleId == item.Value ? "selected" : "")>@item.Text</option>
-                    }
-                </select>
-                </div>
-
-                <div class="mb-3 col-md-2 align-self-end">
-                    <button class="btn btn-primary">Search</button>
-                </div>
-            </div>
-        </form>
-    </section>*@
 
 
 

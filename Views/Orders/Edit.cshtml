@@ -6,149 +6,191 @@
 
 <h2>Edit</h2>
 
+<head>
+    <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.js"></script>
+    <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />
+</head>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Order</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserId, "UserId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
+    <h4>Order</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id, new { id = "OrderId" })
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+
+
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.UserId, "帳號", htmlAttributes: new { @class = "col col-12" })
+            <div class="mb-5">
+                @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control", @id = "DropDownUserId", @disabled = "disabled" })
+                @*@Html.TextBoxFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ReceiverName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.ReceiverName, htmlAttributes: new { @class = "col col-12" })
+            <div class="mb-5">
                 @Html.EditorFor(model => model.ReceiverName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ReceiverName, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ReceiverAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.ReceiverAddress, htmlAttributes: new { @class = "col col-12" })
+            <div class="mb-5">
                 @Html.EditorFor(model => model.ReceiverAddress, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ReceiverAddress, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ReceiverPhone, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="col col-md-3">
+            @Html.LabelFor(model => model.ReceiverPhone, htmlAttributes: new { @class = "col col-12" })
+            <div class="mb-5">
                 @Html.EditorFor(model => model.ReceiverPhone, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ReceiverPhone, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TaxIdNum, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.TaxIdNum, htmlAttributes: new { @class = "col-12" })
+            <div class="mb-5">
                 @Html.EditorFor(model => model.TaxIdNum, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TaxIdNum, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.VehicleNum, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.VehicleNum, htmlAttributes: new { @class = "col-12" })
+            <div class="mb-5">
                 @Html.EditorFor(model => model.VehicleNum, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.VehicleNum, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Remark, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.Remark, htmlAttributes: new { @class = "col-12" })
+            <div class="mb-5">
                 @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderTime, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.OrderTime, htmlAttributes: new { @class = "col-12" })
+            <div class="mb-5">
+                @Html.EditorFor(model => model.OrderTime, new { htmlAttributes = new { @class = "form-control datetime" } })
                 @Html.ValidationMessageFor(model => model.OrderTime, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderStatusId, "OrderStatusId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.OrderStatusId, "OrderStatusId", htmlAttributes: new { @class = "col-12" })
+            <div class="mb-5">
                 @Html.DropDownList("OrderStatusId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.OrderStatusId, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "col-12" })
+            <div class="mb-5">
                 @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShippingNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.ShippingNumber, htmlAttributes: new { @class = "col-12" })
+            <div class="mb-5">
                 @Html.EditorFor(model => model.ShippingNumber, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ShippingNumber, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShippingTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ShippingTime, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.ShippingTime, htmlAttributes: new { @class = "col-12" })
+            <div class="mb-5">
+                @Html.EditorFor(model => model.ShippingTime, new { htmlAttributes = new { @class = "form-control datetime" } })
                 @Html.ValidationMessageFor(model => model.ShippingTime, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShippingFee, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.ShippingFee, htmlAttributes: new { @class = "col-12" })
+            <div class="mb-5">
                 @Html.EditorFor(model => model.ShippingFee, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ShippingFee, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShippingStatusId, "ShippingStatusId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.ShippingStatusId, "ShippingStatusId", htmlAttributes: new { @class = "col-12" })
+            <div class="mb-5">
                 @Html.DropDownList("ShippingStatusId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ShippingStatusId, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TotalPayment, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.TotalPayment, htmlAttributes: new { @class = "col-12" })
+            <div class="mb-5">
                 @Html.EditorFor(model => model.TotalPayment, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TotalPayment, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+        <div class="col-md-12 d-flex px-5">
+            @Html.ActionLink("返回", "Index", "Orders", new { @class = "btn btn-secondary" })
+            @*<input type="submit" value="出貨" class="btn btn-primary btn-lg ml-auto" />*@
+            <button type="button" class="btn btn-secondary" id="ToShip">出貨</button>
         </div>
+
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js" integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+
+        const datetimes = document.querySelectorAll('input.datetime');
+
+        datetimes.forEach(dt => {
+            dt.value = moment(dt.value, 'YYYY/M/D a hh:mm:ss').format('YYYY/MM/DD HH:mm:ss');
+        })
+
+        $('form').on('submit', function () {
+            $('#DropDownUserId').prop('disabled', false);
+        });
+
+        $("#ToShip").click(function () {
+            var orderId = $("#OrderId").val(); // 訂單ID
+            var ShippingStatusId = $("#ShippingStatusId").val();
+
+            debugger;
+
+            $.ajax({
+                url: "/Orders/CustomAction", // 根據控制器和方法的路由設定進行調整
+                type: "POST",
+                data: { orderId: orderId },
+                success: function (result) {
+                    // 成功處理後的操作，例如重新導向或顯示訊息
+                    alert("自訂按鈕觸發成功！");
+                    location.href = "/Orders";
+                },
+                error: function () {
+                    // 錯誤處理，例如顯示錯誤訊息
+                    alert("發生錯誤，無法觸發自訂按鈕！");
+                }
+            });
+        });
+
+
+    </script>
 }
