@@ -1,0 +1,43 @@
+﻿@model IEnumerable<EBookStore.Site.Models.ViewModels.WriterIndexVm>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Photo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Profile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProfileText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th></th>
+    </tr>*@
+
+@foreach (var item in Model) {
+    <tr class="writer" data-id="@item.Id" data-name="@item.Name" >
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+
+      
+    </tr>
+}
+
+@*</table>*@

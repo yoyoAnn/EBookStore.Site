@@ -10,6 +10,27 @@
     string s_MailStatus = criteria.MailStatus;
 
 }
+@section cdn{
+    @*<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />*@
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
+
+@section Style
+{
+    <style>
+        .container-fluid {
+            /*background-color: #FFFFDF*/
+            /*margin-top:5px*/
+        }
+        table {
+            border: 2px solid #CCCCCC;
+        }
+        /*.table-light tbody tr td {
+            border: 2px solid #CCCCCC;
+        }*/
+
+    </style>
+}
 <div class="container-fluid">
     <h2>客服管理</h2>
     <form method="get">
@@ -37,7 +58,7 @@
             <div class="col">
                 <input type="text" class="form-control" name="ProblemStatement" id="s_Statement" value="@criteria.ProblemStatement" placeholder="問題敘述">
             </div>
-            <div class="col">
+            <div class="col" id="datetimepicker1">
                 <input type="date" class="form-control" name="CreatedTime" id="s_CreatedTime" value="@criteria.CreatedTime">
             </div>
             <div class="col align-self-end">
@@ -46,88 +67,89 @@
         </div>
     </form>
 
-    <div class="mt-3 table-responsive-lg">
-        <table class="table table-bordered table-hover">
-            <tr class="">
-                <th>
-                    已讀取
-                </th>
-                <th>
-                    已回覆
-                </th>
-                <th>
-                    使用者
-                </th>
-                <th>
-                    信箱
-                </th>
-                <th>
-                    問題種類
-                </th>
-                <th>
-                    問題敘述
-                </th>
-                <th>
-                    發問時間
-                </th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr class="mails" data-id="@item.Id" @(item.IsReplied ? "isReplied" : string.Empty)>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsRead)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsReplied)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserAccount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProblemType.Name)
-                    </td>
-                    <td>
-                        <p class="ellipsis">@Html.DisplayFor(modelItem => item.ProblemStatement)</p>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedTime)
-                    </td>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+    <div class="mt-3">
+        <table class="table table-responsive-lg">
+            <thead class="table-dark">
+                <tr>
+                    <th>
+                        信箱
+                    </th>
+                    <th>
+                        使用者
+                    </th>
+                    <th>
+                        問題種類
+                    </th>
+                    <th>
+                        問題敘述
+                    </th>
+                    <th>
+                        發問時間
+                    </th>
                 </tr>
-            }
+            </thead>
+            <tbody class="table-light">
+                @foreach (var item in Model)
+                {
+                    <tr class="mails" data-id="@item.Id" @(item.IsReplied ? "isReplied" : string.Empty) @(item.IsRead ? "IsRead" : string.Empty)>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserAccount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProblemType.Name)
+                        </td>
+                        <td>
+                            <p class="ellipsis">@Html.DisplayFor(modelItem => item.ProblemStatement)</p>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedTime)
+                        </td>
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
 </div>
-@section scripts{
-    @Scripts.Render("~/bundles/jquery")
+    @section scripts{
+        @Scripts.Render("~/bundles/jquery")
 
-    <script>
-        var basement = "https://localhost:44314";
-        $(function () {
-            $('.mails').each(function () {
-                if (this.hasAttribute('isReplied')) {
-                    $(this).addClass("bg-gray-200");
-                }
-                $(this).on("click", function () {
-                    var id = $(this).attr("data-id");
-                    $(location).attr("href", "/CustomerServiceMails/Details?id=" + id);
+        <script>
+            var basement = "https://localhost:44314";
+            $(function () {
+                //$('#datetimepicker1').datetimepicker({
+                //    format: "YYYY/MM/DD"
+                //});
+
+                $('.mails').each(function () {
+                    if (this.hasAttribute('isReplied')) {
+                        $(this).addClass("bg-gray-200");
+                    }
+
+                    if (this.hasAttribute('isRead')==false){
+                        $(this).addClass("text-lg font-weight-bold");
+                    }
+
+                    $(this).on("click", function () {
+                        var id = $(this).attr("data-id");
+                        $(location).attr("href", "/CustomerServiceMails/Details?id=" + id);
+                    });
+                });
+                
+                // 內容超過20個字以"..."取代
+                var length = 20; 
+                $(".ellipsis").each(function () {
+                    if ($(this).text().length > length) {
+                        $(this).attr("title", $(this).text());
+                        var text = $(this).text().substring(0, length - 1) + "...";
+                        $(this).text(text);
+                    }
                 });
             });
-
-            var length = 10; // 超過30個字以"..."取代
-            $(".ellipsis").each(function () {
-                if ($(this).text().length > length) {
-                    $(this).attr("title", $(this).text());
-                    var text = $(this).text().substring(0, length - 1) + "...";
-                    $(this).text(text);
-                }
-            });
-        });
-    </script>
-}
+        </script>
+    }

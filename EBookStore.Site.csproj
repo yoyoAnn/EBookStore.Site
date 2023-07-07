@@ -257,7 +257,7 @@
     <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BooksDapperVMsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
-    <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\CustomerServiceMailsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
@@ -265,7 +265,9 @@
     <Compile Include="Controllers\PublishersController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\RepliedMailsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\WritersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -324,6 +326,10 @@
     <Compile Include="Models\Infra\OrderEditDapperRepository.cs" />
     <Compile Include="Models\Infra\OrderItemDapperRepository.cs" />
     <Compile Include="Models\Infra\Result.cs" />
+    <Compile Include="Models\ViewModels\ArticleCreateVm.cs" />
+    <Compile Include="Models\ViewModels\ArticleEditVm.cs" />
+    <Compile Include="Models\ViewModels\ArticleIndexVm.cs" />
+    <Compile Include="Models\ViewModels\BooksIndexForArticleVm.cs" />
     <Compile Include="Models\ViewModels\OrderVm.cs" />
     <Compile Include="Models\ViewModels\ProductCriteria.cs" />
     <Compile Include="Models\ViewModels\CommentIndexVm.cs" />
@@ -332,7 +338,7 @@
     <Compile Include="Models\ViewModels\NewsEditVm.cs" />
     <Compile Include="Models\ViewModels\NewsIndexVm.cs" />
     <Compile Include="Models\ViewModels\CSMailCriteria.cs" />
-    <Compile Include="Models\ViewModels\ReplyMailVM.cs" />
+    <Compile Include="Models\ViewModels\ReplyMailCreateVM.cs" />
     <Compile Include="Models\ViewModels\EmployeeCreateVM.cs" />
     <Compile Include="Models\ViewModels\EmployeeCriteria.cs" />
     <Compile Include="Models\ViewModels\EmployeeEditVM.cs" />
@@ -343,6 +349,7 @@
     <Compile Include="Models\ViewModels\UserEditVM.cs" />
     <Compile Include="Models\ViewModels\UserExts.cs" />
     <Compile Include="Models\ViewModels\UserIndexVM.cs" />
+    <Compile Include="Models\ViewModels\WriterIndexVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -459,12 +466,29 @@
     <Content Include="Views\BooksDapperVMs\Index.cshtml" />
     <Content Include="Views\BooksDapperVMs\CreateBook.cshtml" />
     <Content Include="Views\BooksDapperVMs\CreateFromExcel.cshtml" />
+    <Content Include="Views\Articles\Create.cshtml" />
+    <Content Include="Views\Articles\Delete.cshtml" />
+    <Content Include="Views\Articles\Edit.cshtml" />
+    <Content Include="Views\Articles\Index.cshtml" />
+    <Content Include="Views\CustomerServiceMails\SuccessReplied.cshtml" />
+    <Content Include="Views\Writers\Create.cshtml" />
+    <Content Include="Views\Writers\Delete.cshtml" />
+    <Content Include="Views\Writers\Details.cshtml" />
+    <Content Include="Views\Writers\Edit.cshtml" />
+    <Content Include="Views\Writers\Index.cshtml" />
+    <Content Include="Views\Articles\WriterIndex.cshtml" />
+    <Content Include="Views\RepliedMails\Create.cshtml" />
+    <Content Include="Views\RepliedMails\Delete.cshtml" />
+    <Content Include="Views\RepliedMails\Details.cshtml" />
+    <Content Include="Views\RepliedMails\Edit.cshtml" />
+    <Content Include="Views\RepliedMails\Index.cshtml" />
+    <Content Include="Views\Articles\BookIndex.cshtml" />
     <Content Include="Views\Orders\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="files\" />
     <Folder Include="Uploads\NewsImage\" />
-    <Folder Include="Views\Article\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
