@@ -283,6 +283,15 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             return publisherId;
         }
 
+        private int GetOrCreatePublisherId(string publisherName)
+        {
+            string sql = "SELECT Id FROM Publishers WHERE Name = @PublisherName";
+            int publisherId = _connection.QuerySingleOrDefault<int>(sql, new { PublisherName = publisherName });
+
+            return publisherId;
+        }
+
+
         private int GetCategoryIdByName(string categoryName)
         {
             string sql = "SELECT Id FROM Categories WHERE Name = @CategoryName";
