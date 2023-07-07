@@ -21,18 +21,18 @@
     .container {
        
         display: flex;
-        border: 1px solid green;
+        /*border: 1px solid green;*/
         margin-left: 0px
     }
 
     .left-column {
         width:62%;
-        border:1px solid red;
+        /*border:1px solid red;*/
     }
 
     .right-column {
         width:38%;
-        border: 1px solid green;
+        /*border: 1px solid green;*/
         margin-left:0px
     }
 
@@ -42,7 +42,7 @@
 
     }
 
-
+  
 
     
 </style>
@@ -132,11 +132,16 @@
 
                     <table class="table">
                         <tr>
-                            <th>姓名:</th>
-                            <th>
-                                <input type="text" class="searchWriter" id="searchWriter" />
+                            <th style="width:80px; padding-top:15px;">
+                                <span style="margin-top:5px">姓名</span>
+                            </th>
+                            <th style="width:150px">
+                                <input type="text" class="searchWriter form-control" id="searchWriter" style="height:30px"  />
+                            </th>
+                            <th style="width:200px">
                                 <button class="btn btn-sm btn-outline-secondary btnSearchWriter"> 搜尋 </button>
                             </th>
+
                         </tr>
 
                         <tr>
@@ -201,7 +206,7 @@
 
                 $(this).on("click", function () {
                   
-                    var searchWriterInput = $(this).parent().find('#searchWriter').val();
+                    var searchWriterInput = $(this).parent().parent().find('#searchWriter').val();
 
                     $.ajax({
                         url: "/Articles/WriterIndex",
