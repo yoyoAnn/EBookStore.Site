@@ -8,7 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using EBookStore.Site.Models.EFModels;
-using EBookStore.Site.Models.Infra;
 using EBookStore.Site.Models.ViewModels;
 
 namespace EBookStore.Site.Controllers
@@ -27,7 +26,7 @@ namespace EBookStore.Site.Controllers
             // 查詢記錄, 由於第一次進到這網頁時,criteria是沒有值的
             var query = db.Employees.Include(e => e.Role);
 
-
+           
             if (string.IsNullOrEmpty(criteria.Name) == false)
             {
                 query = query.Where(e => e.Name.Contains(criteria.Name));
@@ -67,7 +66,7 @@ namespace EBookStore.Site.Controllers
             }
             return View(employee);
         }
-
+        
         // GET: Employees/Create
         public ActionResult Create()
         {
@@ -163,88 +162,5 @@ namespace EBookStore.Site.Controllers
             }
             base.Dispose(disposing);
         }
-
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Login(LoginVM vm)
-        {
-            if (ModelState.IsValid == false) return View(vm);
-
-           
-            //驗證帳密的正確性
-            Result result = ValidLogin(vm);
-
-            if (result.IsSuccess != true) // 若驗證失敗...
-            {
-                ModelState.AddModelError("", result.ErrorMessage);
-                return View(vm);
-            }
-
-            const bool rememberMe = false; // 是否記住登入成功的會員
-
-            //若登入帳密正確,就開始處理後續登入作業,將登入帳號編碼之後,加到 cookie裡
-            (string returnUrl, HttpCookie cookie) processResult = ProcessLogin(vm.Account, rememberMe);
-
-            Response.Cookies.Add(processResult.cookie);
-
-            return Redirect(processResult.returnUrl);
-        }
-
-
-        private Result ValidLogin(LoginVM vm)
-        {
-            var db = new AppDbContext();
-            var employee = db.Employees.FirstOrDefault(e => e.Account == vm.Account);
-
-            if (employee == null) return Result.Fail("帳密有誤");
-
-            //if (employee.IsConfirmed.HasValue == false || employee.IsConfirmed.Value == false) return Result.Fail("會員資格尚未確認");
-
-            var salt = HashUtility.GetSalt();
-            var hashPassword = HashUtility.ToSHA256(vm.Password, salt);
-
-            return string.Compare(employee.Password, hashPassword) == 0
-                ? Result.Success()
-                : Result.Fail("帳密有誤");
-        }
-        private (string returnUrl, HttpCookie cookie) ProcessLogin(string account, bool rememberMe)
-        {
-            var roles = string.Empty; // 在本範例, 沒有用到角色權限,所以存入空白
-
-            // 建立一張認證票
-            var ticket =
-                new FormsAuthenticationTicket(
-                    1,          // 版本別, 沒特別用處
-                    account,
-                    DateTime.Now,   // 發行日
-                    DateTime.Now.AddDays(2), // 到期日
-                    rememberMe,     // 是否續存
-                    roles,          // userdata
-                    "/" // cookie位置
-                );
-
-            // 將它加密
-            var value = FormsAuthentication.Encrypt(ticket);
-
-            // 存入cookie
-            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, value);
-
-            // 取得return url
-            var url = FormsAuthentication.GetRedirectUrl(account, true); //第二個引數沒有用處
-
-            return (url, cookie);
-        }
-
-        public ActionResult Logout()
-        {
-            Session.Abandon();
-            FormsAuthentication.SignOut(); 
-            return Redirect("/Employees/Login");
-        }
-
     }
 }

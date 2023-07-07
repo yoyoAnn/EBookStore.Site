@@ -90,7 +90,7 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEmployees"
                    aria-expanded="true" aria-controls="collapseEmployees">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>員工管理</span>
+                    <span>人員管理</span>
                 </a>
                 <div id="collapseEmployees" class="collapse" aria-labelledby="headingUtilities"
                      data-parent="#accordionSidebar">
@@ -427,22 +427,20 @@
                                  aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    @*Profile*@
-                                    個人資料
+                                    Profile
                                 </a>
-                                @*<a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
-                                </a>*@
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    @*Logout*@
-                                    登出
+                                    Logout
                                 </a>
                             </div>
                         </li>
@@ -483,15 +481,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">登出</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">您確定要離開系統嗎?</div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-                    <a class="btn btn-primary" href="~/Employees/Login">確認</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
                 </div>
             </div>
         </div>

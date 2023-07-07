@@ -9,9 +9,9 @@
 
 <h2 style="padding-left: 10px; margin-left: 0px;">會員列表</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
 
 <section class="container" style="padding-left: 10px; margin-left: 0px;">
     <form method="get">
@@ -34,7 +34,7 @@
 </section>
 
 
-<table class="table table-striped table-hover">
+<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Account)
@@ -117,5 +117,3 @@
     }
 
 </table>
-
-
