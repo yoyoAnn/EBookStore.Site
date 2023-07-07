@@ -1,0 +1,73 @@
+﻿@model IEnumerable<EBookStore.Site.Models.ViewModels.ArticleIndexVm>
+
+@{
+    ViewBag.Title = "ArticleIndex";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <thead class="table-light table-secondary">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WriterName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContentText)
+            </th>
+            <th style="width:80px;">
+                @Html.DisplayNameFor(model => model.PageViews)
+            </th>
+            <th style="width:80px;">
+                @Html.DisplayNameFor(model => model.StatusText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedTime)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+    <tbody class="table-hover">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WriterName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContentText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PageViews)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedTime)
+                </td>
+                <td>
+                    <button onclick="location.href='@Url.Action("Edit", new { id = item.Id })'" class="btn btn-outline-secondary btn-sm" style="margin-bottom:2px;">編輯</button>
+
+                    <button onclick="location.href='@Url.Action("Delete", new { id = item.Id })'" class="btn btn-outline-danger btn-sm">刪除</button>
+
+                </td>
+            </tr>
+        }
+</tbody>
+</table>
