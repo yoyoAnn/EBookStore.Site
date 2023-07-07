@@ -6,7 +6,7 @@ using System.Web;
 
 namespace EBookStore.Site.Models.ViewModels
 {
-	public class ReplyMailVM
+	public class ReplyMailCreateVM
 	{
 		public int Id { get; set; }
 
