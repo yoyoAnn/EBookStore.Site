@@ -289,6 +289,7 @@
     <Compile Include="Models\Infra\OrderEditDapperRepository.cs" />
     <Compile Include="Models\Infra\OrderItemDapperRepository.cs" />
     <Compile Include="Models\Infra\Result.cs" />
+    <Compile Include="Models\ViewModels\LoginVM.cs" />
     <Compile Include="Models\ViewModels\ProductCriteria.cs" />
     <Compile Include="Models\ViewModels\CommentIndexVm.cs" />
     <Compile Include="Models\ViewModels\NewsCreateVm.cs" />
@@ -423,6 +424,7 @@
     <Content Include="Views\BooksDapperVMs\Index.cshtml" />
     <Content Include="Views\BooksDapperVMs\CreateBook.cshtml" />
     <Content Include="Views\BooksDapperVMs\CreateFromExcel.cshtml" />
+    <Content Include="Views\Employees\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
