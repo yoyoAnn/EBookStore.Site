@@ -155,14 +155,7 @@ namespace EBookStore.Site.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+       
 
         public ActionResult Login()
         {
@@ -180,7 +173,8 @@ namespace EBookStore.Site.Controllers
 
             if (result.IsSuccess != true) // 若驗證失敗...
             {
-                ModelState.AddModelError("", result.ErrorMessage);
+                //ModelState.AddModelError("", result.ErrorMessage);
+                ViewBag.ErrorMessage = "帳號或密碼有誤";
                 return View(vm);
             }
 
@@ -200,7 +194,7 @@ namespace EBookStore.Site.Controllers
             var db = new AppDbContext();
             var employee = db.Employees.FirstOrDefault(e => e.Account == vm.Account);
 
-            if (employee == null) return Result.Fail("帳密有誤");
+            if (employee == null) return Result.Fail("帳號或密碼有誤");
 
             //if (employee.IsConfirmed.HasValue == false || employee.IsConfirmed.Value == false) return Result.Fail("會員資格尚未確認");
 
@@ -209,7 +203,8 @@ namespace EBookStore.Site.Controllers
 
             return string.Compare(employee.Password, hashPassword) == 0
                 ? Result.Success()
-                : Result.Fail("帳密有誤");
+                //: Result.Fail("帳號或密碼有誤");
+                : ViewBag.ErrorMessage = "帳號或密碼有誤";
         }
         private (string returnUrl, HttpCookie cookie) ProcessLogin(string account, bool rememberMe)
         {
