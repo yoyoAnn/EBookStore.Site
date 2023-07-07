@@ -28,7 +28,9 @@
         }
 
         table {
-            font-size:16px;
+            font-size: 16px;
+            width: 500px;
+            margin: 0 auto;
         }
         /*.table-light tbody tr td {
             border: 2px solid #CCCCCC;
@@ -42,7 +44,7 @@
     </style>
 }
 <div class="container-fluid">
-    <h2>客服管理</h2>
+    <h2>信件列表</h2>
     <form method="get">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6">
             <div class="col">
@@ -79,7 +81,8 @@
 
     <div class="mt-3">
         @*<table class="table table-responsive-lg table-light" id="dataTable">
-            <thead class="bg-dark">*@
+        <thead class="bg-dark">*@
+        @*<table class="table table-responsive-lg fixed-cell" id="dataTable">*@
         <table class="table table-responsive-lg fixed-cell" id="dataTable">
             <thead>
                 <tr>
@@ -100,7 +103,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody class="">
+            <tbody>
                 @foreach (var item in Model)
                 {
                     <tr class="mails" data-id="@item.Id" @(item.IsReplied ? "isReplied" : string.Empty) @(item.IsRead ? "IsRead" : string.Empty)>
@@ -120,8 +123,8 @@
                             @Html.DisplayFor(modelItem => item.CreatedTime)
                         </td>
                         @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
                     </tr>
                 }
             </tbody>
@@ -145,8 +148,7 @@
             $("#dataTable").DataTable({
                 "bPaginate": true, // 顯示換頁
                 "searching": true, // 顯示搜尋
-                //"info": false, // 顯示資訊
-                "fixedHeader": true, // 標題置頂
+                "fixedHeader": false, // 標題置頂
                 "lengthMenu": [10, 20, 30],  //顯示項目設定:10筆、20筆...
                 "autoWidth": true,
                 language: {
@@ -156,7 +158,10 @@
                         "sNext": "下一頁",
                         "sLast": "末頁"
                     }
-                }
+                },
+                "scrollY": "400px",  //表格内容部分高度设置为170像素
+                "scrollX": true,
+                //"scrollCollapse": true,  //表格高度随内容自适应
             });
 
             $('.mails').each(function () {
@@ -165,7 +170,7 @@
                 }
 
                 if (this.hasAttribute('isRead') == false) {
-                    $(this).addClass("text-lg font-weight-bold");
+                    $(this).addClass("black font-weight-bold");
                 }
 
                 $(this).on("click", function () {
