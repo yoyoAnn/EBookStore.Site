@@ -407,6 +407,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Content\bookstyle.css" />
     <Content Include="Views\Orders\Print.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -425,7 +426,6 @@
     <Content Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Orders\Delete.cshtml" />
-    <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Comments\Create.cshtml" />

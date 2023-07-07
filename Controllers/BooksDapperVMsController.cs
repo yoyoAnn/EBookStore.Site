@@ -27,11 +27,10 @@ namespace EBookStore.Site.Controllers
             _repository = new BookDapperRepository(db);
         }
         // GET: BooksDapperVMs
-        public ActionResult Index(int? page)
+        public ActionResult Index()
         {
-            var pagenumber = page??1;
-            var pageSize = 10;
-            var books = _repository.GetBookItems().ToPagedList(pagenumber,pageSize);
+
+            var books = _repository.GetBookItems();
             if (TempData.ContainsKey("SuccessMessage"))
             {
                 ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
