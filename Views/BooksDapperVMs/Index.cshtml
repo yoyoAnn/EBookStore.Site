@@ -1,13 +1,16 @@
 ﻿@model IEnumerable<EBookStore.Site.Models.BooksViewsModel.BooksDapperVM>
+@using PagedList;
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "IndexDapper";
 }
+
 @if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
 {
     <div class="alert alert-success">@ViewBag.SuccessMessage</div>
 }
-<h2>IndexDapper</h2>
+<h2>書本管理</h2>
 
 <div class="row mb-3">
     <div class="col">
@@ -18,7 +21,7 @@
     </div>
 </div>
 <p>
-   
+
 </p>
 <table class="table">
     <tr>
@@ -37,15 +40,6 @@
         <th>
             @Html.DisplayNameFor(model => model.PublishDate)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Summary)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ISBN)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EISBN)
-        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Stock)
         </th>
@@ -79,15 +73,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PublishDatetxt)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Summary)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ISBN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EISBN)
-            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Stock)
             </td>
@@ -102,13 +87,17 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
             </td>
         </tr>
     }
 
 </table>
+
+@Html.PagedListPager((IPagedList)Model, x => Url.Action("Index", new { page = x }),
+    new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, LiElementClasses = new[] { "btn", "btn-lg" } })
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 @section Scripts{
     <script>
          $(document).ready(function () {

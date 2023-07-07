@@ -12,6 +12,8 @@ using EBookStore.Site.Models.BooksViewsModel;
 using EBookStore.Site.Models.EFModels;
 using EBookStore.Site.Models.Infra;
 using EBookStore.Site.Models.Infra.DapperRepository;
+using PagedList.Mvc;
+using PagedList;
 
 namespace EBookStore.Site.Controllers
 {
@@ -25,9 +27,11 @@ namespace EBookStore.Site.Controllers
             _repository = new BookDapperRepository(db);
         }
         // GET: BooksDapperVMs
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var books = _repository.GetBookItems();
+            var pagenumber = page??1;
+            var pageSize = 10;
+            var books = _repository.GetBookItems().ToPagedList(pagenumber,pageSize);
             if (TempData.ContainsKey("SuccessMessage"))
             {
                 ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;

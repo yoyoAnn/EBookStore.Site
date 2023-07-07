@@ -10,6 +10,7 @@ using EBookStore.Site.Models.DTOs;
 using EBookStore.Site.Models.EFModels;
 using EBookStore.Site.Models.Servives;
 using EBookStore.Site.Models.ViewsModel;
+using PagedList;
 
 namespace EBookStore.Site.Controllers
 {
@@ -26,13 +27,15 @@ namespace EBookStore.Site.Controllers
 		}
 
 		// GET: Categories
-		public ActionResult Index()
+		public ActionResult Index(int? page)
 		{
-			if (TempData.ContainsKey("SuccessMessage"))
+            var pagenumber = page ?? 1;
+            var pageSize = 5;
+            if (TempData.ContainsKey("SuccessMessage"))
 			{
 				ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
 			}
-			var categories = _server.GetCategories();
+			var categories = _server.GetCategories().ToPagedList(pagenumber, pageSize);
 			return View(categories);
 		}
 

@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DocumentFormat.OpenXml.Vml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using EBookStore.Site.Models.BooksViewsModel;
 using EBookStore.Site.Models.EFModels;
 using EBookStore.Site.Models.Infra.DapperRepository;
+using PagedList;
 
 namespace EBookStore.Site.Controllers
 {
@@ -24,9 +26,11 @@ namespace EBookStore.Site.Controllers
         }
 
         // GET: PurchaseOrderDapperVMs
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var purchaseOrders = _repository.GetAll();
+            var pagenumber = page ?? 1;
+            var pageSize = 10;
+            var purchaseOrders = _repository.GetAll().ToPagedList(pagenumber, pageSize);
             if (TempData.ContainsKey("SuccessMessage"))
             {
                 ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
@@ -35,9 +39,11 @@ namespace EBookStore.Site.Controllers
         }
 
 
-        public ActionResult HistoryIndex()
+        public ActionResult HistoryIndex(int? page)
         {
-            var purchaseOrders = _repository.GetHistory();
+            var pagenumber = page ?? 1;
+            var pageSize = 10;
+            var purchaseOrders = _repository.GetHistory().ToPagedList(pagenumber, pageSize);
             if (TempData.ContainsKey("SuccessMessage"))
             {
                 ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;

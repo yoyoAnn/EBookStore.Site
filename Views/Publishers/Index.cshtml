@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<EBookStore.Site.Models.EFModels.Publisher>
-
+@using PagedList;
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
 }
@@ -58,6 +59,10 @@
             </tr>
         }
     </table>
+
+    @Html.PagedListPager((IPagedList)Model, x => Url.Action("Index", new { page = x }),
+    new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, LiElementClasses = new[] { "btn", "btn-lg" } })
+    
 </div>
 @section Scripts{
     <script>
