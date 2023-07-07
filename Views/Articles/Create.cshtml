@@ -103,7 +103,7 @@
             <div class="row mb-3">
 
                 <label class="form-label" for="@Html.NameFor(model => model.Status)">@Html.DisplayNameFor(model => model.Status)</label>
-                <div class="form-check">
+                <div class="form-check" style="padding-left: 0px;">
                     @Html.EditorFor(model => model.Status)
                     <label id="statusLabel" style="margin-top:2px;"></label>
                     @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })

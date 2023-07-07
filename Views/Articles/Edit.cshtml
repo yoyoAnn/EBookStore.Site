@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "編輯專欄";
+
 }
 
 <style>
@@ -36,6 +37,7 @@
 <div class="row mb-3">
     <label class="form-label" for="@Html.NameFor(model => model.WriterId)">@Html.DisplayNameFor(model => model.WriterId)</label>
     @Html.DropDownList("WriterId", null, htmlAttributes: new { @class = "form-control", style = "width: 500px;" })
+   
     @Html.ValidationMessageFor(model => model.WriterId, "", new { @class = "text-danger" })
 </div>
 

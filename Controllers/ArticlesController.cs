@@ -152,8 +152,8 @@ namespace EBookStore.Site.Controllers
 			var articleInDb = db.Articles.FirstOrDefault(x => x.Id == vm.Id);
 
 			if (articleInDb == null) return Result.Fail("找不到此筆專欄");
-			articleInDb.BookId = vm.BookId;
-			articleInDb.WriterId = vm.WriterId;
+			//articleInDb.BookId = vm.BookId;
+			//articleInDb.WriterId = vm.WriterId;
 			articleInDb.Title = vm.Title;
 			articleInDb.Content	= vm.Content;
 			articleInDb.Status = vm.Status;
