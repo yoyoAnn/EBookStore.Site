@@ -1,7 +1,7 @@
 ﻿@model EBookStore.Site.Models.ViewModels.NewsEditVm
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "NewsEdit";
 }
 
 <style>
@@ -51,9 +51,10 @@
 
         <label class="form-label" for="@Html.NameFor(model => model.Status)">@Html.DisplayNameFor(model => model.Status)</label>
 
-        @Html.CheckBoxFor(model => model.Status)
-
-        <label id="statusLabel" style="margin-top:6px;"></label>
+        <div class="form-check" style="padding-left: 0px;">
+            @Html.EditorFor(model => model.Status)
+            <label id="statusLabel" style="margin-top:2px;"></label>
+        </div>
         @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
     </div>
     <div class="row mb-3">
