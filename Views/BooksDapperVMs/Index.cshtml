@@ -4,21 +4,12 @@
 
 @section cdn{
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
-    <link rel="stylesheet" href="~/Content/bookstyle.css" />
     <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/bookstyle.css" />
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
 }
 
-@section Style{
-    <style>
-        .fixed-cell {
-            width: 200px; /* 根據需要調整固定寬度 */
-            white-space: nowrap;
-            /*        overflow: hidden;
-        text-overflow: ellipsis;*/
-        }
-    </style>
 
-}
 
 @{
     ViewBag.Title = "IndexDapper";
@@ -31,10 +22,9 @@
 <h2>書本管理</h2>
 
 <div class="row mb-3">
-    <div class="col">
+    <div class="col-6 d-flex justify-content-start">
         @Html.ActionLink("新建書本", "CreateBook", null, new { @class = "btn btn-primary" })
-    </div>
-    <div class="col text-center">
+        <span class="ml-2"></span>
         @Html.ActionLink("從Excel創建資料", "CreateFromExcel", null, new { @class = "btn btn-primary" })
     </div>
 </div>
@@ -116,16 +106,11 @@
 
 </table>
 
-@*@Html.PagedListPager((IPagedList)Model, x => Url.Action("Index", new { page = x }),
-    new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, LiElementClasses = new[] { "btn", "btn-lg" } })*@
-
-
 
 
 @section Scripts{
-    <script src="~/Scripts/jquery-3.7.0.js"></script>
+
     <script src="~/Scripts/bootstrap.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
