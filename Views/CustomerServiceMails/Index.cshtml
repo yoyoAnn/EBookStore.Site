@@ -11,7 +11,6 @@
 
 }
 @section cdn{
-	@*<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />*@
 	<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 
 	<!-- Custom styles for this page -->
@@ -128,13 +127,11 @@
 @section scripts{
 	@Scripts.Render("~/bundles/jquery")
 
-	<!-- Page level plugins -->
 	<script src="~/Scripts/vendor/datatables/jquery.dataTables.min.js"></script>
 	<script src="~/Scripts/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 	<script>
 		var basement = "https://localhost:44314";
-		/*let table = new DataTable("#dataTable")*/
 
 		$(document).ready( function () {
 			$("#dataTable").DataTable({
@@ -164,9 +161,6 @@
 						"sLast": "末頁"
 					}
 				},
-				//"scrollY": "600px",  //表格内容部分高度设置为170像素
-				//"scrollX": true,
-				//"scrollCollapse": true,  //表格高度随内容自适应
 				"fnDrawCallback": function (oSettings) {
 					// 內容超過n個字以"..."取代
 					var length = 30;
@@ -206,9 +200,6 @@
 				$("div > label").css("width", "150px");
 				$("div > label > input").css({ "display": "inline-block", "width": "100%" });
 			});
-
-
-			
 		});
 	</script>
 

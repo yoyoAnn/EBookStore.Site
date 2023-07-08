@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.Infra;
+using EBookStore.Site.Models.Infra.DapperRepository;
+using EBookStore.Site.Models.ViewModels;
 
 namespace EBookStore.Site.Controllers
 {
@@ -15,10 +18,36 @@ namespace EBookStore.Site.Controllers
         private AppDbContext db = new AppDbContext();
 
         // GET: RepliedMails
-        public ActionResult Index()
+        public ActionResult Index(RepliedMailCriteria criteria)
         {
-            var repliedMails = db.RepliedMails.Include(r => r.CustomerServiceMail);
-            return View(repliedMails.ToList());
+			ViewBag.Criteria = criteria;
+
+			var problemTypes = db.ProblemTypes.ToList().Prepend(new ProblemType { Name = "問題種類:" });
+			ViewBag.ProblemTypeId = new SelectList(problemTypes, "Id", "Name", criteria.ProblemTypeId);
+
+
+			var query = new RepliedMailDapperRepository().GetRepliedMails();
+
+			#region where
+
+			if (criteria.ProblemTypeId != null && criteria.ProblemTypeId.Value > 0)
+			{
+                var problemList = db.ProblemTypes.ToList();
+                var pId = int.Parse(criteria.ProblemTypeId.ToString());
+				criteria.ProblemTypeName = problemList[pId-1].Name;
+
+				query = (IEnumerable<RepliedMailVM>)query.Where(p => p.Title.Contains(criteria.ProblemTypeName));
+			}
+            if (criteria.CreatedTime != null)
+            {
+                var dateStart = criteria.CreatedTime.Value;
+                var dateEnd = dateStart.AddDays(1);
+                query = query.Where(p => p.CreatedTime >= dateStart && p.CreatedTime <= dateEnd);
+            }
+            #endregion
+
+
+            return View(query.ToList());
         }
 
         // GET: RepliedMails/Details/5
@@ -111,7 +140,7 @@ namespace EBookStore.Site.Controllers
 
         // POST: RepliedMails/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             RepliedMail repliedMail = db.RepliedMails.Find(id);
