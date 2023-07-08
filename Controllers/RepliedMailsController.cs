@@ -97,13 +97,13 @@ namespace EBookStore.Site.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RepliedMail repliedMail = db.RepliedMails.Find(id);
-            if (repliedMail == null)
+			var query = new RepliedMailDapperRepository().GetRepliedMailById(id);
+			if (query == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CSId = new SelectList(db.CustomerServiceMails, "Id", "UserAccount", repliedMail.CSId);
-            return View(repliedMail);
+
+            return View(query);
         }
 
         // POST: RepliedMails/Edit/5
@@ -111,16 +111,20 @@ namespace EBookStore.Site.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CSId,Email,Title,Content,CreatedTime")] RepliedMail repliedMail)
+        public ActionResult Edit(RepliedMailEditVM repliedMail)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid!=true)
             {
-                db.Entry(repliedMail).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+				return View();
+
+			}
+
+            Result editResult = new RepliedMailDapperRepository().UpdateRepliedMails(repliedMail);
+            if (editResult.IsSuccess)
+            {
+				return RedirectToAction("Index");
             }
-            ViewBag.CSId = new SelectList(db.CustomerServiceMails, "Id", "UserAccount", repliedMail.CSId);
-            return View(repliedMail);
+            return View();
         }
 
         // GET: RepliedMails/Delete/5
