@@ -3,66 +3,74 @@
 @{
     ViewBag.Title = "Index";
 }
+@section cdn{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/bookstyle.css" />
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-
+}
 @if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
 {
     <div class="alert alert-success">@ViewBag.SuccessMessage</div>
 }
-<body>
+
+<div id="newbackground" class="table-container">
+    <h2>作者管理</h2>
+
     <div class="row mb-3">
-        <div class="col">
+        <div class="col-6 d-flex justify-content-start">
             @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
-        </div>
-        <div class="col text-center">
+            <span class="ml-2"></span>
             @Html.ActionLink("傳入excel新增作者", "CreateFromExcel", null, new { @class = "btn btn-primary" })
         </div>
     </div>
     <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Photo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Profile)
-            </th>
-            <th></th>
-        </tr>
 
-        @foreach (var item in Model)
-        {
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Photo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Profile)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id })
-                    @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Photo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Profile)
+                </th>
+                <th></th>
             </tr>
-        }
+        </thead>
 
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Photo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Profile)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id })
+                        @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
-</body>
-</html>
+</div>
+
 @section Scripts{
+    <script src="~/Content/book.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
          $(document).ready(function () {
             var successMessage = '@ViewBag.SuccessMessage';

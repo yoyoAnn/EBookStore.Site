@@ -29,15 +29,14 @@ namespace EBookStore.Site.Controllers
         }
 
         // GET: Publishers
-        public ActionResult Index(int? page)
+        public ActionResult Index()
         {
-            var pagenumber = page ?? 1;
-            var pageSize = 5;
+           
             if (TempData.ContainsKey("SuccessMessage"))
             {
                 ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
             }
-            var publisher = db.Publishers.ToList().ToPagedList(pagenumber, pageSize);
+            var publisher = db.Publishers.ToList();
             return View(publisher);
         }
 
