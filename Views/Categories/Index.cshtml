@@ -18,7 +18,7 @@
 }
 
 <div id="newbackground" class="table-container">
-    <h2>Index</h2>
+    <h2>書籍分類</h2>
     <div class="row mb-3">
         <div class="col-6 d-flex justify-content-start">
             @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
@@ -47,9 +47,9 @@
                     @Html.DisplayFor(modelItem => item.DisplayOrder)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm" }) 
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm" }) 
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm" })
                 </td>
             </tr>
         }
