@@ -157,5 +157,17 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             return purchaseOrders.ToList();
         }
 
+        public PurchaseOrderDapperVM GetHistoryById(int id)
+        {
+            string sql = @"SELECT PO.Id as Id,B.Id as BookId,B.Name as BookName,P.Name as PublisherName,
+                         P.Id as PublisherId,PO.Qty,PO.Detail as Detail,
+                         PO.CreateTime as CreateTime,PO.PurchasePrice as PurchasePrice
+                         FROM PurchaseOrderHistory AS PO
+                         left JOIN Books as B ON B.Id = PO.BookId
+                         JOIN Publishers as P ON P.Id = PO.PublisherId where PO.Id = @Id";
+
+            return _connection.QuerySingleOrDefault<PurchaseOrderDapperVM>(sql, new { Id = id });
+        }
+
     }
 }

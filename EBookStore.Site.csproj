@@ -500,6 +500,7 @@
     <Content Include="Views\PurchaseOrderDapperVMs\HistoryIndex.cshtml" />
     <Content Include="Views\BooksDapperVMs\CreateBook.cshtml" />
     <Content Include="Views\BooksDapperVMs\CreateFromExcel.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\HistoryDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -60,6 +60,16 @@ namespace EBookStore.Site.Controllers
             return View(purchaseOrderDapperVM);
         }
 
+        public ActionResult HistoryDetails(int id)
+        {
+            PurchaseOrderDapperVM purchaseOrderDapperVM = _repository.GetHistoryById(id);
+            if (purchaseOrderDapperVM == null)
+            {
+                return HttpNotFound();
+            }
+            return View(purchaseOrderDapperVM);
+        }
+
         // GET: PurchaseOrderDapperVMs/Create
         public ActionResult Create()
         {
