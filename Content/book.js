@@ -241,3 +241,9 @@ $(document).ready(function () {
         }
     });
 });
+$(document).ready(function () {
+    var successMessage = '@ViewBag.SuccessMessage';
+    if (successMessage !== '') {
+        alert(successMessage);
+    }
+});

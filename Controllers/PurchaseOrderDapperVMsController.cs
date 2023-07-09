@@ -26,11 +26,10 @@ namespace EBookStore.Site.Controllers
         }
 
         // GET: PurchaseOrderDapperVMs
-        public ActionResult Index(int? page)
+        public ActionResult Index()
         {
-            var pagenumber = page ?? 1;
-            var pageSize = 10;
-            var purchaseOrders = _repository.GetAll().ToPagedList(pagenumber, pageSize);
+         
+            var purchaseOrders = _repository.GetAll();
             if (TempData.ContainsKey("SuccessMessage"))
             {
                 ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
@@ -39,11 +38,10 @@ namespace EBookStore.Site.Controllers
         }
 
 
-        public ActionResult HistoryIndex(int? page)
+        public ActionResult HistoryIndex()
         {
-            var pagenumber = page ?? 1;
-            var pageSize = 10;
-            var purchaseOrders = _repository.GetHistory().ToPagedList(pagenumber, pageSize);
+          
+            var purchaseOrders = _repository.GetHistory();
             if (TempData.ContainsKey("SuccessMessage"))
             {
                 ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
@@ -145,6 +143,7 @@ namespace EBookStore.Site.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 db.Entry(purchaseOrderDapperVM).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

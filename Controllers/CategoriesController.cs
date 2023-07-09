@@ -27,15 +27,14 @@ namespace EBookStore.Site.Controllers
 		}
 
 		// GET: Categories
-		public ActionResult Index(int? page)
+		public ActionResult Index()
 		{
-            var pagenumber = page ?? 1;
-            var pageSize = 5;
+            
             if (TempData.ContainsKey("SuccessMessage"))
 			{
 				ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
 			}
-			var categories = _server.GetCategories().ToPagedList(pagenumber, pageSize);
+			var categories = _server.GetCategories();
 			return View(categories);
 		}
 
