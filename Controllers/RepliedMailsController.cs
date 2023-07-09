@@ -111,7 +111,7 @@ namespace EBookStore.Site.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(RepliedMailEditVM repliedMail)
+        public ActionResult Edit(RepliedMailEditVM vm)
         {
             if (ModelState.IsValid!=true)
             {
@@ -119,11 +119,13 @@ namespace EBookStore.Site.Controllers
 
 			}
 
-            Result editResult = new RepliedMailDapperRepository().UpdateRepliedMails(repliedMail);
+            Result editResult = new RepliedMailDapperRepository().UpdateRepliedMails(vm);
             if (editResult.IsSuccess)
             {
+				//new EmailHelper().SendFromGmail(null, vm.Email, vm.Title, vm.Content);
+
 				return RedirectToAction("Index");
-            }
+			}
             return View();
         }
 
@@ -152,7 +154,6 @@ namespace EBookStore.Site.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
