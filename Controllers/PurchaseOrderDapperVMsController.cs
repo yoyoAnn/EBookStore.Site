@@ -28,7 +28,7 @@ namespace EBookStore.Site.Controllers
         // GET: PurchaseOrderDapperVMs
         public ActionResult Index()
         {
-         
+
             var purchaseOrders = _repository.GetAll();
             if (TempData.ContainsKey("SuccessMessage"))
             {
@@ -40,7 +40,7 @@ namespace EBookStore.Site.Controllers
 
         public ActionResult HistoryIndex()
         {
-          
+
             var purchaseOrders = _repository.GetHistory();
             if (TempData.ContainsKey("SuccessMessage"))
             {
@@ -51,7 +51,7 @@ namespace EBookStore.Site.Controllers
 
         // GET: PurchaseOrderDapperVMs/Details/5
         public ActionResult Details(int id)
-        {       
+        {
             PurchaseOrderDapperVM purchaseOrderDapperVM = _repository.GetById(id);
             if (purchaseOrderDapperVM == null)
             {
@@ -87,7 +87,7 @@ namespace EBookStore.Site.Controllers
             {
                 vm.BookId = _repository.GetOrCreateBookId(vm.BookName);
 
-                if(vm.BookId == 0 && vm.PublisherId == 0)
+                if (vm.BookId == 0 && vm.PublisherId == 0)
                 {
                     ModelState.AddModelError("", "找不到書與出版商，請輸入有效的名稱");
                     return View(vm);
@@ -130,6 +130,15 @@ namespace EBookStore.Site.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult UpdateToHistory()
+        {
+            var getallitem = _repository.GetAll();
+            var allitem = getallitem.ToList();
+            _repository.ConfirmOrder(allitem);
+            return RedirectToAction("Index");
+        }
+
 
         // GET: PurchaseOrderDapperVMs/Edit/5
         public ActionResult Edit(int id)
@@ -152,7 +161,7 @@ namespace EBookStore.Site.Controllers
         public ActionResult Edit([Bind(Include = "Id,BookId,BookName,PublisherId,PublisherName,CreateTime,Qty,Detail,PurchasePrice")] PurchaseOrderDapperVM purchaseOrderDapperVM)
         {
             if (ModelState.IsValid)
-            {               
+            {
                 db.Entry(purchaseOrderDapperVM).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -171,7 +180,7 @@ namespace EBookStore.Site.Controllers
             return View(purchaseOrder);
         }
 
-    
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

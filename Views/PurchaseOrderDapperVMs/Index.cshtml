@@ -20,7 +20,8 @@
     <H2>進貨管理</H2>
     <div class="row mb-3">
         <div class="col-6 d-flex justify-content-start">
-            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary mr-2" })
+            <button id="submitAllBtn" class="btn btn-primary">全部送出</button>
         </div>
     </div>
     <table class="table">
@@ -57,7 +58,6 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.BookName)
                     </td>
-
                     <td>
                         @Html.DisplayFor(modelItem => item.PublisherName)
                     </td>
@@ -107,4 +107,19 @@
     <script src="~/Scripts/bootstrap.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $("#submitAllBtn").click(function () {
+            $.ajax({
+                url: "/PurchaseOrderDapperVMs/UpdateToHistory",  // 替換為控制器和方法的實際路徑
+                type: "POST",
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    alert(失敗);
+                }
+            });
+        });
+    </script>
 }

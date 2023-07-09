@@ -90,6 +90,21 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
 
         }
 
+        public void ConfirmOrder(IEnumerable<PurchaseOrderDapperVM> vmList)
+        {
+            string sql = @"
+            UPDATE Books
+            SET Stock = Stock + @Qty
+            WHERE Id = @BookId;
+        ";
+            foreach(var vm in vmList)
+            {
+                _connection.Execute(sql, new { BookId = vm.BookId, Qty = vm.Qty });
+
+                Delete(vm.Id);
+            }
+        }
+
         public void CreateInHistory(PurchaseOrderDapperVM vm)
         {
             var purchaseOrder = new PurchaseOrderDapperVM
