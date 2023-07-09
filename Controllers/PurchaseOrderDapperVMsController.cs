@@ -142,8 +142,7 @@ namespace EBookStore.Site.Controllers
         public ActionResult Edit([Bind(Include = "Id,BookId,BookName,PublisherId,PublisherName,CreateTime,Qty,Detail,PurchasePrice")] PurchaseOrderDapperVM purchaseOrderDapperVM)
         {
             if (ModelState.IsValid)
-            {
-                
+            {               
                 db.Entry(purchaseOrderDapperVM).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
