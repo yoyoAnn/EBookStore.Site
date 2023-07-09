@@ -23,7 +23,6 @@ namespace EBookStore.Site.Controllers
             PrepareCategoryDataSource(criteria.RoleId);
             ViewBag.Criteria = criteria;
 
-
             // 查詢記錄, 由於第一次進到這網頁時,criteria是沒有值的
             var query = db.Employees.Include(e => e.Role);
 
