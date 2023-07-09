@@ -33,12 +33,12 @@
             <input type="file" id="excelFile" name="excelFiles" class="form-control" />
         </div>
 
-        <input type="submit" value="Upload File" class="btn btn-primary" />
+        <input type="submit" value="Upload File" class="btn btn-primary btn-sm" />
     }
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary btn-sm" })
+</div>
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

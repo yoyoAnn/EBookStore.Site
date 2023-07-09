@@ -3,80 +3,94 @@
 @{
     ViewBag.Title = "UpdateBookStock";
 }
+@section cdn{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/bookstyle.css" />
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
 
-<!DOCTYPE html>
+}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>UpdateBookStock</title>
-</head>
-<body>
+<div id="newbackground" class="table-container">
+
+
+    <h2>UpdateBookStock</h2>
+
     <div>
-        <h4>PurchaseOrderDapperVM</h4>
-        <hr />
-        <dl class="dl-horizontal">
+        <div>
+            <h4>確定入庫?</h4>
+            <hr />
+            <dl class="dl-horizontal">
 
-            <dt>
-                @Html.DisplayNameFor(model => model.BookName)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.BookName)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.BookName)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.BookName)
+                </dd>
 
-   
-            <dt>
-                @Html.DisplayNameFor(model => model.PublisherName)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.PublisherName)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.PublisherName)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.CreateTime)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PublisherName)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.CreateTime)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreateTime)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Qty)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CreateTime)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Qty)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Qty)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Detail)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Qty)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Detail)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Detail)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.PurchasePrice)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Detail)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.PurchasePrice)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.PurchasePrice)
+                </dt>
 
-        </dl>
+                <dd>
+                    @Html.DisplayFor(model => model.PurchasePrice)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            <button type="button" class="btn btn-primary btn-sm" onclick="updateBookStock('@Model.Id','@Model.BookId','@Model.PublisherId','@Model.BookName', '@Model.PublisherName', '@Model.CreateTime',
+                                                        '@Model.Qty','@Model.Detail','@Model.PurchasePrice')">
+                確認入庫
+            </button> |
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary btn-sm" })
+        </p>
     </div>
-    <p>
-        <button type="button" onclick="updateBookStock('@Model.Id','@Model.BookId','@Model.PublisherId','@Model.BookName', '@Model.PublisherName', '@Model.CreateTime',
-                                                        '@Model.Qty','@Model.Detail','@Model.PurchasePrice')">確認入庫</button> |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+</div>
 
+@section Scripts{
+    <script src="~/Content/book.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        function updateBookStock(itemId,BookId,PublisherId,BookName,PublisherName,CreateTime,Qty,Detail,PurchasePrice) {
+        function updateBookStock(itemId, BookId, PublisherId, BookName, PublisherName, CreateTime, Qty, Detail, PurchasePrice) {
             $.ajax({
                 url: '/PurchaseOrderDapperVMs/UpdateBookStock',
                 type: 'POST',
@@ -84,7 +98,7 @@
                     Id: itemId,
                     BookName: BookName,
                     BookId: BookId,
-                    PublisherId:PublisherId,
+                    PublisherId: PublisherId,
                     PublisherName: PublisherName,
                     CreateTime: CreateTime,
                     Qty: Qty,
@@ -100,7 +114,4 @@
             });
         }
     </script>
-</body>
-
-
-</html>
+}

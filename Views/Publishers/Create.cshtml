@@ -11,7 +11,7 @@
     <script src="~/Scripts/jquery-3.7.0.js"></script>
 }
 
-<<div id="newbackground" class="table-container">
+<div id="newbackground" class="table-container">
     <h2>Create</h2>
     @using (Html.BeginForm())
     {
@@ -55,29 +55,30 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Create" class="btn btn-primary btn-sm" />
                 </div>
             </div>
         </div>
     }
 
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary btn-sm" })
     </div>
 </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        <script src="~/Content/book.js"></script>
-        <script src="~/Scripts/bootstrap.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
-            $(document).ready(function () {
-                var validationSummary = $("#validationSummary");
-                validationSummary.fadeIn();
-                setTimeout(function () {
-                    validationSummary.fadeOut();
-                }, 3000);
-            });
-        </script>
-    }
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Content/book.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            var validationSummary = $("#validationSummary");
+            validationSummary.fadeIn();
+            setTimeout(function () {
+                validationSummary.fadeOut();
+            }, 3000);
+        });
+    </script>
+}
