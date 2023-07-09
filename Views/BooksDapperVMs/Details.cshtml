@@ -3,120 +3,130 @@
 @{
     ViewBag.Title = "Details";
 }
+@section cdn{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/bookstyle.css" />
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
 
-<!DOCTYPE html>
+}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
+
+<div id="newbackground" class="table-container">
+
+    <h2>Details</h2>
+
+<div>
     <div>
-        <h4>BooksDapperVM</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.Name)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Name)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.PublisherName)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.PublisherName)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Author)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Author)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.CategoryName)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.CategoryName)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.PublishDate)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.PublishDatetxt)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Summary)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Summary)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.ISBN)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.ISBN)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.EISBN)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.EISBN)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Stock)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Stock)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Status)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Status)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Price)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Price)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Discount)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Discount)
             </dd>
-    
+
         </dl>
     </div>
     <p>
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
         @Html.ActionLink("Back to List", "Index")
     </p>
-</body>
-</html>
+</div>
+</div>
+@section Scripts{
+    <script src="~/Content/book.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}
