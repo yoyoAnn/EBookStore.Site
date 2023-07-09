@@ -7,17 +7,22 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using DocumentFormat.OpenXml.Spreadsheet;
 using EBookStore.Site.Models.EFModels;
 using EBookStore.Site.Models.Infra;
 using EBookStore.Site.Models.ViewModels;
+using static System.Web.Razor.Parser.SyntaxConstants;
 
 namespace EBookStore.Site.Controllers
 {
+    [Authorize]
     public class EmployeesController : Controller
     {
         private AppDbContext db = new AppDbContext();
 
+
         // GET: Employees
+        [Authorize(Roles = "執行長")]
         public ActionResult Index(EmployeeCriteria criteria)
         {
             PrepareCategoryDataSource(criteria.RoleId);
@@ -25,7 +30,6 @@ namespace EBookStore.Site.Controllers
 
             // 查詢記錄, 由於第一次進到這網頁時,criteria是沒有值的
             var query = db.Employees.Include(e => e.Role);
-
 
             if (string.IsNullOrEmpty(criteria.Name) == false)
             {
@@ -75,8 +79,6 @@ namespace EBookStore.Site.Controllers
         }
 
         // POST: Employees/Create
-        // 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,RoleId,Account,Password,Email,Name,Gender,Phone")] Employee employee)
@@ -111,8 +113,6 @@ namespace EBookStore.Site.Controllers
         }
 
         // POST: Employees/Edit/5
-        // 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,RoleId,Account,Password,Email,Name,Gender,Phone,CreatedTime")] Employee employee)
@@ -154,19 +154,28 @@ namespace EBookStore.Site.Controllers
             return RedirectToAction("Index");
         }
 
-       
+        [AllowAnonymous]
+        public ActionResult Error()
+        {
+            return View();
+        }
 
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult Login(LoginVM vm)
         {
-            if (ModelState.IsValid == false) return View(vm);
+            if (ModelState.IsValid == false)
+            {
+                return View(vm);
+            }
 
-           
+
             //驗證帳密的正確性
             Result result = ValidLogin(vm);
 
@@ -180,6 +189,7 @@ namespace EBookStore.Site.Controllers
             const bool rememberMe = false; // 是否記住登入成功的會員
 
             //若登入帳密正確,就開始處理後續登入作業,將登入帳號編碼之後,加到 cookie裡
+
             (string returnUrl, HttpCookie cookie) processResult = ProcessLogin(vm.Account, rememberMe);
 
             Response.Cookies.Add(processResult.cookie);
@@ -187,13 +197,15 @@ namespace EBookStore.Site.Controllers
             return Redirect(processResult.returnUrl);
         }
 
-
         private Result ValidLogin(LoginVM vm)
         {
-            var db = new AppDbContext();
+            //var db = new AppDbContext();
             var employee = db.Employees.FirstOrDefault(e => e.Account == vm.Account);
 
-            if (employee == null) return Result.Fail("帳號或密碼有誤");
+            if (employee == null)
+            {
+                return Result.Fail("帳號或密碼有誤");
+            }
 
             //if (employee.IsConfirmed.HasValue == false || employee.IsConfirmed.Value == false) return Result.Fail("會員資格尚未確認");
 
@@ -205,30 +217,48 @@ namespace EBookStore.Site.Controllers
                 //: Result.Fail("帳號或密碼有誤");
                 : ViewBag.ErrorMessage = "帳號或密碼有誤";
         }
+        public bool IsValid(string account, string password)
+        {
+            var employee = db.Employees.FirstOrDefault(e => e.Account == account);
+
+            if (employee == null)
+            {
+                return false;
+            }
+
+            var salt = HashUtility.GetSalt();
+            var hashPassword = HashUtility.ToSHA256(password, salt);
+
+            return string.Compare(employee.Password, hashPassword) == 0;
+        }
+
         private (string returnUrl, HttpCookie cookie) ProcessLogin(string account, bool rememberMe)
         {
-            var roles = string.Empty; // 在本範例, 沒有用到角色權限,所以存入空白
+            var employee = db.Employees.FirstOrDefault(e => e.Account == account);
 
-            // 建立一張認證票
-            var ticket =
-                new FormsAuthenticationTicket(
-                    1,          // 版本別, 沒特別用處
-                    account,
-                    DateTime.Now,   // 發行日
-                    DateTime.Now.AddDays(2), // 到期日
-                    rememberMe,     // 是否續存
-                    roles,          // userdata
-                    "/" // cookie位置
-                );
+            if (employee == null)
+            {
+                throw new Exception("User not found");
+            }
 
-            // 將它加密
+            //var roles = string.Empty;
+            var roles = db.Roles.FirstOrDefault(r => r.Id == employee.RoleId)?.Name ?? string.Empty;
+
+            var ticket = new FormsAuthenticationTicket(
+                1,
+                account,
+                DateTime.Now,
+                DateTime.Now.AddDays(2),
+                rememberMe,
+                roles,
+                "/"
+            );
+
             var value = FormsAuthentication.Encrypt(ticket);
 
-            // 存入cookie
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, value);
 
-            // 取得return url
-            var url = FormsAuthentication.GetRedirectUrl(account, true); //第二個引數沒有用處
+            var url = FormsAuthentication.GetRedirectUrl(account, true);
 
             return (url, cookie);
         }
@@ -236,7 +266,7 @@ namespace EBookStore.Site.Controllers
         public ActionResult Logout()
         {
             Session.Abandon();
-            FormsAuthentication.SignOut(); 
+            FormsAuthentication.SignOut();
             return Redirect("/Employees/Login");
         }
 

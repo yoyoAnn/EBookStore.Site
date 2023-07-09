@@ -447,6 +447,7 @@
     <Content Include="Views\RepliedMails\Edit.cshtml" />
     <Content Include="Views\RepliedMails\Index.cshtml" />
     <Content Include="Views\Employees\Login.cshtml" />
+    <Content Include="Views\Employees\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
