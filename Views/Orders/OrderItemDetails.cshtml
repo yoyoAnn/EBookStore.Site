@@ -5,6 +5,9 @@
     var OrderId = ViewBag.OrderId;
     var OrderItem = ViewBag.OrderItem;
 }
+@section cdn{
+    <script src="https://kit.fontawesome.com/fbde3a79d6.js" crossorigin="anonymous"></script>
+}
 
 <style>
     .center-table {
@@ -15,19 +18,19 @@
 
 
 <h2></h2>
-
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4" id="block1">
-    <div class="col-md-12 d-flex px-5">
-        <h2 class="ml-auto"></h2>
-        @*@Html.ActionLink("匯出", "DownloadXlsx", null, new { @class = "btn btn-danger btn-lg ml-auto" })*@
-        @using (Html.BeginForm("DownloadXlsx", "Orders", FormMethod.Post))
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4" id="block1">
+        <div class="col-md-12 d-flex px-5 justify-content-end">
+            <h2 class="ml-auto"></h2>
+            @*@Html.ActionLink("匯出", "DownloadXlsx", null, new { @class = "btn btn-danger btn-lg ml-auto" })*@
+            @using (Html.BeginForm("DownloadXlsx", "Orders", FormMethod.Post))
             {
-
-                <button type="submit" class="btn btn-danger btn-lg ml-auto">匯出</button>
+                <button type="submit" class="btn btn-success btn-lg ml-auto fa-regular fa-file-excel justify-content-end position-relative" style="right:-350px">匯出</button>
             }
 
-        @*<button type="button" class="" id="PrintItemXlsx">匯出</button>*@
-        <button type="button" class="btn btn-danger btn-lg ml-auto" id="PrintOrder">列印</button>
+            @*<button type="button" class="" id="PrintItemXlsx">匯出</button>*@
+            <button type="button" class="btn btn-danger btn-lg ml-auto fa-solid fa-print w-10" id="PrintOrder">列印</button>
+        </div>
     </div>
 </div>
 <hr />
@@ -38,7 +41,7 @@
             <h2 class="ml-auto"></h2>
         </div>
     </div>
-        @*<p>
+    @*<p>
             @Html.ActionLink("Create New", "Create")
         </p>*@
     <table class="table center-table">
@@ -89,11 +92,17 @@
     </table>
 </div>
 
-@Html.ActionLink("Return", "Index", new { /* id=item.PrimaryKey */ })
+
+<div class="col-md-12 d-flex px-5">
+    @Html.ActionLink("返回", "Index",null, new { @class = "fa-solid fa-arrow-rotate-left fa-xl" })
+    @*<input type="submit" value="出貨" class="btn btn-primary btn-lg ml-auto" />*@
+    @*<button type="button" class="btn btn-danger btn-lg" id="CancelOrder">取消訂單</button>*@
+    <div class="ml-auto"></div>
+</div>
 
 @section scripts{
     <script>
-/*        <link rel="stylesheet" href="Print.css" />*/
+        /*        <link rel="stylesheet" href="Print.css" />*/
         document.getElementById("PrintOrder").addEventListener("click", function () {
             const printContent = $('#print_parts').html();
             const original = document.body.innerHTML;

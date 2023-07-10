@@ -22,7 +22,7 @@ namespace EBookStore.Site.Models.ViewModels
         }
 
         [RegularExpression(@"^.*\.(xls|xlsx)$", ErrorMessage = "請選擇副檔名為.xls或.xlsx的文件")]
-        public string XlsFile { get; set; }
+        public string file1 { get; set; }
 
         public long Id { get; set; }
 
