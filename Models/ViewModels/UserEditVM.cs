@@ -15,7 +15,7 @@ namespace EBookStore.Site.Models.ViewModels
         [StringLength(255)]
         public string Account { get; set; }
 
-        [Required]
+     
         [StringLength(255)]
         public string Password { get; set; }
 
@@ -50,7 +50,7 @@ namespace EBookStore.Site.Models.ViewModels
         }
 
         [Display(Name = "照片")]
-        [Required]
+    
         [StringLength(255)]
         public string Photo { get; set; }
 

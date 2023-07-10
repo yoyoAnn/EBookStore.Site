@@ -16,7 +16,6 @@ namespace EBookStore.Site.Models.ViewModels
         [StringLength(255)]
         public string Account { get; set; }
 
-        [Required]
         [StringLength(255)]
         public string Password { get; set; }
 

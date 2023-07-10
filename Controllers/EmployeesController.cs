@@ -15,7 +15,7 @@ using static System.Web.Razor.Parser.SyntaxConstants;
 
 namespace EBookStore.Site.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class EmployeesController : Controller
     {
         private AppDbContext db = new AppDbContext();
@@ -96,6 +96,104 @@ namespace EBookStore.Site.Controllers
             return View(employee);
         }
 
+        public ActionResult Edit(int id)
+        {
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //Employee employee = db.Employees.Find(id);
+            //if (employee == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name", employee.RoleId);
+            //return View(employee);
+
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            EmployeeEditVM employee = GetEmployeeInfo(id);
+
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+
+            PrepareEmployeeDataSource(employee.Id);
+   
+            return View(employee);
+        }
+
+        private void PrepareEmployeeDataSource(int? id)
+        {
+            var employees = new AppDbContext().Employees.ToList().Prepend(new Employee());
+            ViewBag.BookId = new SelectList(employees, "Id", "Name", id);
+        }
+
+
+
+        private EmployeeEditVM GetEmployeeInfo(int id)
+        {
+            var db = new AppDbContext();
+            var employeeInDb = db.Employees.Find(id);
+            if (employeeInDb == null) return null;
+
+            return new EmployeeEditVM
+            {
+                Id = employeeInDb.Id,
+                Email = employeeInDb.Email,
+                Name = employeeInDb.Name,
+                Phone = employeeInDb.Phone,
+                RoleId = employeeInDb.RoleId,
+                Account = employeeInDb.Account,
+                //Password = employeeInDb.Password,
+                Gender = employeeInDb.Gender
+                //CreatedTime = employeeInDb.CreatedTime
+            };
+        }
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EmployeeEditVM vm)
+        {
+            if (ModelState.IsValid)
+            {
+                //db.Entry(employee).State = EntityState.Modified;
+                var db = new AppDbContext();
+                var en = new Employee
+                {
+                    Id = vm.Id,
+                    Account = vm.Account,
+                    Email = vm.Email,
+                    Name = vm.Name,
+                    Phone = vm.Phone,
+                    RoleId = vm.RoleId,
+                    Password = "123",
+                    Gender = vm.Gender,
+                    CreatedTime= DateTime.Now,
+                };
+                db.Entry(en).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            //ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name", employee.RoleId);
+            return View();
+        }
+
+
+
+
+
+
+
+
+
         // GET: Employees/Edit/5
         //public ActionResult Edit(int? id)
         //{
@@ -128,69 +226,69 @@ namespace EBookStore.Site.Controllers
         //    return View(employee);
         //}
 
-        [Authorize]
-        public ActionResult Edit()
-        {
-            var currentUserAccount = User.Identity.Name; 
+        //[Authorize]
+        //public ActionResult Edit()
+        //{
+        //    var currentUserAccount = User.Identity.Name; 
 
-            var model = GetMemberProfile1(currentUserAccount);
+        //    var model = GetMemberProfile1(currentUserAccount);
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
-        [Authorize]
-        [HttpPost]
-        public ActionResult Edit(EmployeeEditVM vm)
-        {
-            var currentUserAccount = User.Identity.Name;
+        //[Authorize]
+        //[HttpPost]
+        //public ActionResult Edit(EmployeeEditVM vm)
+        //{
+        //    var currentUserAccount = User.Identity.Name;
 
-            if (ModelState.IsValid == false) return View(vm);
+        //    if (ModelState.IsValid == false) return View(vm);
 
-            Result updateResult = UpdateProfile1(vm);
-            if (updateResult.IsSuccess) return RedirectToAction("Index");
+        //    Result updateResult = UpdateProfile1(vm);
+        //    if (updateResult.IsSuccess) return RedirectToAction("Index");
 
-            ModelState.AddModelError(string.Empty, updateResult.ErrorMessage);
-            return View(vm);
-        }
+        //    ModelState.AddModelError(string.Empty, updateResult.ErrorMessage);
+        //    return View(vm);
+        //}
 
-        private EmployeeEditVM GetMemberProfile1(string account)
-        {
-            var memberInDb = new AppDbContext().Employees.FirstOrDefault(m => m.Account == account);
-            return memberInDb == null
-                ? null
-                : new EmployeeEditVM
-                {
-                    Id = memberInDb.Id,
-                    Email = memberInDb.Email,
-                    Name = memberInDb.Name,
-                    Phone = memberInDb.Phone,
-                    RoleId = memberInDb.RoleId,
-                    Account = memberInDb.Account,
-                    Password = memberInDb.Password,                 
-                    Gender = memberInDb.Gender,         
-                    CreatedTime = memberInDb.CreatedTime
-                };
-        }
+        //private EmployeeEditVM GetMemberProfile1(string account)
+        //{
+        //    var memberInDb = new AppDbContext().Employees.FirstOrDefault(m => m.Account == account);
+        //    return memberInDb == null
+        //        ? null
+        //        : new EmployeeEditVM
+        //        {
+        //            Id = memberInDb.Id,
+        //            Email = memberInDb.Email,
+        //            Name = memberInDb.Name,
+        //            Phone = memberInDb.Phone,
+        //            RoleId = memberInDb.RoleId,
+        //            Account = memberInDb.Account,
+        //            Password = memberInDb.Password,                 
+        //            Gender = memberInDb.Gender,         
+        //            CreatedTime = memberInDb.CreatedTime
+        //        };
+        //}
 
-        private Result UpdateProfile1(EmployeeEditVM vm)
-        {
-            // 取得在db裡的原始記錄
-            var db = new AppDbContext();
+        //private Result UpdateProfile1(EmployeeEditVM vm)
+        //{
+        //    // 取得在db裡的原始記錄
+        //    var db = new AppDbContext();
 
-            var currentUserAccount = User.Identity.Name;
-            var memberInDb = db.Employees.FirstOrDefault(m => m.Account == currentUserAccount);
-            if (memberInDb == null) return Result.Fail("找不到要修改的會員記錄");
+        //    var currentUserAccount = User.Identity.Name;
+        //    var memberInDb = db.Employees.FirstOrDefault(m => m.Account == currentUserAccount);
+        //    if (memberInDb == null) return Result.Fail("找不到要修改的會員記錄");
 
-            // 更新記錄
-            memberInDb.Account = vm.Account;
-            memberInDb.Name = vm.Name;
-            memberInDb.Email = vm.Email;
-            memberInDb.Phone = vm.Phone;
+        //    // 更新記錄
+        //    memberInDb.Account = vm.Account;
+        //    memberInDb.Name = vm.Name;
+        //    memberInDb.Email = vm.Email;
+        //    memberInDb.Phone = vm.Phone;
 
-            db.SaveChanges();
+        //    db.SaveChanges();
 
-            return Result.Success();
-        }
+        //    return Result.Success();
+        //}
 
 
 

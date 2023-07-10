@@ -85,39 +85,87 @@ namespace EBookStore.Site.Controllers
 			return View(user);
 		}
 
+
+
 		// GET: Users/Edit/5
-		public ActionResult Edit(int? id)
+		public ActionResult Edit(int id)
 		{
-			if (id == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
-			User user = db.Users.Find(id);
-			if (user == null)
-			{
-				return HttpNotFound();
-			}
-			return View(user);
-		}
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-		// POST: Users/Edit/5
-		// 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，
-		// 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Edit([Bind(Include = "Id,Account,Password,Email,Name,Phone,Address,Gender,Photo,CreatedTime,IsConfirmed,ConfirmCode")] User user)
-		{
-			if (ModelState.IsValid)
-			{
-				db.Entry(user).State = EntityState.Modified;
-				db.SaveChanges();
-				return RedirectToAction("Index");
-			}
-			return View(user);
-		}
+            UserEditVM user = GetUserInfo(id);
 
-		// GET: Users/Delete/5
-		public ActionResult Delete(int? id)
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            //PrepareEmployeeDataSource(employee.Id);
+
+            return View(user);
+        }
+
+
+        private UserEditVM GetUserInfo(int id)
+        {
+            var db = new AppDbContext();
+            var userInDb = db.Users.Find(id);
+            if (userInDb == null) return null;
+
+            return new UserEditVM
+            {
+                Id = userInDb.Id,
+                Email = userInDb.Email,
+                Name = userInDb.Name,
+                Phone = userInDb.Phone,
+                Account = userInDb.Account,
+                //Password = userInDb.Password,
+                Gender = (bool)userInDb.Gender
+                //CreatedTime = userInDb.CreatedTime
+            };
+        }
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(UserEditVM vm)
+        {
+            if (ModelState.IsValid)
+            {
+                //db.Entry(employee).State = EntityState.Modified;
+                var db = new AppDbContext();
+                var en = new User
+                {
+                    Id = vm.Id,
+                    Account = vm.Account,
+                    Email = vm.Email,
+                    Name = vm.Name,
+                    Phone = vm.Phone,
+                    Password = "123",
+                    Gender = vm.Gender,
+                    CreatedTime = DateTime.Now,
+                };
+                db.Entry(en).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            //ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name", employee.RoleId);
+            return View();
+        }
+
+
+
+
+
+
+
+
+        // GET: Users/Delete/5
+        public ActionResult Delete(int? id)
 		{
 			if (id == null)
 			{
