@@ -96,139 +96,105 @@ namespace EBookStore.Site.Controllers
             return View(employee);
         }
 
-        // GET: Employees/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Employee employee = db.Employees.Find(id);
-        //    if (employee == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name", employee.RoleId);
-        //    return View(employee);
-        //}
-
-        //// POST: Employees/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,RoleId,Account,Password,Email,Name,Gender,Phone,CreatedTime")] Employee employee)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // employee.CreatedTime = DateTime.Now;
-        //        db.Entry(employee).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name", employee.RoleId);
-        //    return View(employee);
-        //}
-
-        [Authorize]
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
-            var currentUserAccount = User.Identity.Name; 
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //Employee employee = db.Employees.Find(id);
+            //if (employee == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name", employee.RoleId);
+            //return View(employee);
 
-            var model = GetMemberProfile1(currentUserAccount);
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-            return View(model);
+            EmployeeEditVM employee = GetEmployeeInfo(id);
+
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+
+            PrepareEmployeeDataSource(employee.Id);
+   
+            return View(employee);
         }
 
-        [Authorize]
+        private void PrepareEmployeeDataSource(int? id)
+        {
+            var roles = new AppDbContext().Roles.ToList().Prepend(new Role());
+            ViewBag.RoleId = new SelectList(roles, "Id", "Name", id);
+        }
+
+
+
+        private EmployeeEditVM GetEmployeeInfo(int id)
+        {
+            var db = new AppDbContext();
+            var employeeInDb = db.Employees.Find(id);
+            if (employeeInDb == null) return null;
+
+            return new EmployeeEditVM
+            {
+                Id = employeeInDb.Id,
+                Email = employeeInDb.Email,
+                Name = employeeInDb.Name,
+                Phone = employeeInDb.Phone,
+                RoleId = employeeInDb.RoleId,
+                Account = employeeInDb.Account,
+                //Password = employeeInDb.Password,
+                Gender = employeeInDb.Gender
+                //CreatedTime = employeeInDb.CreatedTime
+            };
+        }
+
+
+        // 新增的方法，處理自訂按鈕的觸發事件
         [HttpPost]
+        public ActionResult EditRoleId(int Id, int RoleId)
+        {
+            new EmployeeEditDapper().EmployeeDapper(RoleId, Id);
+
+            return RedirectToAction("Index"); // 重新導向到訂單列表頁面或其他適當的頁面
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(EmployeeEditVM vm)
         {
-            var currentUserAccount = User.Identity.Name;
-
-            if (ModelState.IsValid == false) return View(vm);
-
-            Result updateResult = UpdateProfile1(vm);
-            if (updateResult.IsSuccess) return RedirectToAction("Index");
-
-            ModelState.AddModelError(string.Empty, updateResult.ErrorMessage);
-            return View(vm);
-        }
-
-        private EmployeeEditVM GetMemberProfile1(string account)
-        {
-            var memberInDb = new AppDbContext().Employees.FirstOrDefault(m => m.Account == account);
-            return memberInDb == null
-                ? null
-                : new EmployeeEditVM
+            if (ModelState.IsValid)
+            {
+                //db.Entry(employee).State = EntityState.Modified;
+                var db = new AppDbContext();
+                var en = new Employee
                 {
-                    Id = memberInDb.Id,
-                    Email = memberInDb.Email,
-                    Name = memberInDb.Name,
-                    Phone = memberInDb.Phone,
-                    RoleId = memberInDb.RoleId,
-                    Account = memberInDb.Account,
-                    Password = memberInDb.Password,                 
-                    Gender = memberInDb.Gender,         
-                    CreatedTime = memberInDb.CreatedTime
+                    Id = vm.Id,
+                    Account = vm.Account,
+                    Email = vm.Email,
+                    Name = vm.Name,
+                    Phone = vm.Phone,
+                    RoleId = vm.RoleId,
+                    Password = "123",
+                    Gender = vm.Gender,
+                    CreatedTime= DateTime.Now,
                 };
+                db.Entry(en).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            //ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name", employee.RoleId);
+            return View();
         }
 
-        private Result UpdateProfile1(EmployeeEditVM vm)
-        {
-            // 取得在db裡的原始記錄
-            var db = new AppDbContext();
-
-            var currentUserAccount = User.Identity.Name;
-            var memberInDb = db.Employees.FirstOrDefault(m => m.Account == currentUserAccount);
-            if (memberInDb == null) return Result.Fail("找不到要修改的會員記錄");
-
-            // 更新記錄
-            memberInDb.Account = vm.Account;
-            memberInDb.Name = vm.Name;
-            memberInDb.Email = vm.Email;
-            memberInDb.Phone = vm.Phone;
-
-            db.SaveChanges();
-
-            return Result.Success();
-        }
-
-
-
-
-
-        //[Authorize]
-        //[HttpPost]
-        //public ActionResult Edit(EmployeeEditVM viewModel)
-        //{
-        //    var currentUserAccount = User.Identity.Name;
-
-        //    if (ModelState.IsValid)
-        //    {
-
-        //        var employee = db.Employees.Find(viewModel.Id);
-
-        //        if (employee == null)
-        //        {
-        //            return HttpNotFound();
-        //        }
-
-        //        employee.RoleId = viewModel.RoleId;
-        //        employee.Account = viewModel.Account;
-        //        employee.Password = viewModel.Password;
-        //        employee.Email = viewModel.Email;
-        //        employee.Name = viewModel.Name;
-        //        employee.Gender = viewModel.Gender;
-        //        employee.Phone = viewModel.Phone;
-        //        employee.CreatedTime = viewModel.CreatedTime;
-
-
-        //        db.SaveChanges();
-
-        //        return RedirectToAction("Index"); 
-        //    }
-
-        //    return View(viewModel);
-        //}
 
 
         // GET: Employees/Delete/5
@@ -379,13 +345,6 @@ namespace EBookStore.Site.Controllers
         {
            return View();
         }
-
-        //[Authorize]
-        //public ActionResult PersonalDetails()
-        //{
-        //    return View();
-        //}
-
 
 
         [Authorize]

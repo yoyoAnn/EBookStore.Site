@@ -287,6 +287,7 @@
     <Compile Include="Models\DTOs\PublisherDto.cs" />
     <Compile Include="Models\Infra\DapperRepository\RepliedMailDapperRepository.cs" />
     <Compile Include="Models\Infra\DeleteOrderItemDapperRepository.cs" />
+    <Compile Include="Models\Infra\EmployeeEditDapper.cs" />
     <Compile Include="Models\ViewModels\RepliedMailEditVM.cs" />
     <Compile Include="Models\ViewModels\RepliedMailVM.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
