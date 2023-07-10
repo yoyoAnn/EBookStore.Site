@@ -25,10 +25,14 @@ namespace EBookStore.Site.Models.Infra
 
 
             sql.AppendLine(@"
-insert into Orders(Id,UserId,ReceiverName,ReceiverAddress,ReceiverPhone,TaxIdNum,VehicleNum,Remark,OrderTime,OrderStatusId,TotalAmount,
-ShippingNumber,ShippingTime,ShippingFee,ShippingStatusId,TotalPayment)
-values
-(@Id,@UserId,@ReceiverName,@ReceiverAddress,@ReceiverPhone,@TaxIdNum,@VehicleNum,@Remark,@OrderTime,@OrderStatusId,@TotalAmount,@ShippingNumber,@ShippingTime,@ShippingFee,@ShippingStatusId,@TotalPayment)");
+ SET IDENTITY_INSERT [dbo].[Orders] ON 
+ insert into Orders(Id,UserId,ReceiverName,ReceiverAddress,ReceiverPhone,TaxIdNum,VehicleNum,Remark,OrderTime,OrderStatusId,TotalAmount,
+ ShippingNumber,ShippingTime,ShippingFee,ShippingStatusId,TotalPayment)
+ values
+  (@Id,@UserId,@ReceiverName,@ReceiverAddress,@ReceiverPhone,@TaxIdNum,@VehicleNum,@Remark,@OrderTime,@OrderStatusId,@TotalAmount,@ShippingNumber,
+  @ShippingTime,@ShippingFee,@ShippingStatusId,@TotalPayment)
+
+ SET IDENTITY_INSERT [dbo].[Orders] OFF");
 
             param.Add("Id", orders.Id);
             param.Add("UserId", orders.UserId);
