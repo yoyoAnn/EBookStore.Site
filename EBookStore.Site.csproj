@@ -390,6 +390,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Img\money.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -421,6 +422,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Content\bookstyle.css" />
+    <Content Include="Views\Home\elements.html" />
+    <Content Include="Views\Home\generic.html" />
     <Content Include="Views\Orders\Print.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
