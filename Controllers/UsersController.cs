@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.Infra;
 using EBookStore.Site.Models.ViewModels;
 
 namespace EBookStore.Site.Controllers
@@ -15,9 +16,9 @@ namespace EBookStore.Site.Controllers
 	{
 		private AppDbContext db = new AppDbContext();
 
-        // GET: Users
-        //[Authorize(Roles = "執行長,專欄作家")]
-        public ActionResult Index(UserCriteria criteria)
+		// GET: Users
+		[Authorize(Roles = "執行長,專欄作家")]
+		public ActionResult Index(UserCriteria criteria)
 		{
 			ViewBag.Criteria = criteria;
 
@@ -36,19 +37,18 @@ namespace EBookStore.Site.Controllers
 			return View(users);
 		}
 
+        //public ActionResult Index(EmployeeCriteria criteria)
+        //{
+        //    ViewBag.Criteria = criteria;
 
-		//public ActionResult Index(EmployeeCriteria criteria)
-		//{
-		//    ViewBag.Criteria = criteria;
-
-		//    return View(db.Users.ToList());
-		//    var users = db.Users.ToList().Select(u => u.ToIndexVM());
-		//    return View(users);
-		//}
+        //    return View(db.Users.ToList());
+        //    var users = db.Users.ToList().Select(u => u.ToIndexVM());
+        //    return View(users);
+        //}
 
 
-		// GET: Users/Details/5
-		public ActionResult Details(int? id)
+        // GET: Users/Details/5
+        public ActionResult Details(int? id)
 		{
 			if (id == null)
 			{
@@ -121,6 +121,7 @@ namespace EBookStore.Site.Controllers
                 Name = userInDb.Name,
                 Phone = userInDb.Phone,
                 Account = userInDb.Account,
+				Address = userInDb.Address,
                 //Password = userInDb.Password,
                 Gender = (bool)userInDb.Gender
                 //CreatedTime = userInDb.CreatedTime
@@ -147,6 +148,8 @@ namespace EBookStore.Site.Controllers
                     Phone = vm.Phone,
                     Password = "123",
                     Gender = vm.Gender,
+					Address = vm.Address,
+					Photo = "defaultUser.jpg",
                     CreatedTime = DateTime.Now,
                 };
                 db.Entry(en).State = EntityState.Modified;
@@ -156,12 +159,6 @@ namespace EBookStore.Site.Controllers
             //ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name", employee.RoleId);
             return View();
         }
-
-
-
-
-
-
 
 
         // GET: Users/Delete/5
