@@ -113,7 +113,7 @@ namespace EBookStore.Site.Controllers
 		    };
             ViewBag.Email = customerServiceMail.Email;
             ViewBag.MailTitle = $"回覆問題:[{customerServiceMail.ProblemType.Name}]";
-            ViewBag.MailContent = $"親愛的{customerServiceMail.UserAccount}用戶您好，針對您於提出關於{customerServiceMail.ProblemType.Name}的提問，客服人員在此回覆您：";
+            ViewBag.MailContent = $"親愛的{customerServiceMail.UserAccount}用戶您好，針對您提出的提問，客服人員在此回覆您：";
 
 			return View(mail);
 		}

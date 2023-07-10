@@ -18,11 +18,12 @@
 		body {
 			font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
 		}
-		table {
-			font-size: 16px;
-			width: 500px;
-			margin: 0 auto;
-		}
+        table {
+            font-size: 16px;
+            width: 500px;
+            margin: 0 auto;
+            background-color: #FFFFDF;
+        }
 
 		.fixed-cell {
 			/*width: 200px;*/ /* 根據需要調整固定寬度 */
@@ -33,6 +34,10 @@
 			color: #696969;
 			font-family: DFYuanBold-B5;
 		}
+
+        thead {
+            background-color: #fcfc4e;
+        }
 	</style>
 }
 
@@ -87,7 +92,7 @@
 				{
 					<tr>
 						<td>
-							@Html.DisplayFor(modelItem => item.Email)
+                            @Html.DisplayFor(modelItem => item.Email)
 						</td>
 						<td>
 							@Html.DisplayFor(modelItem => item.UserAccount)

@@ -8,6 +8,9 @@
     <style>
         .container-fluid {
             font-family: DFYuanBold-B5;
+            background-color: #FFFFDF;
+            border: 3px solid gray;
+            padding: 20px;
         }
 
         h2 {
@@ -20,7 +23,7 @@
     <hr />
     <form action="/RepliedMails/Edit" method="POST">
         @Html.HiddenFor(model => model.Id)
-        <div class="row row-cols-1">
+        <div class="row row-cols-1 m-0">
             <div class="form-group">
                 <label>使用者</label>
                 @Html.EditorFor(model => model.CustomerServiceMail.UserAccount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
@@ -44,7 +47,7 @@
         </div>
     </form>
 
-    <p>
+    <div class="text-center">
         @Html.ActionLink("修改", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
-    </p>
+    </div>
 </div>

@@ -21,11 +21,14 @@
 @section Style
 {
 	<style>
-		table {
-			font-size: 16px;
-			width: 500px;
-			margin: 0 auto;
-		}
+        .container-fluid {
+        }
+        table {
+            font-size: 16px;
+            width: 500px;
+            margin: 0 auto;
+            background-color: #FFFFDF;
+        }
 		.fixed-cell {
 			/*width: 200px;*/ /* 根據需要調整固定寬度 */
 			white-space: nowrap;
@@ -34,7 +37,9 @@
 			color: #696969;
 			font-family: DFYuanBold-B5;
 		}
-
+        thead {
+            background-color: #fcfc4e;
+        }
 	</style>
 }
 <div class="container-fluid" style="width:90%">
@@ -113,9 +118,6 @@
 						<td>
 							@Html.DisplayFor(modelItem => item.CreatedTime)
 						</td>
-						@*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-							@Html.ActionLink("Details", "Details", new { id = item.Id }) |
-							@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
 					</tr>
 				}
 			</tbody>
@@ -174,7 +176,8 @@
 
 					$('.mails').each(function () {
 						if (this.hasAttribute('isReplied')) {
-							$(this).addClass("bg-gray-200");
+							/*$(this).addClass("bg-gray-200");*/
+                            $(this).css("background-color", "#ffffff");
 						}
 
 						if (this.hasAttribute('isRead') == false) {
