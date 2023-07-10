@@ -1,134 +1,152 @@
 ﻿@model EBookStore.Site.Models.EFModels.Article
 
 @{
-    ViewBag.Title = "ArticleDelte";
+	ViewBag.Title = "ArticleDelte";
 }
 
-<div style="margin-left:5px;">
-    <h2>確認刪除此筆專欄</h2>
-</div>
+}
+@section Style
+{
+	<style>
+		.container-fluid {
+			font-family: DFYuanBold-B5;
+			background-color: #FFFFDF;
+			border: 3px solid gray;
+			padding: 20px;
+		}
 
-<div>
-    <table class="table">
-        <tbody>
-             <tr>
-                <th><div style="width:45px">日期</div></th>
-                <td>@Html.DisplayFor(model => model.CreatedTime)</td>
-            </tr>
+		h2 {
+			color: #696969;
+		}
+	</style>
+}
+<div class="container-fluid" style="width:90%">
+	<div style="margin-left:5px;">
+		<h2>確認刪除此筆專欄</h2>
+	</div>
 
-            <tr>
-                <th><div>書名</div></th>
-                <td>@Html.DisplayFor(model => model.Book.Name)</td>
-            </tr>
-            <tr>
-                <th><div>作者</div></th>
-                <td>@Html.DisplayFor(model => model.Writer.Name)</td>
-            </tr>
+	<div>
+		<table class="table">
+			<tbody>
+				<tr>
+					<th><div style="width:45px">日期</div></th>
+					<td>@Html.DisplayFor(model => model.CreatedTime)</td>
+				</tr>
 
-            <tr>
-                <th><div>標題</div></th>
-                <td>@Html.DisplayFor(model => model.Title)</td>
-            </tr>
-            <tr>
-                <th>內容</th>
-                <td>@Html.DisplayFor(model => model.Content)</td>
-            </tr>
-            <tr>
-                <th>狀態</th>
-                <td>
-                    @if (Model.Status)
-                    {
-                        <span>已發布</span>
-                    }
-                    else
-                    {
-                        <span>未發布</span>
-                    }
-                </td>
+				<tr>
+					<th><div>書名</div></th>
+					<td>@Html.DisplayFor(model => model.Book.Name)</td>
+				</tr>
+				<tr>
+					<th><div>作者</div></th>
+					<td>@Html.DisplayFor(model => model.Writer.Name)</td>
+				</tr>
 
-            </tr>
-        </tbody>
-    </table>
+				<tr>
+					<th><div>標題</div></th>
+					<td>@Html.DisplayFor(model => model.Title)</td>
+				</tr>
+				<tr>
+					<th>內容</th>
+					<td>@Html.DisplayFor(model => model.Content)</td>
+				</tr>
+				<tr>
+					<th>狀態</th>
+					<td>
+						@if (Model.Status)
+						{
+							<span>已發布</span>
+						}
+						else
+						{
+							<span>未發布</span>
+						}
+					</td>
 
-
-
-
-
-    @*<div>
-
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Book.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Book.Name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Writer.Photo)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Writer.Photo)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Title)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Title)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Content)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Content)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.PageViews)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.PageViews)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Status)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Status)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedTime)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.CreatedTime)
-            </dd>
-
-        </dl>*@
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color" style="margin-left:5px;">
-
-            <a href="@Url.Action("Delete")">
-                <button class="btn btn-outline-danger btn-m">刪除</button>
-            </a>
+				</tr>
+			</tbody>
+		</table>
 
 
 
-            <a href="@Url.Action("Index")" class="btn btn-m btn-outline-secondary">回到主頁</a>
-        </div>
-    }
+
+
+		@*<div>
+
+			<hr />
+			<dl class="dl-horizontal">
+				<dt>
+					@Html.DisplayNameFor(model => model.Book.Name)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.Book.Name)
+				</dd>
+
+				<dt>
+					@Html.DisplayNameFor(model => model.Writer.Photo)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.Writer.Photo)
+				</dd>
+
+				<dt>
+					@Html.DisplayNameFor(model => model.Title)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.Title)
+				</dd>
+
+				<dt>
+					@Html.DisplayNameFor(model => model.Content)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.Content)
+				</dd>
+
+				<dt>
+					@Html.DisplayNameFor(model => model.PageViews)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.PageViews)
+				</dd>
+
+				<dt>
+					@Html.DisplayNameFor(model => model.Status)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.Status)
+				</dd>
+
+				<dt>
+					@Html.DisplayNameFor(model => model.CreatedTime)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.CreatedTime)
+				</dd>
+
+			</dl>*@
+
+		@using (Html.BeginForm())
+		{
+			@Html.AntiForgeryToken()
+
+			<div class="form-actions no-color" style="margin-left:5px;">
+
+				<a href="@Url.Action("Delete")">
+					<button class="btn btn-outline-danger btn-m">刪除</button>
+				</a>
+
+
+
+				<a href="@Url.Action("Index")" class="btn btn-m btn-outline-secondary">回到主頁</a>
+			</div>
+		}
+	</div>
 </div>

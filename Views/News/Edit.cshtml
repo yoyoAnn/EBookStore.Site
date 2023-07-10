@@ -1,119 +1,132 @@
 ﻿@model EBookStore.Site.Models.ViewModels.NewsEditVm
 
 @{
-    ViewBag.Title = "NewsEdit";
+	ViewBag.Title = "NewsEdit";
 }
 
 <style>
+	.container-fluid {
+		font-family: DFYuanBold-B5;
+		background-color: #FFFFDF;
+		border: 3px solid gray;
+		padding: 20px;
+	}
 
-    .form-label {
-        /*  border: 1px solid red;*/
-        padding: 0px;
-        padding-left: 48px;
-        width: 130px;
-        margin-right: 0px;
-        margin-top: 5px;
-    }
+	h2 {
+		color: #696969;
+		font-family: DFYuanBold-B5;
+	}
+
+	.form-label {
+		/*  border: 1px solid red;*/
+		padding: 0px;
+		padding-left: 48px;
+		width: 130px;
+		margin-right: 0px;
+		margin-top: 5px;
+	}
 </style>
 
-<div style="margin-left:38px">
-    <h2>編輯最新消息</h2>
+<div class="container-fluid" style="width:90%">
+	<div style="margin-left:38px">
+		<h2>編輯最新消息</h2>
+	</div>
+
+
+	@using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	{
+		@Html.AntiForgeryToken()
+
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.Id)
+
+		<div class="row mb-3">
+			<label class="form-label" for="@Html.NameFor(model => model.Title)">@Html.DisplayNameFor(model => model.Title)</label>
+
+			@Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", style = "width: 500px;" } })
+			@Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="row mb-3">
+
+			<label class="form-label" for="@Html.NameFor(model => model.Content)">@Html.DisplayNameFor(model => model.Content)</label>
+
+			@Html.TextAreaFor(model => model.Content, new { @class = "form-control", style = "width:  500px; max-width: 100%; max-height:300px; overflow-y: auto;", rows = "18", cols = "50" })
+			@Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+
+		</div>
+
+		<div class="row mb-3">
+
+
+
+			<label class="form-label" for="@Html.NameFor(model => model.Status)">@Html.DisplayNameFor(model => model.Status)</label>
+
+			<div class="form-check" style="padding-left: 0px;">
+				@Html.EditorFor(model => model.Status)
+				<label id="statusLabel" style="margin-top:2px;"></label>
+			</div>
+			@Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="row mb-3" style="margin-left:120px;">
+			<div style="width: 500px;">
+				<img src="~/Uploads/NewsImage/@Model.ImageText" style="width:500px" />
+			</div>
+		</div>
+
+		<div class="row mb-3">
+
+			<label class="form-label" for="@Html.NameFor(model => model.Image)">@Html.DisplayNameFor(model => model.Image)</label>
+
+			<div style="width: 500px;">
+				@Html.DisplayFor(model => model.Image)
+				<input type="hidden" id="ImageText" name="ImageText" value="@Model.ImageText" />
+				<input type="file" name="file1" class="form-control" />
+				@Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+
+		<div class="row mb-3">
+
+			<label class="form-label" for="@Html.NameFor(model => model.CreatedTime)">@Html.DisplayNameFor(model => model.CreatedTime)</label>
+
+			@Html.TextBoxFor(model => model.CreatedTime, "{0:yyyy-MM-dd}", new { @class = "form-control", style = "width: 160px;", type = "date" })
+			@Html.ValidationMessageFor(model => model.CreatedTime, "", new { @class = "text-danger" })
+
+		</div>
+
+		<div class="row mb-3" style="margin-left:450px">
+			<a href="@Url.Action("Index")" class="btn btn-outline-secondary" style="margin-right:8px">返回清單</a>
+			<input type="submit" value="儲存" class="btn btn-outline-secondary" />
+
+
+		</div>
+
+	}
 </div>
 
 
-@using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
+	@section Scripts {
+		@Scripts.Render("~/bundles/jqueryval")
+		<script>
+			var statusCheckbox = document.getElementById("Status");
+			var statusLabel = document.getElementById("statusLabel");
+			if (this.checked) {
+				statusLabel.innerHTML = "發布";
+			} else {
+				statusLabel.innerHTML = "不發布";
+			}
 
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
+			statusCheckbox.addEventListener("change", function () {
+				if (this.checked) {
+					statusLabel.innerHTML = "發布";
+				} else {
+					statusLabel.innerHTML = "不發布";
+				}
+			});
+		</script>
 
-    <div class="row mb-3">
-        <label class="form-label" for="@Html.NameFor(model => model.Title)">@Html.DisplayNameFor(model => model.Title)</label>
-
-        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", style = "width: 500px;" } })
-        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="row mb-3">
-
-        <label class="form-label" for="@Html.NameFor(model => model.Content)">@Html.DisplayNameFor(model => model.Content)</label>
-
-        @Html.TextAreaFor(model => model.Content, new { @class = "form-control", style = "width:  500px; max-width: 100%; max-height:300px; overflow-y: auto;", rows = "18", cols = "50" })
-        @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-
-    </div>
-
-    <div class="row mb-3">
-
-
-
-        <label class="form-label" for="@Html.NameFor(model => model.Status)">@Html.DisplayNameFor(model => model.Status)</label>
-
-        <div class="form-check" style="padding-left: 0px;">
-            @Html.EditorFor(model => model.Status)
-            <label id="statusLabel" style="margin-top:2px;"></label>
-        </div>
-        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="row mb-3" style="margin-left:120px;">
-        <div style="width: 500px;">
-            <img src="~/Uploads/NewsImage/@Model.ImageText" style="width:500px"/>
-            </div>
-        </div>
-
-        <div class="row mb-3">
-
-            <label class="form-label" for="@Html.NameFor(model => model.Image)">@Html.DisplayNameFor(model => model.Image)</label>
-
-            <div style="width: 500px;">
-                @Html.DisplayFor(model => model.Image)
-                <input type="hidden" id="ImageText" name="ImageText" value="@Model.ImageText" />
-                <input type="file" name="file1" class="form-control" />
-                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="row mb-3">
-
-            <label class="form-label" for="@Html.NameFor(model => model.CreatedTime)">@Html.DisplayNameFor(model => model.CreatedTime)</label>
-
-            @Html.TextBoxFor(model => model.CreatedTime, "{0:yyyy-MM-dd}", new { @class = "form-control", style = "width: 160px;", type = "date" })
-            @Html.ValidationMessageFor(model => model.CreatedTime, "", new { @class = "text-danger" })
-
-        </div>
-
-        <div class="row mb-3" style="margin-left:450px">
-            <a href="@Url.Action("Index")" class="btn btn-outline-secondary" style="margin-right:8px">返回清單</a>
-            <input type="submit" value="儲存" class="btn btn-outline-secondary" />
-
-
-        </div>
-
-        }
-
-
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-            <script>
-                var statusCheckbox = document.getElementById("Status");
-                var statusLabel = document.getElementById("statusLabel");
-                if (this.checked) {
-                    statusLabel.innerHTML = "發布";
-                } else {
-                    statusLabel.innerHTML = "不發布";
-                }
-
-                statusCheckbox.addEventListener("change", function () {
-                    if (this.checked) {
-                        statusLabel.innerHTML = "發布";
-                    } else {
-                        statusLabel.innerHTML = "不發布";
-                    }
-                });
-            </script>
-
-        }
+	}

@@ -1,61 +1,78 @@
 ﻿@model EBookStore.Site.Models.BooksViewsModel.PurchaseOrderDapperVM
 @{
-    ViewBag.Title = "CreateFromExcel";
+	ViewBag.Title = "CreateFromExcel";
 }
 @section cdn{
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
-    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/Content/bookstyle.css" />
-    <script src="~/Scripts/jquery-3.7.0.js"></script>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+	<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="~/Content/bookstyle.css" />
+	<script src="~/Scripts/jquery-3.7.0.js"></script>
 
 }
 
-<div id="newbackground" class="table-container">
-    <h2>匯入Excel</h2>
+@section Style
+{
+	<style>
+		.container-fluid {
+			font-family: DFYuanBold-B5;
+			background-color: #FFFFDF;
+			border: 3px solid gray;
+			padding: 20px;
+		}
 
-    @using (Html.BeginForm("CreateFromExcel", "PurchaseOrderDapperVMs", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		h2 {
+			color: #696969;
+		}
+	</style>
+}
+<div class="container-fluid" style="width:90%">
+	<div id="newbackground" class="table-container">
+		<h2>匯入Excel</h2>
 
-        <div class="form-group">
-            <label for="excelFile">選取進貨訂單</label>
-            <input type="file" id="excelFile" name="excelFiles" class="form-control" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
-            <span id="fileError" class="text-danger" style="display: none;">只能選擇 .xlsx 檔案</span>
-        </div>
+		@using (Html.BeginForm("CreateFromExcel", "PurchaseOrderDapperVMs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+		{
+			@Html.AntiForgeryToken()
+			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group ">
-            <label for="excelSheetName">Excel 表單名稱</label>
-            <input type="text" id="excelSheetName" name="excelSheetName" class="form-control" />
-            @Html.ValidationMessageFor(model => model.excelSheetName, "", new { @class = "text-danger" })
-        </div>
+			<div class="form-group">
+				<label for="excelFile">選取進貨訂單</label>
+				<input type="file" id="excelFile" name="excelFiles" class="form-control" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+				<span id="fileError" class="text-danger" style="display: none;">只能選擇 .xlsx 檔案</span>
+			</div>
 
-        <input type="submit" value="上傳檔案" class="btn btn-primary btn-sm" />
-    }
+			<div class="form-group ">
+				<label for="excelSheetName">Excel 表單名稱</label>
+				<input type="text" id="excelSheetName" name="excelSheetName" class="form-control" />
+				@Html.ValidationMessageFor(model => model.excelSheetName, "", new { @class = "text-danger" })
+			</div>
 
-    <div class="mt-2">
-        @Html.ActionLink("返回目錄", "Index", null, new { @class = "btn btn-secondary btn-sm" })
-    </div>
+			<input type="submit" value="上傳檔案" class="btn btn-primary btn-sm" />
+		}
+
+		<div class="mt-2">
+			@Html.ActionLink("返回目錄", "Index", null, new { @class = "btn btn-secondary btn-sm" })
+		</div>
+	</div>
 </div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Content/book.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).ready(function () {
-            $("#excelFile").change(function () {
-                var fileName = $(this).val();
-                var extension = fileName.split('.').pop().toLowerCase();
+	@section Scripts {
+		@Scripts.Render("~/bundles/jqueryval")
+		<script src="~/Content/book.js"></script>
+		<script src="~/Scripts/bootstrap.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<script>
+			$(document).ready(function () {
+				$("#excelFile").change(function () {
+					var fileName = $(this).val();
+					var extension = fileName.split('.').pop().toLowerCase();
 
-                if (extension !== "xlsx") {
-                    $("#fileError").show();
-                    $(this).val("");
-                } else {
-                    $("#fileError").hide();
-                }
-            });
-        });
-    </script>
-}
+					if (extension !== "xlsx") {
+						$("#fileError").show();
+						$(this).val("");
+					} else {
+						$("#fileError").hide();
+					}
+				});
+			});
+		</script>
+	}

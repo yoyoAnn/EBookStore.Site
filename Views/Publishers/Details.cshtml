@@ -1,69 +1,86 @@
 ﻿@model EBookStore.Site.Models.EFModels.Publisher
 
 @{
-    ViewBag.Title = "Details";
+	ViewBag.Title = "Details";
 }
 @section cdn{
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
-    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/Content/bookstyle.css" />
-    <script src="~/Scripts/jquery-3.7.0.js"></script>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+	<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="~/Content/bookstyle.css" />
+	<script src="~/Scripts/jquery-3.7.0.js"></script>
 }
 
-<div id="newbackground" class="table-container">
-    
-    <h4>詳細資料</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+@section Style
+{
+	<style>
+		.container-fluid {
+			font-family: DFYuanBold-B5;
+			background-color: #FFFFDF;
+			border: 3px solid gray;
+			padding: 20px;
+		}
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+		h2 {
+			color: #696969;
+		}
+	</style>
+}
+<div class="container-fluid" style="width:90%">
+	<div id="newbackground" class="table-container">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
+		<h4>詳細資料</h4>
+		<hr />
+		<dl class="dl-horizontal">
+			<dt>
+				@Html.DisplayNameFor(model => model.Name)
+			</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
+			<dd>
+				@Html.DisplayFor(model => model.Name)
+			</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
+			<dt>
+				@Html.DisplayNameFor(model => model.Address)
+			</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
+			<dd>
+				@Html.DisplayFor(model => model.Address)
+			</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+			<dt>
+				@Html.DisplayNameFor(model => model.Phone)
+			</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+			<dd>
+				@Html.DisplayFor(model => model.Phone)
+			</dd>
 
-    </dl>
-    <p>
-        @Html.ActionLink("修改", "Edit", new { id = Model.Id }, new { @class = "btn btn-secondary btn-sm" }) |
-        @Html.ActionLink("返回目錄", "Index", null, new { @class = "btn btn-secondary btn-sm" })
-    </p>
+			<dt>
+				@Html.DisplayNameFor(model => model.Email)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.Email)
+			</dd>
+
+		</dl>
+		<p>
+			@Html.ActionLink("修改", "Edit", new { id = Model.Id }, new { @class = "btn btn-secondary btn-sm" }) |
+			@Html.ActionLink("返回目錄", "Index", null, new { @class = "btn btn-secondary btn-sm" })
+		</p>
+	</div>
 </div>
-@section Scripts{
-    <script src="~/Content/book.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
+	@section Scripts{
+		<script src="~/Content/book.js"></script>
+		<script src="~/Scripts/bootstrap.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<script>
          $(document).ready(function () {
             var successMessage = '@ViewBag.SuccessMessage';
             if (successMessage !== '') {
                 alert(successMessage);
             }
         });
-    </script>
-}
+		</script>
+	}

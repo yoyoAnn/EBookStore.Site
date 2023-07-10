@@ -3,62 +3,78 @@
 @using PagedList.Mvc;
 
 @section cdn{
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
-    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/Content/bookstyle2.css" />
-    <script src="~/Scripts/jquery-3.7.0.js"></script>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+	<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="~/Content/bookstyle2.css" />
+	<script src="~/Scripts/jquery-3.7.0.js"></script>
 
 }
+@section Style
+{
+	<style>
+		h2 {
+			color: #696969;
+			font-family: DFYuanBold-B5;
+		}
+
+		thead {
+			background-color: #fcfc4e;
+		}
+	</style>
+}
 @{
-    ViewBag.Title = "Index";
+	ViewBag.Title = "Index";
 }
 @if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
 {
-    <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+	<div class="alert alert-success">@ViewBag.SuccessMessage</div>
 }
+<div class="container-fluid" style="width:90%">
+	<div id="newbackground" class="table-container">
+		<h2>書籍分類</h2>
+		<div class="row mb-3">
+			<div class="col-6 d-flex justify-content-start">
+				@Html.ActionLink("新增類別", "Create", null, new { @class = "btn btn-primary" })
+			</div>
+		</div>
 
-<div id="newbackground" class="table-container">
-    <h2>書籍分類</h2>
-    <div class="row mb-3">
-        <div class="col-6 d-flex justify-content-start">
-            @Html.ActionLink("新增類別", "Create", null, new { @class = "btn btn-primary" })
-        </div>
-    </div>
 
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						@Html.DisplayNameFor(model => model.Name)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.DisplayOrder)
+					</th>
+					<th></th>
+				</tr>
+			</thead>
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DisplayOrder)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DisplayOrder)
-                </td>
-                <td>
-                    @Html.ActionLink("修改", "Edit", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm" }) 
-                    @Html.ActionLink("詳細資料", "Details", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm" }) 
-                </td>
-            </tr>
-        }
-    </table>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Name)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.DisplayOrder)
+					</td>
+					<td>
+						@Html.ActionLink("修改", "Edit", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm" })
+						@Html.ActionLink("詳細資料", "Details", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm" })
+					</td>
+				</tr>
+			}
+		</table>
+	</div>
 </div>
 
-    
-@section Scripts{
-    <script src="~/Content/book.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-}
+
+	@section Scripts{
+		<script src="~/Content/book.js"></script>
+		<script src="~/Scripts/bootstrap.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	}
