@@ -1,155 +1,209 @@
 ﻿@model IEnumerable<EBookStore.Site.Models.EFModels.CustomerServiceMail>
 
 @{
-    ViewBag.Title = "Index";
-    var criteria = ViewBag.Criteria as EBookStore.Site.Models.ViewModels.CSMailCriteria;
+	ViewBag.Title = "Index";
+	var criteria = ViewBag.Criteria as EBookStore.Site.Models.ViewModels.CSMailCriteria;
 
-    var problemTypes = ViewBag.ProblemTypeId as SelectList;
-    string s_problemTypeId = criteria.ProblemTypeId.HasValue ? criteria.ProblemTypeId.Value.ToString() : "";
+	var problemTypes = ViewBag.ProblemTypeId as SelectList;
+	string s_problemTypeId = criteria.ProblemTypeId.HasValue ? criteria.ProblemTypeId.Value.ToString() : "";
 
-    string s_MailStatus = criteria.MailStatus;
+	string s_MailStatus = criteria.MailStatus;
 
 }
 @section cdn{
-    @*<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />*@
-    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+	<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+	<!-- Custom styles for this page -->
+	<link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 }
 
 @section Style
 {
-    <style>
+	<style>
         .container-fluid {
-            /*background-color: #FFFFDF*/
-            /*margin-top:5px*/
         }
         table {
-            border: 2px solid #CCCCCC;
+            font-size: 16px;
+            width: 500px;
+            margin: 0 auto;
+            background-color: #FFFFDF;
         }
-        /*.table-light tbody tr td {
-            border: 2px solid #CCCCCC;
-        }*/
-
-    </style>
+		.fixed-cell {
+			/*width: 200px;*/ /* 根據需要調整固定寬度 */
+			white-space: nowrap;
+		}
+		h2 {
+			color: #696969;
+			font-family: DFYuanBold-B5;
+		}
+        thead {
+            background-color: #fcfc4e;
+        }
+	</style>
 }
-<div class="container-fluid">
-    <h2>客服管理</h2>
-    <form method="get">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6">
-            <div class="col">
-                <select name="MailStatus" id="s_MailStatus" class="form-control">
-                    <option value="All" @(s_MailStatus == "All" ? "selected" : "")>全部信件</option>
-                    <option value="NotRead" @(s_MailStatus == "NotRead" ? "selected" : "")>未讀取</option>
-                    <option value="NotReplied" @(s_MailStatus == "NotReplied" ? "selected" : "")>未回覆</option>
-                    <option value="Read" @(s_MailStatus == "Read" ? "selected" : "")>已讀取</option>
-                    <option value="Replied" @(s_MailStatus == "Replied" ? "selected" : "")>已回覆</option>
-                </select>
-            </div>
-            <div class="col">
-                <select name="ProblemTypeId" id="s_problemTypeId" class="form-control">
-                    @foreach (var item in problemTypes)
-                    {
-                        <option value="@item.Value" @(s_problemTypeId == item.Value ? "selected" : "")>@item.Text</option>
-                    }
-                </select>
-            </div>
-            <div class="col replied">
-                <input type="text" class="form-control" name="Account" id="s_Account" value="@criteria.Account" placeholder="會員帳號">
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" name="ProblemStatement" id="s_Statement" value="@criteria.ProblemStatement" placeholder="問題敘述">
-            </div>
-            <div class="col" id="datetimepicker1">
-                <input type="date" class="form-control" name="CreatedTime" id="s_CreatedTime" value="@criteria.CreatedTime">
-            </div>
-            <div class="col align-self-end">
-                <button class="btn btn-primary">Search</button>
-            </div>
-        </div>
-    </form>
+<div class="container-fluid" style="width:90%">
+	<h2 class="text-center">信件列表</h2>
+	<form method="get">
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6">
+			<div class="col">
+				<select name="MailStatus" id="s_MailStatus" class="form-control">
+					<option value="All" @(s_MailStatus == "All" ? "selected" : "")>全部信件</option>
+					<option value="NotRead" @(s_MailStatus == "NotRead" ? "selected" : "")>未讀取</option>
+					<option value="NotReplied" @(s_MailStatus == "NotReplied" ? "selected" : "")>未回覆</option>
+					<option value="Read" @(s_MailStatus == "Read" ? "selected" : "")>已讀取</option>
+					<option value="Replied" @(s_MailStatus == "Replied" ? "selected" : "")>已回覆</option>
+				</select>
+			</div>
+			<div class="col">
+				<select name="ProblemTypeId" id="s_problemTypeId" class="form-control">
+					@foreach (var item in problemTypes)
+					{
+						<option value="@item.Value" @(s_problemTypeId == item.Value ? "selected" : "")>@item.Text</option>
+					}
+				</select>
+			</div>
+			<div class="col replied">
+				<input type="text" class="form-control" name="Account" id="s_Account" value="@criteria.Account" placeholder="會員帳號">
+			</div>
+			<div class="col">
+				<input type="text" class="form-control" name="ProblemStatement" id="s_Statement" value="@criteria.ProblemStatement" placeholder="問題敘述">
+			</div>
+			<div class="col" id="datetimepicker1">
+				<input type="date" class="form-control" name="CreatedTime" id="s_CreatedTime" value="@criteria.CreatedTime">
+			</div>
+			<div class="col d-flex justify-content-end align-self-end">
+				<button class="btn btn-primary">搜尋</button>
+			</div>
+		</div>
+	</form>
 
-    <div class="mt-3">
-        <table class="table table-responsive-lg">
-            <thead class="table-dark">
-                <tr>
-                    <th>
-                        信箱
-                    </th>
-                    <th>
-                        使用者
-                    </th>
-                    <th>
-                        問題種類
-                    </th>
-                    <th>
-                        問題敘述
-                    </th>
-                    <th>
-                        發問時間
-                    </th>
-                </tr>
-            </thead>
-            <tbody class="table-light">
-                @foreach (var item in Model)
-                {
-                    <tr class="mails" data-id="@item.Id" @(item.IsReplied ? "isReplied" : string.Empty) @(item.IsRead ? "IsRead" : string.Empty)>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UserAccount)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ProblemType.Name)
-                        </td>
-                        <td>
-                            <p class="ellipsis">@Html.DisplayFor(modelItem => item.ProblemStatement)</p>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CreatedTime)
-                        </td>
-                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+	<div class="mt-3" style="overflow-y: scroll;">
+		<table class="table table-bordered fixed-cell" id="dataTable" style="width:100%">
+			<thead>
+				<tr>
+					<th>
+						信箱
+					</th>
+					<th>
+						使用者
+					</th>
+					<th>
+						問題種類
+					</th>
+					<th>
+						問題敘述
+					</th>
+					<th>
+						發問時間
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr class="mails" data-id="@item.Id" @(item.IsReplied ? "isReplied" : string.Empty) @(item.IsRead ? "IsRead" : string.Empty)>
+						<td>
+							@Html.DisplayFor(modelItem => item.Email)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.UserAccount)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.ProblemType.Name)
+						</td>
+						<td>
+							<p class="ellipsis">@Html.DisplayFor(modelItem => item.ProblemStatement)</p>
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.CreatedTime)
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
 </div>
-    @section scripts{
-        @Scripts.Render("~/bundles/jquery")
 
-        <script>
-            var basement = "https://localhost:44314";
-            $(function () {
-                //$('#datetimepicker1').datetimepicker({
-                //    format: "YYYY/MM/DD"
-                //});
 
-                $('.mails').each(function () {
-                    if (this.hasAttribute('isReplied')) {
-                        $(this).addClass("bg-gray-200");
-                    }
+@section scripts{
+	@Scripts.Render("~/bundles/jquery")
 
-                    if (this.hasAttribute('isRead')==false){
-                        $(this).addClass("text-lg font-weight-bold");
-                    }
+	<script src="~/Scripts/vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="~/Scripts/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-                    $(this).on("click", function () {
-                        var id = $(this).attr("data-id");
-                        $(location).attr("href", "/CustomerServiceMails/Details?id=" + id);
-                    });
-                });
-                
-                // 內容超過20個字以"..."取代
-                var length = 20; 
-                $(".ellipsis").each(function () {
-                    if ($(this).text().length > length) {
-                        $(this).attr("title", $(this).text());
-                        var text = $(this).text().substring(0, length - 1) + "...";
-                        $(this).text(text);
-                    }
-                });
-            });
-        </script>
-    }
+	<script>
+		var basement = "https://localhost:44314";
+
+		$(document).ready( function () {
+			$("#dataTable").DataTable({
+				"bPaginate": true, // 顯示換頁
+				"searching": true, // 顯示搜尋
+				"fixedHeader": false, // 標題置頂
+				"lengthMenu": [8, 15, 30],  //顯示項目設定:10筆、20筆...
+				"autoWidth": true,
+				"ordering": false,
+				language: {
+					/*"order": [[5, 'desc']],*/
+					"searchPlaceholder": "關鍵字搜尋",
+					"emptyTable": "無資料...",
+					"processing": "處理中...",
+					"loadingRecords": "載入中...",
+					"lengthMenu": "顯示 _MENU_ 筆",
+					"zeroRecords": "無搜尋結果",
+					"info": "_START_ 至 _END_ / 共 _TOTAL_ 筆",
+					"infoEmpty": "尚無資料",
+					"infoFiltered": "(從 _MAX_ 筆資料過濾)",
+					"infoPostFix": "",
+					"search": "",
+					"oPaginate": {
+						"sFirst": "首頁",
+						"sPrevious": "上一頁",
+						"sNext": "下一頁",
+						"sLast": "末頁"
+					}
+				},
+				"fnDrawCallback": function (oSettings) {
+					// 內容超過n個字以"..."取代
+					var length = 30;
+					$(".ellipsis").each(function () {
+						if ($(this).text().length > length) {
+							$(this).attr("title", $(this).text());
+							var text = $(this).text().substring(0, length - 1) + "...";
+							$(this).text(text);
+						}
+					});
+
+					$('.mails').each(function () {
+						if (this.hasAttribute('isReplied')) {
+							/*$(this).addClass("bg-gray-200");*/
+                            $(this).css("background-color", "#ffffff");
+						}
+
+						if (this.hasAttribute('isRead') == false) {
+							$(this).addClass("black font-weight-bold");
+						}
+
+						$(this).on("click", function () {
+							var id = $(this).attr("data-id");
+							$(location).attr("href", "/CustomerServiceMails/Details?id=" + id);
+						});
+					});
+				}
+			});
+
+			$("#dataTable_length").each(function () {
+				$(this).addClass("d-flex justify-content-start");
+				$("div > label").css("width", "100%");
+				$("div > label > select").css({ "display": "inline-block", "width": "60px" });
+			});
+
+			$("#dataTable_filter").each(function () {
+				$(this).addClass("d-flex justify-content-end");
+				$("div > label").css("width", "150px");
+				$("div > label > input").css({ "display": "inline-block", "width": "100%" });
+			});
+		});
+	</script>
+
+}

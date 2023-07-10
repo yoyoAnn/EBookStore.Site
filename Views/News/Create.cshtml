@@ -62,9 +62,9 @@
     <div class="row mb-3">
 
         <label class="form-label" for="@Html.NameFor(model => model.Image)">@Html.DisplayNameFor(model => model.Image)</label>
-
+       
         <div style="width: 500px;">
-            <input type="file" name="file1" class="form-control" />
+            <input type="file" name="file1" class="form-control" style="width:500px;"/>
             @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -79,7 +79,7 @@
     </div>
     <div class="row mb-3" style="margin-left:450px">
         <a href="@Url.Action("Index")" class="btn btn-outline-secondary" style="margin-right:8px">返回清單</a>
-        <input type="submit" value="新增" class="btn btn-outline-secondary" />
+        <input type="submit" value="新增" class="btn btn-outline-primary" />
     </div>
 }
 

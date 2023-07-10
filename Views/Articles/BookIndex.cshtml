@@ -1,0 +1,23 @@
+﻿@model IEnumerable<EBookStore.Site.Models.ViewModels.BooksIndexForArticleVm>
+
+
+@foreach (var item in Model)
+{
+    <tr class="book-show" data-id="@item.Id" data-name="@item.Name">
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.PublisherName)
+        </td>
+
+
+    </tr>
+}
+
+@*</table>*@
+

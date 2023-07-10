@@ -11,8 +11,13 @@
 <div>
     <table class="table">
         <tbody>
+             <tr>
+                <th><div style="width:45px">日期</div></th>
+                <td>@Html.DisplayFor(model => model.CreatedTime)</td>
+            </tr>
+
             <tr>
-                <th><div style="width:45px">書名</div></th>
+                <th><div>書名</div></th>
                 <td>@Html.DisplayFor(model => model.Book.Name)</td>
             </tr>
             <tr>
@@ -41,10 +46,6 @@
                     }
                 </td>
 
-            </tr>
-            <tr>
-                <th>內容</th>
-                <td>@Html.DisplayFor(model => model.Content)</td>
             </tr>
         </tbody>
     </table>

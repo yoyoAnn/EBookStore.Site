@@ -30,7 +30,7 @@ namespace EBookStore.Site.Models.ViewModels
 		{
 			get
 			{
-				return this.Content.Length > 50
+				return this.Content.Length > 20
 					? this.Content.Substring(0, 20) + "..."
 					: this.Content;
 			}

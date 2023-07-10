@@ -3,13 +3,28 @@
 @{
     ViewBag.Title = "Details";
 }
+@section Style
+{
+    <style>
+        .container-fluid {
+            font-family: DFYuanBold-B5;
+            background-color: #FFFFDF;
+            border:3px solid gray;
+            padding:20px;
+        }
 
+        h2 {
+            color: #696969;
+            font-family: DFYuanBold-B5;
+        }
+    </style>
+}
 
-<div class="container-fluid">
-    <h2>信件內容</h2>
+<div class="container-fluid" style="width:500px">
+    <h2 class="text-center">信件內容</h2>
     <hr />
-    <div class="row row-cols-1 row-cols-sm-2">
-        <div class="col mt-3">
+    <div class="row row-cols-1">
+        <div class="col">
             <label class="form-label">會員帳號</label>
             @Html.EditorFor(model => model.UserAccount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
         </div>
@@ -29,14 +44,11 @@
             <label class="form-label">問題敘述</label>
             @Html.TextAreaFor(model => model.ProblemStatement, new { @class = "form-control", @rows = 5, @readonly = "readonly", @disabled = "disabled" })
         </div>
-        <div class="col mt-3 isReplied" data-id="@Model.Id" data-isReplied="@Model.IsReplied">
-            <label class="form-label">已回覆使用者</label>
+        <div class="col mt-3 isReplied text-center" data-id="@Model.Id" data-isReplied="@Model.IsReplied">
+            <label class="form-label">-已回覆使用者-</label>
         </div>
     </div>
 </div>
-@*<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>*@
 
 @section scripts{
     @Scripts.Render("~/bundles/jquery")
@@ -56,4 +68,4 @@
             }
         });
     </script>
-    }
+}

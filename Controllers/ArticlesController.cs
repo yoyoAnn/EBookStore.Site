@@ -17,6 +17,36 @@ namespace EBookStore.Site.Controllers
     {
 		//private AppDbContext db = new AppDbContext();
 
+
+		public PartialViewResult BookIndex(string bookName)
+		{
+			AppDbContext db = new AppDbContext();
+
+			IQueryable<Book> query = db.Books;
+
+			if (string.IsNullOrEmpty(bookName) == false)
+			{
+				//如果Name有值
+				query = query.Where(p => p.Name.Contains(bookName));
+			}
+
+			List<BooksIndexForArticleVm> book = query.Select(x => new BooksIndexForArticleVm
+			{
+				Id = x.Id,
+				Name = x.Name,
+				PublisherId = x.PublisherId,
+				PublisherName = x.Publisher.Name,
+				CategoryId = x.CategoryId,
+				CategoryName = x.Category.Name
+				
+			}).ToList();
+
+			return PartialView(book);
+		}
+
+
+
+
 		public PartialViewResult WriterIndex(string writerName)
 		{
 			//IEnumerable<WriterIndexVm> vm = GetWriterList();
@@ -134,7 +164,7 @@ namespace EBookStore.Site.Controllers
 			if (result.IsFail)
 			{
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
-				//這裡應該還要加，如果選了空白以後會跳出什麼錯誤。
+				
 				return View(vm);
 			}
 			return RedirectToAction("Index");
@@ -146,14 +176,14 @@ namespace EBookStore.Site.Controllers
 
 		private Result UpdateArticleProfile(ArticleEditVm vm)
 		{
-			if(vm.WriterId==0||vm.BookId ==0) return Result.Fail("找不到此筆專欄");
+			//if(vm.WriterId==0||vm.BookId ==0) return Result.Fail("找不到此筆專欄");
 
 			var db = new AppDbContext();
 			var articleInDb = db.Articles.FirstOrDefault(x => x.Id == vm.Id);
 
 			if (articleInDb == null) return Result.Fail("找不到此筆專欄");
-			articleInDb.BookId = vm.BookId;
-			articleInDb.WriterId = vm.WriterId;
+			//articleInDb.BookId = vm.BookId;
+			//articleInDb.WriterId = vm.WriterId;
 			articleInDb.Title = vm.Title;
 			articleInDb.Content	= vm.Content;
 			articleInDb.Status = vm.Status;
@@ -174,7 +204,9 @@ namespace EBookStore.Site.Controllers
 			{
 				Id = articleInDb.Id,
 				BookId = articleInDb.BookId,
+				BookName = articleInDb.Book.Name,
 				WriterId = articleInDb.WriterId,
+				WriterName = articleInDb.Writer.Name,
 				Title = articleInDb.Title,
 				Content = articleInDb.Content,
 				PageViews = articleInDb.PageViews,

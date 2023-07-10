@@ -9,11 +9,8 @@
 
 }
 @section cdn{
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 }
-
-
 
 @section Style
 {
@@ -74,6 +71,7 @@
 
 <section class="container">
     <form method="get">
+        @Html.AntiForgeryToken()
         <div class="row">
             <div class="col-md-12 d-flex justify-content-center">
                 <div class="mb-3 col-md-3">
@@ -89,15 +87,37 @@
 
                 <div class="mb-3 col-md-3">
                     <label for="s_name">帳號</label>
-                    <input type="text" class="form-control" name="name" id="s_name" value="@criteria.Name">
+                    <input type="text" class="form-control" name="Name" id="s_name" value="@criteria.Name">
+                </div>
+
+                <div class="mb-3 col-md-3" id="Date">
+                    <label for="s_date_start">日期:(起)</label>
+                    <input type="text" class="form-control" name="date_start" id="s_date_start" value="@criteria.Date_Start">
+                </div>
+
+                <div class="mb-3 col-md-3" id="Date">
+                    <label for="s_date_end">日期:(迄)</label>
+                    <input type="text" class="form-control" name="date_end" id="s_date_end" value="@criteria.Date_End">
                 </div>
 
 
                 <div class="mb-3 col-md-2 align-self-end">
                     <button class="btn btn-primary">Search</button>
                 </div>
+
+
+
+            </div>
+            <div class="mb-3 col-md-12 d-flex px-5">
+                <div class="fa-solid fa-arrow-rotate-left fa-xl"></div>
+                @*<input type="submit" value="出貨" class="btn btn-primary btn-lg ml-auto" />*@
+                @*<button type="button" class="btn btn-danger btn-lg" id="CancelOrder">取消訂單</button>*@
+
+                @Html.ActionLink("新增批次訂單", "Create", null, new { @class = "btn btn-light ml-auto" })
             </div>
         </div>
+
+
     </form>
 </section>
 
@@ -205,8 +225,8 @@
                         @Html.DisplayFor(modelItem => item.FormattedTotalPayment)
                     </td>
                     <td>
-                        @Html.ActionLink("編輯", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("刪除", "Delete", new { id = item.Id })
+                        @Html.ActionLink("編輯", "Edit", new { id = item.Id }, new { @class = "btn btn-warning " }) |
+                        <button class="deleteButton btn btn-danger" id="deleteButton" data-orderId="@item.Id">刪除</button>
                     </td>
                 </tr>
             }
@@ -215,8 +235,13 @@
 </div>
 
 @section scripts {
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(document).ready(function () {
             $('#orderTable').DataTable({
@@ -246,7 +271,91 @@
                     }
                 },
             });
+
+
+            $(".deleteButton").click(function (event) {
+                event.preventDefault();
+                var orderId = $(this).data('orderid'); // 獲取訂單ID
+
+                // 顯示SweetAlert的確認對話框
+                Swal.fire({
+                    title: '確認',
+                    text: '確定刪除整筆訂單？',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: '確定',
+                    cancelButtonText: '取消'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // 獲取防偽權杖的值
+                        var antiForgeryToken = $('input[name="__RequestVerificationToken"]').val();
+                        //// 創建 FormData 物件
+                        //var formData = new FormData();
+                        //var formData2 = new FormData();
+                        //formData2.append('__RequestVerificationToken', antiForgeryToken);
+                        //formData.append('id', orderId);
+
+                        $.ajax({
+                            url: "/Orders/Delete2",
+                            type: "POST",
+                            data: {
+                                __RequestVerificationToken: antiForgeryToken
+                                , name: $("#deleteButton").val()
+                            },
+
+                            data: { id: orderId },
+                            success: function (result) {
+                                // 成功處理後的操作，例如重新導向或顯示訊息
+                                location.href = "/Orders";
+                            },
+                            error: function () {
+                                // 錯誤處理，例如顯示錯誤訊息
+                                Swal.fire('錯誤', '發生未知的錯誤！', 'error');
+                            }
+                        });
+                    }
+                });
+            });
         });
+
+        //$('#Date_Start').datetimepicker({
+        //    date: null, //一開始輸入框的日期為空
+        //    format: 'YYYY/MM/DD', //日期的顯示格式
+        //    locale: moment.locale('zh-tw'), //國別
+        //   /* daysOfWeekDisabled: [0, 6],*/ //隱藏的天數0為周日6為星期六
+        //    minDate: moment().add(1, 'days'), //顯示最小天數
+        //    maxDate: moment().add(30, 'days'), //顯示最大天數，30為最大的顯示範圍為一個月為限
+        //    //disabledDates:
+        //    //    [ //隱藏的日期
+        //    //        moment().add(1, 'days'), //前一日
+        //    //        moment().add(2, 'days'), //前二日
+        //    //        '2021-10-10', //特別日期
+        //    //        '2021-12-25'
+        //    //    ]
+        //});
+
+        const date = document.querySelectorAll('#Date .form-control');
+
+        date.forEach(function (dt) {
+            $(dt).datetimepicker({
+                date: dt.value?.split(' ')[0], //一開始輸入框的日期為空
+                format: 'YYYY/MM/DD', //日期的顯示格式
+                locale: moment.locale('zh-tw'), //國別
+                /* daysOfWeekDisabled: [0, 6],*/ //隱藏的天數0為周日6為星期六
+                //minDate: moment().add(1, 'days'), //顯示最小天數
+                //maxDate: moment().add(30, 'days'), //顯示最大天數，30為最大的顯示範圍為一個月為限
+                //disabledDates:
+                //    [ //隱藏的日期
+                //        moment().add(1, 'days'), //前一日
+                //        moment().add(2, 'days'), //前二日
+                //        '2021-10-10', //特別日期
+                //        '2021-12-25'
+                //    ]
+            });
+        })
+
+
+
 
 
     </script>

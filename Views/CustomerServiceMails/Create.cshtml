@@ -1,54 +1,64 @@
 ﻿@model EBookStore.Site.Models.ViewModels.ReplyMailCreateVM
 
 @{
-    ViewBag.Title = "Create";
+	ViewBag.Title = "Create";
 }
-
-@using (Html.BeginForm()) 
+@section cdn{
+	<link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+@section Style
 {
-    @Html.AntiForgeryToken()
+	<style>
+        .container-fluid {
+            font-family: DFYuanBold-B5;
+            background-color: #FFFFDF;
+            border: 3px solid gray;
+            padding: 20px;
+        }
+		h2 {
+			color: #696969;
+			font-family: DFYuanBold-B5;
+		}
+	</style>
+}
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
 
-<div class="container-fluid">
-    <h2>回覆信件</h2>
+<div class="container-fluid" style="width:500px">
+    <h2 class="text-center">回覆信件</h2>
     <hr />
-    @Html.HiddenFor(model => model.CSId)
-    <form>
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="row row-cols-1">
-            <div class="col mt-3">
+    <div class="row row-cols-1">
+        <form>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.CSId)
+            <div class="form-group col">
                 @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label" })
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "mailtext form-control" } })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
-
-            <div class="col mt-3">
+            <div class="form-group col">
                 @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "form-label" })
                 @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "titletext form-control" } })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
-
-            <div class="col mt-3">
+            <div class="form-group col">
                 @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "form-label" })
                 @Html.TextAreaFor(model => model.Content, new { @class = "contenttext form-control", @rows = 5 })
                 @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
             </div>
-
-            <div class="mb-3 col mt-3">
-                <input type="submit" value="寄出" class="btn btn-primary" />
-                <input type="reset" value="清除" class="btn btn-info reset" />
+            <div class="form-group text-center">
+                <input type="submit" value="寄出" class="btn btn-danger" />
+                <input type="reset" value="清除" class="btn btn-outline-primary reset" />
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
-    }
+}
 
-    @*<div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>*@
-
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        <script>
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+	<script>
             $(function () {
                 var emailText = `@ViewBag.Email`;
                 var titleText = `@ViewBag.MailTitle`;
@@ -64,5 +74,5 @@
                     });
                 });
             });
-        </script>
-    }
+	</script>
+}

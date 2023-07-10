@@ -15,9 +15,10 @@ namespace EBookStore.Site.Models.EFModels
             OrderItems = new HashSet<OrderItem>();
         }
 
-        public long Id { get; set; }
 
-        public int UserId { get; set; }
+        public long? Id { get; set; }
+
+        public int? UserId { get; set; }
 
         [Required]
         [StringLength(255)]
@@ -46,6 +47,7 @@ namespace EBookStore.Site.Models.EFModels
         [Display(Name = "備註")]
         public string Remark { get; set; }
 
+        [Required]
         [Display(Name = "下單時間")]
         public DateTime OrderTime { get; set; }
 
