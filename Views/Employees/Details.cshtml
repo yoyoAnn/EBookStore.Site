@@ -1,82 +1,89 @@
 ﻿@model EBookStore.Site.Models.EFModels.Employee
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "刪除員工";
 }
 
-<h2>Details</h2>
+<html>
 
-<div>
-    <h4>Employee</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Role.Name)
-        </dt>
+<head>
+    <!--<link rel="stylesheet" href="style.css">-->
+    <style>
+        h3.text-danger {
+            color: red;
+            font-size: 24px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Role.Name)
-        </dd>
+        .dl-horizontal {
+            text-align: center;
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Account)
-        </dt>
+        .dl-horizontal dt {
+            font-weight: bold;
+            text-align: center;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Account)
-        </dd>
+        .dl-horizontal dd {
+            margin-left: 0;
+            text-align: center;
+        }
 
-        @*<dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
+        .form-actions {
+            margin-top: 30px;
+            text-align: center;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>*@
+        .form-actions input[type="submit"] {
+            margin-right: 10px;
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+        .form-actions a {
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+<body>
+    <h3 class="text-danger">您確定要刪除此員工?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.Role.Name)</dt>
+            <dd>@Html.DisplayFor(model => model.Role.Name)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+            <dt>@Html.DisplayNameFor(model => model.Account)</dt>
+            <dd>@Html.DisplayFor(model => model.Account)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dt>@Html.DisplayNameFor(model => model.Email)</dt>
+            <dd>@Html.DisplayFor(model => model.Email)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
+            <dt>@Html.DisplayNameFor(model => model.Name)</dt>
+            <dd>@Html.DisplayFor(model => model.Name)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
+            <dt>@Html.DisplayNameFor(model => model.Gender)</dt>
+            <dd>@Html.DisplayFor(model => model.Gender)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
+            <dt>@Html.DisplayNameFor(model => model.Phone)</dt>
+            <dd>@Html.DisplayFor(model => model.Phone)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
+            <dt>@Html.DisplayNameFor(model => model.CreatedTime)</dt>
+            <dd>@Html.DisplayFor(model => model.CreatedTime)</dd>
+        </dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedTime)
-        </dt>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-        <dd>
-            @Html.DisplayFor(model => model.CreatedTime)
-        </dd>
+            <div class="form-actions">
+                <input type="submit" value="刪除" class="btn btn-danger" />
+                @Html.ActionLink("返回列表", "Index", null, new { @class = "btn btn-primary" })
+            </div>
+        }
+    </div>
+</body>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</html>

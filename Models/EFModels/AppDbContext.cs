@@ -306,6 +306,8 @@ namespace EBookStore.Site.Models.EFModels
         public System.Data.Entity.DbSet<EBookStore.Site.Models.Infra.OrdersItemDapperVM> OrdersItemDapperVMs { get; set; }
 
         public System.Data.Entity.DbSet<EBookStore.Site.Models.BooksViewsModel.PurchaseOrderDapperVM> PurchaseOrderDapperVMs { get; set; }
+
+        public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewModels.EmployeeEditVM> EmployeeEditVMs { get; set; }
     }
 }
 
