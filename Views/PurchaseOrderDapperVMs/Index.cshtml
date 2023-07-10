@@ -1,0 +1,149 @@
+﻿@model IEnumerable<EBookStore.Site.Models.BooksViewsModel.PurchaseOrderDapperVM>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+@if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+{
+    <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+}
+@if (!string.IsNullOrEmpty(ViewBag.NonExistingBooks))
+{
+    <div class="alert alert-danger">@ViewBag.NonExistingBooks</div>
+}
+
+@section cdn{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/bookstyle2.css" />
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
+
+}
+
+<div id="newbackground" class="table-container">
+    <H2>進貨管理</H2>
+    <div class="row mb-3">
+        <div class="col-6 d-flex justify-content-start">
+            @Html.ActionLink("新增訂單", "Create", null, new { @class = "btn btn-primary mr-2" })
+            @Html.ActionLink("從Excel創建", "CreateFromExcel", null, new { @class = "btn btn-primary mr-2" })
+            <button id="submitAllBtn" class="btn btn-primary mr-2">全部送出</button>
+            <button id="DeleteAllBtn" class="btn btn-primary">一鍵刪除</button>
+        </div>
+    </div>
+
+
+
+    <table class="table">
+
+        <thead>
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.BookName)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.PublisherName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreateTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Qty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Detail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PurchasePrice)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PublisherName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Qty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PurchasePrice)
+                    </td>
+
+                    <td id="actions-@item.Id">
+                        @if (ViewBag.SelectedItemId == item.Id)
+                        {
+                            @Html.ActionLink("詳細資料", "Details", new { id = item.Id })
+                        }
+                        else
+                        {
+                            <div id="actions-content-@item.Id">
+                                @Html.ActionLink("詳細資料", "Details", new { id = item.Id })
+                                <span> | </span>
+                                @Html.ActionLink("修改", "Edit", new { id = item.Id })
+                                <span> | </span>
+                                @Html.ActionLink("刪除", "Delete", new { id = item.Id })
+                                <span> | </span>
+                                @Html.ActionLink("商品入庫", "UpdateBookStock", new { id = item.Id })
+                            </div>
+
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+
+@section Scripts{
+    <script src="~/Content/book.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $("#submitAllBtn").click(function () {
+            $.ajax({
+                url: "/PurchaseOrderDapperVMs/UpdateToHistory",  // 替換為控制器和方法的實際路徑
+                type: "POST",
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    alert(失敗);
+                }
+            });
+        });
+    </script>
+    <script>
+        $("#DeleteAllBtn").click(function () {
+            $.ajax({
+                url: "/PurchaseOrderDapperVMs/DeleteAll",
+                type: "POST",
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    alert(失敗);
+                }
+            });
+        });
+    </script>
+}

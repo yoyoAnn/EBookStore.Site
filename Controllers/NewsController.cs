@@ -59,7 +59,7 @@ namespace EBookStore.Site.Controllers
 
 			}
 
-			var news = query.ToList().Select(x => new NewsIndexVm
+			var news = query.OrderByDescending(x=>x.CreatedTime).ToList().Select(x => new NewsIndexVm
 			{
 				Id = x.Id,
 				Title = x.Title,
@@ -108,11 +108,17 @@ namespace EBookStore.Site.Controllers
         {
 			if (ModelState.IsValid == false) return View(vm);
 
-			string path = Server.MapPath("~/Uploads/NewsImage");
-			string fileName = SaveUploadedFile(path, file1);
+			if (file1 != null)
+			{
+				string path = Server.MapPath("~/Uploads/NewsImage");
+				string fileName = SaveUploadedFile(path, file1);
 
-			vm.Image = fileName;
-
+				vm.Image = fileName;
+			}
+			else
+			{
+				vm.Image = vm.ImageText;
+			}
             EditNews(vm);
 
 			return RedirectToAction("Index");
@@ -180,6 +186,7 @@ namespace EBookStore.Site.Controllers
                 Content = newsInDb.Content,
                 Status = newsInDb.Status,
                 Image   = newsInDb.Image,
+				ImageText = newsInDb.Image,
                 CreatedTime = newsInDb.CreatedTime
 
             };

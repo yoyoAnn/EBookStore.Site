@@ -100,6 +100,12 @@
     <Reference Include="NPOI.OpenXmlFormats, Version=2.6.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>packages\NPOI.2.6.0\lib\net472\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
       <HintPath>packages\SixLabors.Fonts.1.0.0-beta19\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
     </Reference>
@@ -254,6 +260,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Content Include="Content\bookstyle2.css" />
     <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BooksDapperVMsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
@@ -266,16 +273,21 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\RepliedMailsController.cs" />
+    <Compile Include="Controllers\PurchaseOrderDapperVMsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\WritersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BooksViewsModel\BooksDapperVM.cs" />
+    <Compile Include="Models\BooksViewsModel\PurchaseOrderDapperVM.cs" />
     <Compile Include="Models\DTOs\AuthorDto.cs" />
     <Compile Include="Models\DTOs\BooksDto.cs" />
     <Compile Include="Models\DTOs\CategoriesDto.cs" />
     <Compile Include="Models\DTOs\PublisherDto.cs" />
+    <Compile Include="Models\Infra\DapperRepository\RepliedMailDapperRepository.cs" />
+    <Compile Include="Models\ViewModels\RepliedMailEditVM.cs" />
+    <Compile Include="Models\ViewModels\RepliedMailVM.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Article.cs" />
     <Compile Include="Models\EFModels\Author.cs" />
@@ -308,6 +320,7 @@
     <Compile Include="Models\Infra\AuthorHelper.cs" />
     <Compile Include="Models\Infra\BookHelper.cs" />
     <Compile Include="Models\Infra\DapperRepository\BookDapperRepository.cs" />
+    <Compile Include="Models\Infra\DapperRepository\PurchaseOrdersDapper.cs" />
     <Compile Include="Models\Infra\OrderItemAllDapperRepository.cs" />
     <Compile Include="Models\Infra\OrderInsert.cs" />
     <Compile Include="Models\Infra\OrderUpdateFee.cs" />
@@ -316,6 +329,7 @@
     <Compile Include="Models\interface\IBooks.cs" />
     <Compile Include="Models\interface\ICategories.cs" />
     <Compile Include="Models\interface\IPublisher.cs" />
+    <Compile Include="Models\interface\IPurchaseOrders.cs" />
     <Compile Include="Models\Servives\AuthorService.cs" />
     <Compile Include="Models\Servives\BooksService.cs" />
     <Compile Include="Models\Servives\CategoriesServer.cs" />
@@ -372,6 +386,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -381,6 +396,8 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\book.js" />
+    <Content Include="Content\Font\SourceCodePro-Italic-VariableFont_wght.ttf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -399,6 +416,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Content\bookstyle.css" />
     <Content Include="Views\Orders\Print.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -414,13 +432,9 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Books\Create.cshtml" />
-    <Content Include="Views\Books\Delete.cshtml" />
-    <Content Include="Views\Books\Details.cshtml" />
-    <Content Include="Views\Books\Edit.cshtml" />
-    <Content Include="Views\Books\Index.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Orders\Delete.cshtml" />
-    <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Comments\Create.cshtml" />
@@ -467,8 +481,6 @@
     <Content Include="Views\BooksDapperVMs\Details.cshtml" />
     <Content Include="Views\BooksDapperVMs\Edit.cshtml" />
     <Content Include="Views\BooksDapperVMs\Index.cshtml" />
-    <Content Include="Views\BooksDapperVMs\CreateBook.cshtml" />
-    <Content Include="Views\BooksDapperVMs\CreateFromExcel.cshtml" />
     <Content Include="Views\Articles\Create.cshtml" />
     <Content Include="Views\Articles\Delete.cshtml" />
     <Content Include="Views\Articles\Edit.cshtml" />
@@ -487,11 +499,23 @@
     <Content Include="Views\RepliedMails\Index.cshtml" />
     <Content Include="Views\Articles\BookIndex.cshtml" />
     <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\Create.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\Delete.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\Details.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\Edit.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\Index.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\UpdateBookStock.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\HistoryIndex.cshtml" />
+    <Content Include="Views\BooksDapperVMs\CreateBook.cshtml" />
+    <Content Include="Views\BooksDapperVMs\CreateFromExcel.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\HistoryDetails.cshtml" />
+    <Content Include="Views\PurchaseOrderDapperVMs\CreateFromExcel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="files\" />
     <Folder Include="Uploads\NewsImage\" />
+    <Folder Include="Views\Article\" />
+    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

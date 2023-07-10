@@ -1,0 +1,107 @@
+﻿@model EBookStore.Site.Models.BooksViewsModel.PurchaseOrderDapperVM
+
+@{
+    ViewBag.Title = "Delete";
+}
+@section cdn{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/bookstyle.css" />
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
+}
+
+<div id="newbackground" class="table-container">
+
+    <h2>Delete</h2>
+
+    <div>
+        <h3>確定刪除?</h3>
+        <div>
+            <h4>刪除訂單</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.BookId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BookId)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.BookName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BookName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PublisherId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PublisherId)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PublisherName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PublisherName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreateTime)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreateTime)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Qty)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Qty)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Detail)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Detail)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PurchasePrice)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PurchasePrice)
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="刪除" class="btn btn-primary btn-sm" /> |
+                    @Html.ActionLink("返回目錄", "Index", null, new { @class = "btn btn-secondary btn-sm" })
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Content/book.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}

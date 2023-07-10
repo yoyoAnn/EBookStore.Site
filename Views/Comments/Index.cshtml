@@ -33,8 +33,8 @@
 </div>
 
 <div class="table-comment" style="margin-left:5px">
-    <table class="table table-hover nowrap" id="dataTable">
-        <thead class="table-light">
+    <table class="table table-hover nowrap " id="dataTable">
+        <thead class="table-primary">
             <tr>
                 <th style="width:350px">
                     @Html.DisplayNameFor(model => model.BookName)
@@ -76,7 +76,7 @@
                     </td>
                     <td>
                             <a href="@Url.Action("Delete", new { id = item.Id })">
-                                <button class="btn btn-sm btn-secondary">詳細</button>
+                                <button class="btn btn-sm btn-primary">詳細</button>
                             </a>
                     </td>
                 </tr>

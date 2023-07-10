@@ -2,6 +2,46 @@
 @{
     ViewBag.Title = "SuccessReplied";
 }
+@section Style{
+    <style>
+        .container-fluid {
+            font-family: DFYuanBold-B5;
+        }
+    </style>
+    }
 
-<h2>信件已寄出!</h2>
+<div class="container-fluid" style="width:500px">
+    <h1 class="text-center text-danger">信件已成功寄出!</h1>
 
+    <div id="timeBox" class="text-center">
+        <link href="~/CustomerServiceMails/Index"/>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jquery")
+
+    <script src="~/Scripts/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+
+    <script>
+        var basement = "https://localhost:44314";
+        // 設定秒數
+        var count = 5;
+        function countDown() {
+            // 將秒數寫在指定元素中
+            document.getElementById("timeBox").innerHTML = count+"秒後自動跳轉回信件列表";
+            // 每次執行就減1
+            count -= 1;
+            // 當 count = 0 時跳轉頁面
+            if (count == 0) {
+                location.href = basement +"/CustomerServiceMails/Index";
+            }
+            // 設定每秒執行1次
+            setTimeout("countDown()", 1000);
+        }
+        // 執行 countDown
+        countDown();
+    </script>
+    }
