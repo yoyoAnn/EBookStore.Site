@@ -13,11 +13,11 @@
 
 <div id="newbackground" class="table-container">
 
-    <h2>Details</h2>
+    <h2>詳細資料</h2>
 
     <div>
         <div>
-            <h4>Author</h4>
+            <h4>作者資料</h4>
             <hr />
             <dl class="dl-horizontal">
                 <dt>
@@ -47,8 +47,8 @@
             </dl>
         </div>
         <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-secondary btn-sm" }) 
-            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary btn-sm" })
+            @Html.ActionLink("修改", "Edit", new { id = Model.Id }, new { @class = "btn btn-secondary btn-sm" }) 
+            @Html.ActionLink("返回目錄", "Index", null, new { @class = "btn btn-secondary btn-sm" })
         </p>
     </div>
 </div>

@@ -12,7 +12,7 @@
 
 <div id="newbackground" class="table-container">
     <meta name="viewport" content="width=device-width" />
-    <h2>Create</h2>
+    <h2>創建訂單</h2>
 
     <div>
         @Scripts.Render("~/bundles/jquery")
@@ -24,7 +24,6 @@
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <h4>PurchaseOrderDapperVM</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -93,9 +92,9 @@
             </div>
         }
 
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+    <div>
+        @Html.ActionLink("返回目錄", "Index", null, new { @class = "btn btn-secondary btn-sm" })
+    </div>
     </div>
 </div>
 @section Scripts{

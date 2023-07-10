@@ -10,7 +10,7 @@
 }
 
 <div id="newbackground" class="table-container">
-    <h2>CreateFromExcel</h2>
+    <h2>匯入EXCEL</h2>
 
     @using (Html.BeginForm("CreateFromExcel", "Authors", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
@@ -31,11 +31,11 @@
             <input type="file" id="excelFile" name="excelFiles" class="form-control" />
         </div>
 
-        <input type="submit" value="Upload File" class="btn btn-primary btn-sm" />
+        <input type="submit" value="上傳檔案" class="btn btn-primary btn-sm" />
     }
 
     <div class="mt-2">
-        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary btn-sm" })
+        @Html.ActionLink("返回目錄", "Index", null, new { @class = "btn btn-secondary btn-sm" })
     </div>
 </div>
 

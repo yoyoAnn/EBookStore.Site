@@ -20,7 +20,7 @@
     <H2>進貨管理</H2>
     <div class="row mb-3">
         <div class="col-6 d-flex justify-content-start">
-            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary mr-2" }) 
+            @Html.ActionLink("新增訂單", "Create", null, new { @class = "btn btn-primary mr-2" }) 
             @Html.ActionLink("從Excel創建", "CreateFromExcel", null, new { @class = "btn btn-primary mr-2" }) 
             <button id="submitAllBtn" class="btn btn-primary mr-2">全部送出</button> 
             <button id="DeleteAllBtn" class="btn btn-primary">一鍵刪除</button>
@@ -82,16 +82,16 @@
                     <td id="actions-@item.Id">
                         @if (ViewBag.SelectedItemId == item.Id)
                         {
-                            @Html.ActionLink("Details", "Details", new { id = item.Id })
+                            @Html.ActionLink("詳細資料", "Details", new { id = item.Id })
                         }
                         else
                         {
                             <div id="actions-content-@item.Id">
-                                @Html.ActionLink("Details", "Details", new { id = item.Id })
+                                @Html.ActionLink("詳細資料", "Details", new { id = item.Id })
                                 <span> | </span>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                @Html.ActionLink("修改", "Edit", new { id = item.Id })
                                 <span> | </span>
-                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                @Html.ActionLink("刪除", "Delete", new { id = item.Id })
                                 <span> | </span>
                                 @Html.ActionLink("商品入庫", "UpdateBookStock", new { id = item.Id })
                             </div>
