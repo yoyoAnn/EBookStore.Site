@@ -10,6 +10,8 @@
 }
 @section cdn{
     <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/fbde3a79d6.js" crossorigin="anonymous"></script>
+
 }
 
 @section Style
@@ -109,11 +111,11 @@
 
             </div>
             <div class="mb-3 col-md-12 d-flex px-5">
-                <div class="fa-solid fa-arrow-rotate-left fa-xl"></div>
+                <div class=" fa-xl"></div>
                 @*<input type="submit" value="出貨" class="btn btn-primary btn-lg ml-auto" />*@
                 @*<button type="button" class="btn btn-danger btn-lg" id="CancelOrder">取消訂單</button>*@
 
-                @Html.ActionLink("新增批次訂單", "Create", null, new { @class = "btn btn-light ml-auto" })
+                @Html.ActionLink("新增批次訂單", "Create", null, new { @class = " btn btn-lg btn-info ml-auto fa-solid fa-file-import " })
             </div>
         </div>
 
@@ -226,7 +228,7 @@
                     </td>
                     <td>
                         @Html.ActionLink("編輯", "Edit", new { id = item.Id }, new { @class = "btn btn-warning " }) |
-                        <button class="deleteButton btn btn-danger" data-orderId="@item.Id">刪除</button>
+                        <button class="deleteButton btn btn-danger" data-orderid="@item.Id">刪除</button>
                     </td>
                 </tr>
             }
@@ -244,34 +246,6 @@
 
     <script>
         $(document).ready(function () {
-            $('#orderTable').DataTable({
-                /*                pageLength: 3,*/
-                order: [[9, 'desc']],
-                language: {
-                    "searchPlaceholder": "關鍵字搜尋",
-                    "emptyTable": "無資料...",
-                    "processing": "處理中...",
-                    "loadingRecords": "載入中...",
-                    "lengthMenu": "每頁 _MENU_ 筆資料",
-                    "zeroRecords": "無搜尋結果",
-                    "info": "_START_ 至 _END_ / 共 _TOTAL_ 筆",
-                    "infoEmpty": "尚無資料",
-                    "infoFiltered": "(從 _MAX_ 筆資料過濾)",
-                    "infoPostFix": "",
-                    "search": "搜尋字串:",
-                    "paginate": {
-                        "first": "首頁",
-                        "last": "末頁",
-                        "next": "下頁",
-                        "previous": "前頁"
-                    },
-                    "aria": {
-                        "sortAscending": ": 升冪",
-                        "sortDescending": ": 降冪"
-                    }
-                },
-            });
-
 
             $(".deleteButton").click(function (event) {
                 event.preventDefault();
@@ -316,6 +290,35 @@
                     }
                 });
             });
+
+            $('#orderTable').DataTable({
+                /*                pageLength: 3,*/
+                order: [[9, 'desc']],
+                language: {
+                    "searchPlaceholder": "關鍵字搜尋",
+                    "emptyTable": "無資料...",
+                    "processing": "處理中...",
+                    "loadingRecords": "載入中...",
+                    "lengthMenu": "每頁 _MENU_ 筆資料",
+                    "zeroRecords": "無搜尋結果",
+                    "info": "_START_ 至 _END_ / 共 _TOTAL_ 筆",
+                    "infoEmpty": "尚無資料",
+                    "infoFiltered": "(從 _MAX_ 筆資料過濾)",
+                    "infoPostFix": "",
+                    "search": "搜尋字串:",
+                    "paginate": {
+                        "first": "首頁",
+                        "last": "末頁",
+                        "next": "下頁",
+                        "previous": "前頁"
+                    },
+                    "aria": {
+                        "sortAscending": ": 升冪",
+                        "sortDescending": ": 降冪"
+                    }
+                },
+            });
+
         });
 
         //$('#Date_Start').datetimepicker({

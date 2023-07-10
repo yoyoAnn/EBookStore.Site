@@ -11,6 +11,8 @@
 
 @section cdn{
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/fbde3a79d6.js" crossorigin="anonymous"></script>
+
 }
 
 <head>
@@ -32,26 +34,33 @@
         <div class="col-md-12 d-flex px-5">
             <h2 class="ml-auto"></h2>
             <input type="file" name="file1" class="form-control ml-auto" id="CancelOrder" />
-            @Html.ValidationMessageFor(model => model.XlsFile, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12 d-flex px-5">
+            <h2 class="ml-auto"></h2>
+            @Html.ValidationMessageFor(model => model.file1, "", new { @class = "text-danger  ml-auto" })
         </div>
     </div>
 
-    <div class="form-horizontal">
+    <hr />
+    <div class="container">
         @*<h4>Order</h4>*@
 
-        <hr />
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+
+        <div class="row">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="col-md-3">
                 @Html.LabelFor(model => model.UserId, "帳號", htmlAttributes: new { @class = " col col-12" })
                 <div class="mb-5">
                     @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control js-example-basic-single", @id = "UserId", @name = "UserId" })
                     @*<select class="form-control js-example-basic-single" id="UserId" name="UserId">
-                            @foreach (var item in UserIdcategories)
-                            {
-                                <option value="@item.Value">@item.Text</option>
-                            }
-                        </select>*@
+                        @foreach (var item in UserIdcategories)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>*@
                     @*@Html.DropDownListFor(m => m.UserId, ViewBag.UserIdList as SelectList, "", new { @class = "form-control js-example-basic-single", @id = "UserId", @name = "state" })*@
 
                     @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
@@ -66,7 +75,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-5">
                 @Html.LabelFor(model => model.ReceiverAddress, htmlAttributes: new { @class = " col col-12" })
                 <div class="mb-5">
                     @Html.EditorFor(model => model.ReceiverAddress, new { htmlAttributes = new { @class = "form-control" } })
@@ -107,12 +116,12 @@
             </div>
 
             @*<div class="col-md-3">
-                    @Html.LabelFor(model => model.OrderTime, htmlAttributes: new { @class = " col col-12" })
-                    <div class="mb-5">
-                        @Html.EditorFor(model => model.OrderTime, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.OrderTime, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
+                @Html.LabelFor(model => model.OrderTime, htmlAttributes: new { @class = " col col-12" })
+                <div class="mb-5">
+                    @Html.EditorFor(model => model.OrderTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.OrderTime, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
             <div class="col-md-3">
                 @Html.LabelFor(model => model.OrderStatusId, "訂單狀態", htmlAttributes: new { @class = " col col-12" })
@@ -123,12 +132,12 @@
             </div>
 
             @*<div class="col-md-3">
-                    @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = " col col-12" })
-                    <div class="mb-5">
-                        @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
+                @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = " col col-12" })
+                <div class="mb-5">
+                    @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
             <div class="col-md-3">
                 @Html.LabelFor(model => model.ShippingNumber, htmlAttributes: new { @class = " col col-12" })
@@ -147,12 +156,12 @@
             </div>
 
             @*<div class="col-md-3">
-                    @Html.LabelFor(model => model.ShippingFee, htmlAttributes: new { @class = " col col-12" })
-                    <div class="mb-5">
-                        @Html.EditorFor(model => model.ShippingFee, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.ShippingFee, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
+                @Html.LabelFor(model => model.ShippingFee, htmlAttributes: new { @class = " col col-12" })
+                <div class="mb-5">
+                    @Html.EditorFor(model => model.ShippingFee, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ShippingFee, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
             <div class="col-md-3">
                 @Html.LabelFor(model => model.ShippingStatusId, "物流狀態", htmlAttributes: new { @class = " col col-12 js-example-basic-single", @id = "ShippingStatusId" })
@@ -163,26 +172,35 @@
             </div>
 
             @*<div class="col-md-3">
-                    @Html.LabelFor(model => model.TotalPayment, htmlAttributes: new { @class = " col col-12" })
-                    <div class="mb-5">
-                        @Html.EditorFor(model => model.TotalPayment, new { htmlAttributes = new { @class = "form-control" ,@readonly="readonly"} })
-                        @Html.ValidationMessageFor(model => model.TotalPayment, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
+                @Html.LabelFor(model => model.TotalPayment, htmlAttributes: new { @class = " col col-12" })
+                <div class="mb-5">
+                    @Html.EditorFor(model => model.TotalPayment, new { htmlAttributes = new { @class = "form-control" ,@readonly="readonly"} })
+                    @Html.ValidationMessageFor(model => model.TotalPayment, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-12 d-flex px-5 col-md-3">
+            @Html.ActionLink("返回", "Index", "null", new { @class = "fa-solid fa-arrow-rotate-left fa-xl" })
+            @*<input type="submit" value="出貨" class="btn btn-primary btn-lg ml-auto" />*@
+            @*<button type="button" class="btn btn-danger btn-lg" id="CancelOrder">取消訂單</button>*@
+
+            <input type="submit" value="送出" class="btn btn-primary btn-lg ml-auto">
+        </div>
+
+        @*<div class="col-md-3">
             <div class="col-md-offset-2 mb-5">
                 <input type="submit" value="送出" class="btn btn-primary" />
             </div>
-        </div>
+        </div>*@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
 @section scripts{
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
