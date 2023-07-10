@@ -124,7 +124,7 @@ namespace EBookStore.Site.Controllers
                 }
 
                 // 自適應欄寬
-                ws.Columns().AdjustToContents(1);
+                ws.Columns().AdjustToContents();
 
                 // return
                 using (var ms = new MemoryStream())
@@ -288,10 +288,11 @@ namespace EBookStore.Site.Controllers
         {
             if (order.UserId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            if(file1.ContentType!=".xlsx"|| string.IsNullOrWhiteSpace(file1.FileName))
+            if(file1 == null || file1.ContentLength == 0 || !file1.FileName.EndsWith(".xlsx"))
             {
                 ModelState.AddModelError("file1", "資料類型錯誤或不能為空!");
-                return View();
+                PrepareCategoryDataSource(order.OrderStatusId, order.ShippingStatusId, order.UserId);
+                return View(order);
             }
 
             int seed = Guid.NewGuid().GetHashCode();
@@ -315,9 +316,9 @@ namespace EBookStore.Site.Controllers
             // 儲存檔案
             string path = Server.MapPath("/Uploads/Execel");
             var savedFileName = SaveUploadedFile(path, file1, OrderId);
-            order.XlsFile = savedFileName;
+            //order.file1 = savedFileName;
 
-            if (savedFileName == null) ModelState.AddModelError("Excel", "請選擇檔案");
+            //if (savedFileName == null) ModelState.AddModelError("Excel", "請選擇檔案");
 
             if (ModelState.IsValid)
             {
@@ -474,6 +475,17 @@ namespace EBookStore.Site.Controllers
         public ActionResult Delete2(long id)
         {
             Order order = db.Orders.Find(id);
+            long OrderId = id;
+
+            new DeleteOrderItemDapperRepository().DeleteOrderItem(id);
+
+            //OrderItem orderItem=db.OrderItems.Find(OrderId);
+            //if(orderItem != null) 
+            //{
+            //    db.OrderItems.Remove(orderItem);
+            //    db.SaveChanges();
+            //}
+            
             db.Orders.Remove(order);
             db.SaveChanges();
 
