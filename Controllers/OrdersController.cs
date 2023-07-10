@@ -288,6 +288,12 @@ namespace EBookStore.Site.Controllers
         {
             if (order.UserId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
+            if(file1.ContentType!=".xlsx"|| string.IsNullOrWhiteSpace(file1.FileName))
+            {
+                ModelState.AddModelError("file1", "資料類型錯誤或不能為空!");
+                return View();
+            }
+
             int seed = Guid.NewGuid().GetHashCode();
             var random = new Random(seed);
 

@@ -226,7 +226,7 @@
                     </td>
                     <td>
                         @Html.ActionLink("編輯", "Edit", new { id = item.Id }, new { @class = "btn btn-warning " }) |
-                        <button class="deleteButton btn btn-danger" id="deleteButton" data-orderId="@item.Id">刪除</button>
+                        <button class="deleteButton btn btn-danger" data-orderId="@item.Id">刪除</button>
                     </td>
                 </tr>
             }
@@ -300,7 +300,7 @@
                             type: "POST",
                             data: {
                                 __RequestVerificationToken: antiForgeryToken
-                                , name: $("#deleteButton").val()
+                                , name: $(".deleteButton").val()
                             },
 
                             data: { id: orderId },
