@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+@*<h2>Edit</h2>*@
 
 <head>
     <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.js"></script>
@@ -14,14 +14,21 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
-    <h4>Order</h4>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+        <div class="col-md-12 d-flex px-5">
+            <h2 class="ml-auto">編輯訂單</h2>
+            <h2 class="ml-auto"></h2>
+        </div>
+        <div class="col-md-12 d-flex px-5">
+            <h2 class="ml-auto"></h2>
+            <button type="button" class="btn btn-danger btn-lg ml-auto" id="CancelOrder">取消訂單</button>
+        </div>
+    </div>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Id, new { id = "OrderId" })
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-
 
         <div class="col-md-3">
             @Html.LabelFor(model => model.UserId, "帳號", htmlAttributes: new { @class = "col col-12" })
@@ -35,7 +42,7 @@
         <div class="col-md-3">
             @Html.LabelFor(model => model.ReceiverName, htmlAttributes: new { @class = "col col-12" })
             <div class="mb-5">
-                @Html.EditorFor(model => model.ReceiverName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ReceiverName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ReceiverName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,7 +50,7 @@
         <div class="col-md-6">
             @Html.LabelFor(model => model.ReceiverAddress, htmlAttributes: new { @class = "col col-12" })
             <div class="mb-5">
-                @Html.EditorFor(model => model.ReceiverAddress, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ReceiverAddress, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ReceiverAddress, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -51,7 +58,7 @@
         <div class="col col-md-3">
             @Html.LabelFor(model => model.ReceiverPhone, htmlAttributes: new { @class = "col col-12" })
             <div class="mb-5">
-                @Html.EditorFor(model => model.ReceiverPhone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ReceiverPhone, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ReceiverPhone, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -59,7 +66,7 @@
         <div class="col-md-3">
             @Html.LabelFor(model => model.TaxIdNum, htmlAttributes: new { @class = "col-12" })
             <div class="mb-5">
-                @Html.EditorFor(model => model.TaxIdNum, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.TaxIdNum, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.TaxIdNum, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -67,7 +74,7 @@
         <div class="col-md-3">
             @Html.LabelFor(model => model.VehicleNum, htmlAttributes: new { @class = "col-12" })
             <div class="mb-5">
-                @Html.EditorFor(model => model.VehicleNum, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.VehicleNum, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.VehicleNum, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -75,7 +82,7 @@
         <div class="col-md-3">
             @Html.LabelFor(model => model.Remark, htmlAttributes: new { @class = "col-12" })
             <div class="mb-5">
-                @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -83,15 +90,15 @@
         <div class="col-md-3">
             @Html.LabelFor(model => model.OrderTime, htmlAttributes: new { @class = "col-12" })
             <div class="mb-5">
-                @Html.EditorFor(model => model.OrderTime, new { htmlAttributes = new { @class = "form-control datetime" } })
+                @Html.EditorFor(model => model.OrderTime, new { htmlAttributes = new { @class = "form-control datetime", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.OrderTime, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="col-md-3">
-            @Html.LabelFor(model => model.OrderStatusId, "OrderStatusId", htmlAttributes: new { @class = "col-12" })
+            @Html.LabelFor(model => model.OrderStatusId, "訂單狀態", htmlAttributes: new { @class = "col-12" })
             <div class="mb-5">
-                @Html.DropDownList("OrderStatusId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("OrderStatusId", null, htmlAttributes: new { @class = "form-control", @id = "DropDownOrderStatusId", @disabled = "disabled" })
                 @Html.ValidationMessageFor(model => model.OrderStatusId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -99,7 +106,7 @@
         <div class="col-md-3">
             @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "col-12" })
             <div class="mb-5">
-                @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -107,7 +114,7 @@
         <div class="col-md-3">
             @Html.LabelFor(model => model.ShippingNumber, htmlAttributes: new { @class = "col-12" })
             <div class="mb-5">
-                @Html.EditorFor(model => model.ShippingNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ShippingNumber, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ShippingNumber, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -115,7 +122,7 @@
         <div class="col-md-3">
             @Html.LabelFor(model => model.ShippingTime, htmlAttributes: new { @class = "col-12" })
             <div class="mb-5">
-                @Html.EditorFor(model => model.ShippingTime, new { htmlAttributes = new { @class = "form-control datetime" } })
+                @Html.EditorFor(model => model.ShippingTime, new { htmlAttributes = new { @class = "form-control datetime", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ShippingTime, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -123,15 +130,15 @@
         <div class="col-md-3">
             @Html.LabelFor(model => model.ShippingFee, htmlAttributes: new { @class = "col-12" })
             <div class="mb-5">
-                @Html.EditorFor(model => model.ShippingFee, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ShippingFee, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ShippingFee, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="col-md-3">
-            @Html.LabelFor(model => model.ShippingStatusId, "ShippingStatusId", htmlAttributes: new { @class = "col-12" })
+            @Html.LabelFor(model => model.ShippingStatusId, "運送狀態", htmlAttributes: new { @class = "col-12" })
             <div class="mb-5">
-                @Html.DropDownList("ShippingStatusId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("ShippingStatusId", null, htmlAttributes: new { @class = "form-control", @id = "DropDownShippingStatusId" })
                 @Html.ValidationMessageFor(model => model.ShippingStatusId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -139,16 +146,19 @@
         <div class="col-md-3">
             @Html.LabelFor(model => model.TotalPayment, htmlAttributes: new { @class = "col-12" })
             <div class="mb-5">
-                @Html.EditorFor(model => model.TotalPayment, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.TotalPayment, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.TotalPayment, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="col-md-12 d-flex px-5">
-            @Html.ActionLink("返回", "Index", "Orders", new { @class = "btn btn-secondary" })
+            @Html.ActionLink("返回", "Index", "Orders", new { @class = "fa-solid fa-arrow-rotate-left fa-xl" })
             @*<input type="submit" value="出貨" class="btn btn-primary btn-lg ml-auto" />*@
-            <button type="button" class="btn btn-secondary" id="ToShip">出貨</button>
+            @*<button type="button" class="btn btn-danger btn-lg" id="CancelOrder">取消訂單</button>*@
+
+            <button type="button" class="btn btn-primary btn-lg ml-auto" id="ToShip">送出</button>
         </div>
+
 
     </div>
 }
@@ -156,6 +166,8 @@
 
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js" integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://kit.fontawesome.com/fbde3a79d6.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @Scripts.Render("~/bundles/jqueryval")
     <script>
 
@@ -169,28 +181,69 @@
             $('#DropDownUserId').prop('disabled', false);
         });
 
+        $('form').on('submit', function () {
+            $('#DropDownOrderStatusId').prop('disabled', false);
+        });
+
+        $('form').on('submit', function () {
+            $('#DropDownShippingStatusId').prop('disabled', false);
+        });
+
         $("#ToShip").click(function () {
             var orderId = $("#OrderId").val(); // 訂單ID
-            var ShippingStatusId = $("#ShippingStatusId").val();
+            var ShippingStatusId = $("#DropDownShippingStatusId").val();
 
-            debugger;
-
-            $.ajax({
-                url: "/Orders/CustomAction", // 根據控制器和方法的路由設定進行調整
-                type: "POST",
-                data: { orderId: orderId },
-                success: function (result) {
-                    // 成功處理後的操作，例如重新導向或顯示訊息
-                    alert("自訂按鈕觸發成功！");
-                    location.href = "/Orders";
-                },
-                error: function () {
-                    // 錯誤處理，例如顯示錯誤訊息
-                    alert("發生錯誤，無法觸發自訂按鈕！");
+            // 顯示SweetAlert的確認對話框
+            Swal.fire({
+                title: '確認',
+                text: '確定修改訂單？',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: '確定',
+                cancelButtonText: '取消'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // 使用者點擊了確定按鈕
+                    $.ajax({
+                        url: "/Orders/CustomAction", // 根據控制器和方法的路由設定進行調整
+                        type: "POST",
+                        data: { orderId: orderId, ShippingStatusId: ShippingStatusId },
+                        success: function (result) {
+                            // 成功處理後的操作，例如重新導向或顯示訊息
+                            /*Swal.fire('成功', '自訂按鈕觸發成功！', 'success').then(() => {*/
+                            location.href = "/Orders";
+                            /*});*/
+                        },
+                        error: function () {
+                            // 錯誤處理，例如顯示錯誤訊息
+                            Swal.fire('錯誤', '發生未知的錯誤！', 'error');
+                        }
+                    });
                 }
             });
         });
 
+        $("#CancelOrder").click(function () {
+            Swal.fire({
+                title: "請輸入取消原因：",
+                input: "text",
+                showCancelButton: true,
+                confirmButtonText: "提交",
+                cancelButtonText: "取消",
+                inputValidator: (value) => {
+                    if (!value || value.trim() === "") {
+                        return "請輸入取消原因！";
+                    }
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var remark = result.value;
+                    $("#DropDownOrderStatusId").val("3"); // 將 DropDownOrderStatusId 改為 3
+                    $("#Remark").val(remark.trim()); // 將輸入的文字儲存至 Remark 欄位
+                    $("form").submit(); // 提交表單
+                }
+            });
+        });
 
     </script>
 }

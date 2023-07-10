@@ -12,6 +12,8 @@ using EBookStore.Site.Models.BooksViewsModel;
 using EBookStore.Site.Models.EFModels;
 using EBookStore.Site.Models.Infra;
 using EBookStore.Site.Models.Infra.DapperRepository;
+using PagedList.Mvc;
+using PagedList;
 
 namespace EBookStore.Site.Controllers
 {
@@ -27,6 +29,7 @@ namespace EBookStore.Site.Controllers
         // GET: BooksDapperVMs
         public ActionResult Index()
         {
+
             var books = _repository.GetBookItems();
             if (TempData.ContainsKey("SuccessMessage"))
             {
@@ -59,6 +62,7 @@ namespace EBookStore.Site.Controllers
             try
             {
                 _repository.CreateBookWithAuthor(vm);
+                TempData["SuccessMessage"] = "創建書籍成功";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -130,6 +134,9 @@ namespace EBookStore.Site.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
+            ViewBag.PublisherId = new SelectList(db.Publishers, "Id", "Name");
+            TempData["SuccessMessage"] = "修改成功";
 
             return View(book);
         }
@@ -144,7 +151,7 @@ namespace EBookStore.Site.Controllers
                 try
                 {
                     // 更新書籍資訊
-                    _repository.UpdateBook(vm);
+                    _repository.UpdateBook(vm,vm.CategoryId,vm.PublisherId);
 
                     return RedirectToAction("Index");
                 }

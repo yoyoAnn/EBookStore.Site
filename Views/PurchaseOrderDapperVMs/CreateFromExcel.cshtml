@@ -1,4 +1,4 @@
-﻿@model EBookStore.Site.Models.EFModels.Book
+﻿@model EBookStore.Site.Models.BooksViewsModel.PurchaseOrderDapperVM
 @{
     ViewBag.Title = "CreateFromExcel";
 }
@@ -7,31 +7,27 @@
     <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Content/bookstyle.css" />
     <script src="~/Scripts/jquery-3.7.0.js"></script>
-}
 
+}
 
 <div id="newbackground" class="table-container">
     <h2>CreateFromExcel</h2>
 
-    @using (Html.BeginForm("CreateFromExcel", "Publishers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("CreateFromExcel", "PurchaseOrderDapperVMs", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, htmlAttributes: new { @class = "form-control" })
-                @*@Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })*@
-                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            <label for="excelFile">選取出版商</label>
+            <label for="excelFile">選取進貨訂單</label>
             <input type="file" id="excelFile" name="excelFiles" class="form-control" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
             <span id="fileError" class="text-danger" style="display: none;">只能選擇 .xlsx 檔案</span>
+        </div>
+
+        <div class="form-group ">
+            <label for="excelSheetName">Excel 表單名稱</label>
+            <input type="text" id="excelSheetName" name="excelSheetName" class="form-control" />
+            @Html.ValidationMessageFor(model => model.excelSheetName, "", new { @class = "text-danger" })
         </div>
 
         <input type="submit" value="Upload File" class="btn btn-primary btn-sm" />
@@ -40,7 +36,6 @@
     <div class="mt-2">
         @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary btn-sm" })
     </div>
-
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

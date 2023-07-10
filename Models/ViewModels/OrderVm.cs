@@ -1,22 +1,28 @@
-namespace EBookStore.Site.Models.EFModels
+ï»¿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace EBookStore.Site.Models.ViewModels
 {
+    using EBookStore.Site.Models.EFModels;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Order
+    public partial class OrderVm
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Order()
+        public OrderVm()
         {
             CustomerServiceMails = new HashSet<CustomerServiceMail>();
             OrderItems = new HashSet<OrderItem>();
         }
 
-        //[RegularExpression(@"^.*\.(xls|xlsx)$", ErrorMessage = "½Ð¿ï¾Ü°ÆÀÉ¦W¬°.xls©Î.xlsxªº¤å¥ó")]
-        //public string XlsFile { get; set; }
+        [RegularExpression(@"^.*\.(xls|xlsx)$", ErrorMessage = "è«‹é¸æ“‡å‰¯æª”åç‚º.xlsæˆ–.xlsxçš„æ–‡ä»¶")]
+        public string XlsFile { get; set; }
 
         public long Id { get; set; }
 
@@ -24,55 +30,55 @@ namespace EBookStore.Site.Models.EFModels
 
         [Required]
         [StringLength(255)]
-        [Display(Name = "¦¬¥ó¤H©m¦W")]
+        [Display(Name = "æ”¶ä»¶äººå§“å")]
         public string ReceiverName { get; set; }
 
         [Required]
         [StringLength(255)]
-        [Display(Name = "¦¬¥ó¤H¦a§}")]
+        [Display(Name = "æ”¶ä»¶äººåœ°å€")]
         public string ReceiverAddress { get; set; }
 
         [Required]
         [StringLength(10)]
-        [Display(Name = "¦¬¥ó¤H¹q¸Ü")]
+        [Display(Name = "æ”¶ä»¶äººé›»è©±")]
         public string ReceiverPhone { get; set; }
 
         [StringLength(8)]
-        [Display(Name = "µo²¼½s¸¹")]
+        [Display(Name = "ç™¼ç¥¨ç·¨è™Ÿ")]
         public string TaxIdNum { get; set; }
 
         [StringLength(30)]
-        [Display(Name = "¸ü¨ã½s¸¹")]
+        [Display(Name = "è¼‰å…·ç·¨è™Ÿ")]
         public string VehicleNum { get; set; }
 
         [StringLength(50)]
-        [Display(Name = "³Æµù")]
+        [Display(Name = "å‚™è¨»")]
         public string Remark { get; set; }
 
-        [Display(Name = "¤U³æ®É¶¡")]
+        [Display(Name = "ä¸‹å–®æ™‚é–“")]
         public DateTime OrderTime { get; set; }
 
-        [Display(Name = "­q³æª¬ºA")]
+        [Display(Name = "è¨‚å–®ç‹€æ…‹")]
         public int? OrderStatusId { get; set; }
 
-        [Display(Name = "¤p­p")]
+        [Display(Name = "å°è¨ˆ")]
         public decimal TotalAmount { get; set; }
         public string FormattedTotalAmount => Math.Ceiling(TotalAmount).ToString();
 
         [StringLength(255)]
-        [Display(Name = "µo²¼½s¸¹")]
+        [Display(Name = "ç™¼ç¥¨ç·¨è™Ÿ")]
         public string ShippingNumber { get; set; }
 
-        [Display(Name = "¥X³f®É¶¡")]
+        [Display(Name = "å‡ºè²¨æ™‚é–“")]
         public DateTime? ShippingTime { get; set; }
 
-        [Display(Name = "¹B¶O")]
+        [Display(Name = "é‹è²»")]
         public decimal ShippingFee { get; set; }
 
-        [Display(Name = "°e³fª¬ºA")]
+        [Display(Name = "é€è²¨ç‹€æ…‹")]
         public int? ShippingStatusId { get; set; }
 
-        [Display(Name = "Á`ÃB")]
+        [Display(Name = "ç¸½é¡")]
         public decimal TotalPayment { get; set; }
         public string FormattedTotalPayment => Math.Ceiling(TotalPayment).ToString();
 

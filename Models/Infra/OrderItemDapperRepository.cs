@@ -21,7 +21,7 @@ namespace EBookStore.Site.Models.Infra
         public IEnumerable<DetailDapperVM> GetOrdersItemsByOrderId(long orderId)
         {
             string sql = $@"
-SELECT [Books].[Name], [Books].[Price], [OrderItems].[Qty], [Books].[Price] * [OrderItems].[Qty] AS [TotalPrice]
+SELECT [Books].[Id], [Books].[Name], [Books].[Price], [OrderItems].[Qty], [Books].[Price] * [OrderItems].[Qty] AS [TotalPrice]
 FROM [OrderItems]
 LEFT JOIN [dbo].[Books] ON [OrderItems].[BookId] = [Books].[Id]
 where OrderId=@OrderId";
@@ -36,6 +36,8 @@ where OrderId=@OrderId";
 
     public class DetailDapperVM
     {
+        [Display(Name = "編號")]
+        public int Id { get; set; }
 
         [Display(Name = "名稱")]
         public string Name { get; set; }

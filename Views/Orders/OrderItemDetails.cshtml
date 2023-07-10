@@ -4,50 +4,93 @@
     ViewBag.Title = "OrderItemDetails";
 }
 
-<h2>OrderItemDetails</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Qty)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalPrice)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Qty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPrice)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+<style>
+    .center-table {
+        margin: 0 auto;
+        width: fit-content;
     }
-</table>
+</style>
+
+
+<h2></h2>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4" id="block1">
+    <div class="col-md-12 d-flex px-5">
+        <h2 class="ml-auto"></h2>
+        <button type="button" class="btn btn-danger btn-lg ml-auto" id="PrintOrder">列印</button>
+    </div>
+</div>
+<hr />
+<div id="print_parts">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+        <div class="col-md-12 d-flex px-5">
+            <h2 class="ml-auto">訂單明細</h2>
+            <h2 class="ml-auto"></h2>
+        </div>
+    </div>
+        @*<p>
+            @Html.ActionLink("Create New", "Create")
+        </p>*@
+    <table class="table center-table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Qty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Qty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
+                @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>*@
+            </tr>
+        }
+    </table>
+</div>
 
 @Html.ActionLink("Return", "Index", new { /* id=item.PrimaryKey */ })
+
+@section scripts{
+    <script>
+/*        <link rel="stylesheet" href="Print.css" />*/
+        document.getElementById("PrintOrder").addEventListener("click", function () {
+            const printContent = $('#print_parts').html();
+            const original = document.body.innerHTML;
+
+            document.body.innerHTML = printContent;
+            window.print();
+            document.body.innerHTML = original;
+        });
+    </script>
+}
