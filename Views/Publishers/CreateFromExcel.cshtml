@@ -30,7 +30,8 @@
 
         <div class="form-group">
             <label for="excelFile">選取出版商</label>
-            <input type="file" id="excelFile" name="excelFiles" class="form-control" />
+            <input type="file" id="excelFile" name="excelFiles" class="form-control" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+            <span id="fileError" class="text-danger" style="display: none;">只能選擇 .xlsx 檔案</span>
         </div>
 
         <input type="submit" value="Upload File" class="btn btn-primary btn-sm" />
@@ -47,4 +48,19 @@
     <script src="~/Scripts/bootstrap.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            $("#excelFile").change(function () {
+                var fileName = $(this).val();
+                var extension = fileName.split('.').pop().toLowerCase();
+
+                if (extension !== "xlsx") {
+                    $("#fileError").show();
+                    $(this).val("");
+                } else {
+                    $("#fileError").hide();
+                }
+            });
+        });
+    </script>
 }
