@@ -231,6 +231,15 @@ namespace EBookStore.Site.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+
+        public ActionResult DeleteAll()
+        {
+            _repository.Delete();
+            return RedirectToAction("Index");
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

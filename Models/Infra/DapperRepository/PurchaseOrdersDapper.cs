@@ -149,6 +149,13 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             _connection.Execute(sql, new { PurchaseOrderId = id });
         }
 
+        public void Delete()
+        {
+            string sql = @"DELETE FROM PurchaseOrders";
+
+            _connection.Execute(sql);
+        }
+
 
         public void ConfirmOrder(PurchaseOrderDapperVM vm)
         {

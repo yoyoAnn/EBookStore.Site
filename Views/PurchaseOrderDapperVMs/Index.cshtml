@@ -20,11 +20,15 @@
     <H2>進貨管理</H2>
     <div class="row mb-3">
         <div class="col-6 d-flex justify-content-start">
-            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary mr-2" })
-            @Html.ActionLink("從Excel創建", "CreateFromExcel", null, new { @class = "btn btn-primary mr-2" })
-            <button id="submitAllBtn" class="btn btn-primary">全部送出</button>
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary mr-2" }) 
+            @Html.ActionLink("從Excel創建", "CreateFromExcel", null, new { @class = "btn btn-primary mr-2" }) 
+            <button id="submitAllBtn" class="btn btn-primary mr-2">全部送出</button> 
+            <button id="DeleteAllBtn" class="btn btn-primary">一鍵刪除</button>
         </div>
     </div>
+
+
+
     <table class="table">
 
         <thead>
@@ -113,6 +117,20 @@
         $("#submitAllBtn").click(function () {
             $.ajax({
                 url: "/PurchaseOrderDapperVMs/UpdateToHistory",  // 替換為控制器和方法的實際路徑
+                type: "POST",
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    alert(失敗);
+                }
+            });
+        });
+    </script>
+    <script>
+        $("#DeleteAllBtn").click(function () {
+            $.ajax({
+                url: "/PurchaseOrderDapperVMs/DeleteAll", 
                 type: "POST",
                 success: function (response) {
                     window.location.reload();
