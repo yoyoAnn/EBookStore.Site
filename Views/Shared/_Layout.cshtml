@@ -15,7 +15,7 @@
     <link href="~/Scripts/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
-
+    <link href="https://startbootstrap.com/theme/sb-admin-pro" />
     <!-- Custom styles for this template-->
     <link href="~/Content/sb-admin-2.min.css" rel="stylesheet">
     @RenderSection("cdn", required: false)
@@ -40,8 +40,9 @@
         .fas.fa-fw {
             color: silver;
         }
-        .titleSize{
-            font-size:36px;
+
+        .titleSize {
+            font-size: 36px;
         }
     </style>
 
@@ -57,7 +58,7 @@
 
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center mt-2 mb-3" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center mt-2 mb-3" href="~/Home/Index">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-book" style="color: grey;"></i>
                 </div>
@@ -67,7 +68,7 @@
             <!-- Nav Item - Users -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="~/Users/Index">
-                    <i class="fas fa-fw fa-wrench"></i>
+                    <i class="fas fa-fw fa-users"></i>
                     <span>會員管理</span>
                 </a>
             </li>
@@ -75,30 +76,16 @@
             <!-- Nav Item - Employees -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="~/Employees/Index">
-                    <i class="fas fa-fw fa-wrench"></i>
+                    <i class="fas fa-fw fa-id-card"></i>
                     <span>員工管理</span>
                 </a>
             </li>
-            @*<li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEmployees"
-               aria-expanded="true" aria-controls="collapseEmployees">
-                <i class="fas fa-fw fa-wrench"></i>
-                <span>員工管理</span>
-            </a>
-            <div id="collapseEmployees" class="collapse" aria-labelledby="headingUtilities"
-                 data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="~/Employees/Index">員工管理</a>
-                    <a class="collapse-item" href="#">權限管理</a>
-                </div>
-            </div>
-        </li>*@
 
             <!-- Nav Item - Books -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBooks"
                    aria-expanded="true" aria-controls="collapseBooks">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-fw fa-book-open"></i>
                     <span>書籍管理</span>
                 </a>
                 <div id="collapseBooks" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -107,8 +94,8 @@
                         <a class="collapse-item" href="~/Categories/Index">書籍分類</a>
                         <a class="collapse-item" href="/Publishers/Index">出版商</a>
                         <a class="collapse-item" href="/Authors/Index">作者管理</a>
-                        <a class="collapse-item" href="#">實體書庫存</a>
-                        <a class="collapse-item" href="#">電子書</a>
+                        <a class="collapse-item" href="/PurchaseOrderDapperVMs/Index">進貨管理</a>
+                        <a class="collapse-item" href="/PurchaseOrderDapperVMs/HistoryIndex">進貨歷史訂單</a>
                     </div>
                 </div>
             </li>
@@ -117,15 +104,15 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrders"
                    aria-expanded="true" aria-controls="collapseOrders">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-fw fa-newspaper"></i>
                     <span>訂單管理</span>
-                    @*</a>*@
-                    <div id="collapseOrders" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="~/Orders/Index">訂單明細</a>
-                            <a class="collapse-item" href="#">寄送狀況</a>
-                        </div>
+                </a>
+                <div id="collapseOrders" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="~/Orders/Index">訂單明細</a>
+                        <a class="collapse-item" href="#">寄送狀況</a>
                     </div>
+                </div>
             </li>
 
 
@@ -133,7 +120,7 @@
             <!-- Nav Item - BookComment  -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="~/Comments/Index">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-fw fa-comment-dots"></i>
                     <span>會員書籍評論</span>
                 </a>
             </li>
@@ -142,13 +129,13 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBulletinBoard"
                    aria-expanded="true" aria-controls="collapseBulletinBoard">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-fw fa-clipboard"></i>
                     <span>佈告欄管理</span>
                 </a>
                 <div id="collapseBulletinBoard" class="collapse" aria-labelledby="headingTwo"
                      data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">部落客專欄</a>
+                        <a class="collapse-item" href="~/Articles/Index">部落客專欄</a>
                         <a class="collapse-item" href="~/News/Index">最新消息內容</a>
                     </div>
                 </div>
@@ -158,8 +145,8 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomerService"
                    aria-expanded="true" aria-controls="collapseCustomerService">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>客服管理</span>
+                    <i class="fas fa-fw fa-envelope"></i>
+                    <span>客服信件管理</span>
                 </a>
                 <div id="collapseCustomerService" class="collapse" aria-labelledby="headingTwo"
                      data-parent="#accordionSidebar">
@@ -170,45 +157,15 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>圖表顯示</span>
-                </a>
-            </li>
-
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
+            @*<li class="nav-item">
                 <a class="nav-link" href=#">
                     <i class="fas fa-fw fa-table"></i>
                     <span>報表下載</span>
                 </a>
-            </li>
-
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-            <!-- Sidebar Message -->
-            <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="~/img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2">
-                    <strong>SB Admin Pro</strong> is packed with premium features, components,
-                    and more!
-                </p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">
-                    Upgrade to
-                    Pro!
-                </a>
-            </div>
-
+            </li>*@
         </ul>
+
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -224,49 +181,12 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                   aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                 aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                               placeholder="Search for..." aria-label="Search"
-                                               aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            <a class="nav-link dropdown-toggle" href="https://startbootstrap.com/theme/sb-admin-pro" id="userDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 @*<span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>*@
                                 @{

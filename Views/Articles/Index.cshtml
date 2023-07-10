@@ -4,24 +4,26 @@
     ViewBag.Title = "ArticleIndex";
 }
 
-<h2>Index</h2>
+<h2>部落客專欄</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div>
+    <p>
+        <a href="@Url.Action("Create")" class="btn btn-m btn-outline-primary" style="margin-left:5px">撰寫新專欄</a>
+    </p>
+</div>
 <table class="table">
     <thead class="table-light table-secondary">
         <tr>
-            <th>
+            <th style="width:180px">
                 @Html.DisplayNameFor(model => model.BookName)
             </th>
-            <th>
+            <th style="width:100px">
                 @Html.DisplayNameFor(model => model.WriterName)
             </th>
-            <th>
+            <th  style="width:200px">
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th>
+            <th style="width:370px">
                 @Html.DisplayNameFor(model => model.ContentText)
             </th>
             <th style="width:80px;">
@@ -33,7 +35,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.CreatedTime)
             </th>
-            <th></th>
+            <th>
+
+            </th>
         </tr>
         </thead>
     <tbody class="table-hover">

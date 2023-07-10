@@ -19,8 +19,8 @@ namespace EBookStore.Site.Models.ViewModels
 
 		[Display(Name = "內容")]
 		public string ContentText { get {
-				return this.Content.Length > 50
-					? this.Content.Substring(0, 50) + "..."
+				return this.Content.Length > 20
+					? this.Content.Substring(0, 20) + "..."
 					: this.Content;
 			} }
 

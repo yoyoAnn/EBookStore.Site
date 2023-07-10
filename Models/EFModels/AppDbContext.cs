@@ -1,3 +1,4 @@
+using EBookStore.Site.Models.ViewModels;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
@@ -303,6 +304,8 @@ namespace EBookStore.Site.Models.EFModels
         public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewModels.UserIndexVM> UserIndexVMs { get; set; }
 
         public System.Data.Entity.DbSet<EBookStore.Site.Models.Infra.OrdersItemDapperVM> OrdersItemDapperVMs { get; set; }
+
+        public System.Data.Entity.DbSet<EBookStore.Site.Models.BooksViewsModel.PurchaseOrderDapperVM> PurchaseOrderDapperVMs { get; set; }
 
         public System.Data.Entity.DbSet<EBookStore.Site.Models.ViewModels.EmployeeEditVM> EmployeeEditVMs { get; set; }
     }

@@ -11,14 +11,19 @@ namespace EBookStore.Site.Models.ViewModels
 	{
 		public int Id { get; set; }
 
+
+        
+        public int BookId { get; set; }
+
 		[Display(Name = "書本")]
-		[Required]
-		public int BookId { get; set; }
+		public string BookName { get; set; }
+	
+		public int WriterId { get; set; }
 
 
 		[Display(Name = "專欄作家")]
-		[Required]
-		public int WriterId { get; set; }
+		public string WriterName { get; set; }
+
 
 		[Display(Name = "專欄標題")]
 		[Required]

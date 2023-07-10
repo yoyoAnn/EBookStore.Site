@@ -42,6 +42,10 @@ namespace EBookStore.Site.Models.ViewModels
 		public string Image { get; set; }
 
 
+		
+		public string ImageText { get; set; }
+
+
 		[Required]
 		[Display(Name = "日期")]
 		public DateTime CreatedTime { get; set; }

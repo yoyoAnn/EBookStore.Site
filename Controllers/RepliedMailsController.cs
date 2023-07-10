@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.Infra;
+using EBookStore.Site.Models.Infra.DapperRepository;
+using EBookStore.Site.Models.ViewModels;
 
 namespace EBookStore.Site.Controllers
 {
@@ -15,10 +18,36 @@ namespace EBookStore.Site.Controllers
         private AppDbContext db = new AppDbContext();
 
         // GET: RepliedMails
-        public ActionResult Index()
+        public ActionResult Index(RepliedMailCriteria criteria)
         {
-            var repliedMails = db.RepliedMails.Include(r => r.CustomerServiceMail);
-            return View(repliedMails.ToList());
+			ViewBag.Criteria = criteria;
+
+			var problemTypes = db.ProblemTypes.ToList().Prepend(new ProblemType { Name = "問題種類:" });
+			ViewBag.ProblemTypeId = new SelectList(problemTypes, "Id", "Name", criteria.ProblemTypeId);
+
+
+			var query = new RepliedMailDapperRepository().GetRepliedMails();
+
+			#region where
+
+			if (criteria.ProblemTypeId != null && criteria.ProblemTypeId.Value > 0)
+			{
+                var problemList = db.ProblemTypes.ToList();
+                var pId = int.Parse(criteria.ProblemTypeId.ToString());
+				criteria.ProblemTypeName = problemList[pId-1].Name;
+
+				query = (IEnumerable<RepliedMailVM>)query.Where(p => p.Title.Contains(criteria.ProblemTypeName));
+			}
+            if (criteria.CreatedTime != null)
+            {
+                var dateStart = criteria.CreatedTime.Value;
+                var dateEnd = dateStart.AddDays(1);
+                query = query.Where(p => p.CreatedTime >= dateStart && p.CreatedTime <= dateEnd);
+            }
+            #endregion
+
+
+            return View(query.ToList());
         }
 
         // GET: RepliedMails/Details/5
@@ -68,13 +97,20 @@ namespace EBookStore.Site.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RepliedMail repliedMail = db.RepliedMails.Find(id);
-            if (repliedMail == null)
+			var query = new RepliedMailDapperRepository().GetRepliedMailById(id);
+
+			if (query == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CSId = new SelectList(db.CustomerServiceMails, "Id", "UserAccount", repliedMail.CSId);
-            return View(repliedMail);
+
+            var csMailDetail = db.CustomerServiceMails.Find(query.CSId);
+            var pId = csMailDetail.ProblemTypeId;
+            query.ProblemTypeName = db.ProblemTypes.Find(pId).Name;
+            query.ProblemStatement = csMailDetail.ProblemStatement;
+            query.ProblemCreatedTime = csMailDetail.CreatedTime;
+
+            return View(query);
         }
 
         // POST: RepliedMails/Edit/5
@@ -82,16 +118,22 @@ namespace EBookStore.Site.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CSId,Email,Title,Content,CreatedTime")] RepliedMail repliedMail)
+        public ActionResult Edit(RepliedMailEditVM vm)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid!=true)
             {
-                db.Entry(repliedMail).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CSId = new SelectList(db.CustomerServiceMails, "Id", "UserAccount", repliedMail.CSId);
-            return View(repliedMail);
+				return View();
+
+			}
+
+            Result editResult = new RepliedMailDapperRepository().UpdateRepliedMails(vm);
+            if (editResult.IsSuccess)
+            {
+				//new EmailHelper().SendFromGmail(null, vm.Email, vm.Title, vm.Content);
+
+				return RedirectToAction("Index");
+			}
+            return View();
         }
 
         // GET: RepliedMails/Delete/5
@@ -111,7 +153,7 @@ namespace EBookStore.Site.Controllers
 
         // POST: RepliedMails/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             RepliedMail repliedMail = db.RepliedMails.Find(id);
@@ -119,7 +161,6 @@ namespace EBookStore.Site.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -13,6 +13,7 @@ using EBookStore.Site.Models.Servives;
 using EBookStore.Site.Models.ViewsModel;
 using System.IO;
 using EBookStore.Site.Models.Infra;
+using PagedList;
 
 namespace EBookStore.Site.Controllers
 {
@@ -30,11 +31,13 @@ namespace EBookStore.Site.Controllers
         // GET: Publishers
         public ActionResult Index()
         {
+           
             if (TempData.ContainsKey("SuccessMessage"))
             {
                 ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
             }
-            return View(db.Publishers.ToList());
+            var publisher = db.Publishers.ToList();
+            return View(publisher);
         }
 
 

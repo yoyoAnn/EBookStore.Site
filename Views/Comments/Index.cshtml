@@ -3,38 +3,62 @@
 @{
     ViewBag.Title = "Index";
 }
-<div style="margin-left:40px">
+
+@section cdn{
+    @*<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />*@
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this page -->
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+}
+
+@section Style
+{
+    <style>
+        table {
+            font-size: 16px;
+            
+        }
+
+        
+
+    </style>
+}
+
+
+<div style="margin-left:2px">
     <h2>會員書籍評論</h2>
 
 </div>
 
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.BookName)
-                    </th>
+<div class="table-comment" style="margin-left:5px">
+    <table class="table table-hover nowrap " id="dataTable">
+        <thead class="table-primary">
+            <tr>
+                <th style="width:350px">
+                    @Html.DisplayNameFor(model => model.BookName)
+                </th>
 
-                    <th>
-                        @Html.DisplayNameFor(model => model.CategoryName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.UserAccount)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Scores)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ContentText)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-
+                <th style="width:120px">
+                    @Html.DisplayNameFor(model => model.CategoryName)
+                </th>
+                <th style="width:120px">
+                    @Html.DisplayNameFor(model => model.UserAccount)
+                </th>
+                <th style="width:80px">
+                    @Html.DisplayNameFor(model => model.Scores)
+                </th>
+                <th style="">
+                    @Html.DisplayNameFor(model => model.ContentText)
+                </th>
+                <th style="width:150px"></th>
+            </tr>
+        </thead>
+        <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr class="comment" data-id="@item.Id">
                     <td>
                         @Html.DisplayFor(modelItem => item.BookName)
                     </td>
@@ -51,12 +75,50 @@
                         @Html.DisplayFor(modelItem => item.ContentText)
                     </td>
                     <td>
-                        <a href="@Url.Action("Delete", new { id = item.Id })">
-                            <button class="btn btn-sm btn-secondary">詳細</button>
-                        </a>
+                            <a href="@Url.Action("Delete", new { id = item.Id })">
+                                <button class="btn btn-sm btn-primary">詳細</button>
+                            </a>
                     </td>
                 </tr>
             }
+        </tbody>
+    </table>
+</div>
 
-        </table>
-    </div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery")
+
+
+    <script>
+
+
+        $(function () {
+            $("#dataTable").DataTable({
+                "bPaginate": true, // 顯示換頁
+                "searching": false, // 顯示搜尋
+                //"info": false, // 顯示資訊
+                "fixedHeader": true, // 標題置頂
+                "lengthMenu": [10, 20, 30],  //顯示項目設定:10筆、20筆...
+                "autoWidth": true,
+                language: {
+                    "oPaginate": {
+                        "sFirst": "首頁",
+                        "sPrevious": "上一頁",
+                        "sNext": "下一頁",
+                        "sLast": "末頁"
+                    }
+                }
+
+
+            });
+
+
+
+
+        });
+    </script>
+
+    <!-- Page level plugins -->
+    <script src="~/Scripts/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+}

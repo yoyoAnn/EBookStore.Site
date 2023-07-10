@@ -36,13 +36,19 @@
         margin-left:0px
     }
 
+    .right-Bookcolumn {
+        width: 38%;
+        /*border: 1px solid green;*/
+        margin-left: 0px
+    }
+
 
     .dontDisplay{
         display:none;
 
     }
 
-  
+    
 
     
 </style>
@@ -61,113 +67,168 @@
 
 <div class="container">
     <div class="left-column">
-      
-            <!-- 左欄內容 -->
-            <div class="row mb-3">
 
-                <label class="form-label" for="@Html.NameFor(model => model.BookId)">@Html.DisplayNameFor(model => model.BookId)</label>
-                @Html.DropDownList("BookId", null, htmlAttributes: new { @class = "form-control", style = "width: 500px;" })
-                @Html.ValidationMessageFor(model => model.BookId, "", new { @class = "text-danger" })
+        <!-- 左欄內容 -->
+        <div class="row mb-3">
+
+            <label class="form-label" for="@Html.NameFor(model => model.BookId)">@Html.DisplayNameFor(model => model.BookId)</label>
+            @*@Html.DropDownList("BookId", null, htmlAttributes: new { @class = "form-control", style = "width: 500px;" })
+            @Html.ValidationMessageFor(model => model.BookId, "", new { @class = "text-danger" })*@
+            <input type="hidden" name="BookId" id="bookId" />
+            <input type="text" class="form-control" name="BookName" id="bookName" style="width:450px" readonly/>
+            <span style="width:5px"></span>
+            <button class="btn btn-sm btn-outline-secondary showSearchBook">查詢</button>
+
+        </div>
+
+        <div class="row mb-3">
+
+            <label class="form-label" for="@Html.NameFor(model => model.WriterId)">@Html.DisplayNameFor(model => model.WriterId)</label>
+            @*@Html.DropDownList("WriterId", null, htmlAttributes: new { @class = "form-control", style = "width: 500px;" })*@
+            @*@Html.EditorFor(model => model.WriterId, new { htmlAttributes = new { @class = "form-control", style = "width: 500px;" } })*@
+            <input type="hidden" name="WriterId" id="writerId" />
+            <input type="text" class="form-control" name="WriterName" id="writerName" style="width:450px; padding-right:5px" readonly />
+            <span style="width:5px"></span>
+            <button class="btn btn-sm btn-outline-secondary showSearchWriter">查詢</button>
+
+            @*@Html.ValidationMessageFor(model => model.WriterId, "", new { @class = "text-danger" })*@
+        </div>
+
+        <div class="row mb-3">
+
+            <label class="form-label" for="@Html.NameFor(model => model.Title)">@Html.DisplayNameFor(model => model.Title)</label>
+
+
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", style = "width: 500px;" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="row mb-3">
+
+            <label class="form-label" for="@Html.NameFor(model => model.Content)">@Html.DisplayNameFor(model => model.Content)</label>
+
+            @Html.TextAreaFor(model => model.Content, new { @class = "form-control", style = "width:  500px; max-width: 100%; max-height:300px; overflow-y: auto;", rows = "18", cols = "50" })
+            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+        </div>
+
+
+
+        <div class="row mb-3">
+
+            <label class="form-label" for="@Html.NameFor(model => model.Status)">@Html.DisplayNameFor(model => model.Status)</label>
+            <div class="form-check" style="padding-left: 0px;">
+                @Html.EditorFor(model => model.Status)
+                <label id="statusLabel" style="margin-top:2px;"></label>
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="row mb-3">
+        <div class="row mb-3">
 
-                <label class="form-label" for="@Html.NameFor(model => model.WriterId)">@Html.DisplayNameFor(model => model.WriterId)</label>
-                @*@Html.DropDownList("WriterId", null, htmlAttributes: new { @class = "form-control", style = "width: 500px;" })*@
-                @*@Html.EditorFor(model => model.WriterId, new { htmlAttributes = new { @class = "form-control", style = "width: 500px;" } })*@
-                <input type="hidden" name="WriterId" id="writerId" />
-                <input type="text" class="form-control" name="WriterName" id="writerName" style="width:500px"/>
+            <label class="form-label" for="@Html.NameFor(model => model.CreatedTime)">@Html.DisplayNameFor(model => model.CreatedTime)</label>
+            @Html.TextBoxFor(model => model.CreatedTime, "{0:yyyy-MM-dd}", new { @class = "form-control", style = "width: 160px;", type = "date" })
+            @*@Html.ValidationMessageFor(model => model.CreatedTime, "", new { @class = "text-danger" })*@
+        </div>
 
-                @Html.ValidationMessageFor(model => model.WriterId, "", new { @class = "text-danger" })
-            </div>
+        <div class="row mb-3" style="margin-left:450px">
+            <a href="@Url.Action("Index")" class="btn btn-outline-secondary" style="margin-right:20px">返回清單</a>
+            <input type="submit" value="新增" class="btn btn-outline-primary" />
+        </div>
 
-            <div class="row mb-3">
-
-                <label class="form-label" for="@Html.NameFor(model => model.Title)">@Html.DisplayNameFor(model => model.Title)</label>
-
-
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", style = "width: 500px;" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="row mb-3">
-
-                <label class="form-label" for="@Html.NameFor(model => model.Content)">@Html.DisplayNameFor(model => model.Content)</label>
-
-                @Html.TextAreaFor(model => model.Content, new { @class = "form-control", style = "width:  500px; max-width: 100%; max-height:300px; overflow-y: auto;", rows = "18", cols = "50" })
-                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-            </div>
-
-
-
-            <div class="row mb-3">
-
-                <label class="form-label" for="@Html.NameFor(model => model.Status)">@Html.DisplayNameFor(model => model.Status)</label>
-                <div class="form-check">
-                    @Html.EditorFor(model => model.Status)
-                    <label id="statusLabel" style="margin-top:2px;"></label>
-                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="row mb-3">
-
-                <label class="form-label" for="@Html.NameFor(model => model.CreatedTime)">@Html.DisplayNameFor(model => model.CreatedTime)</label>
-                @Html.TextBoxFor(model => model.CreatedTime, "{0:yyyy-MM-dd}", new { @class = "form-control", style = "width: 160px;", type = "date" })
-                @*@Html.ValidationMessageFor(model => model.CreatedTime, "", new { @class = "text-danger" })*@
-            </div>
-
-            <div class="row mb-3" style="margin-left:450px">
-                <a href="@Url.Action("Index")" class="btn btn-outline-secondary" style="margin-right:20px">返回清單</a>
-                <input type="submit" value="新增" class="btn btn-outline-primary" />
-            </div>
-        
     </div>
 
     <!-- 右欄內容 -->
-    <div class="right-column">
+    <div class="right-column" >
+       
         <form id="rightForm" class="">
-                <div class="mt-3">
 
 
-                    <table class="table">
-                        <tr>
-                            <th style="width:80px; padding-top:15px;">
-                                <span style="margin-top:5px">姓名</span>
-                            </th>
-                            <th style="width:150px">
-                                <input type="text" class="searchWriter form-control" id="searchWriter" style="height:30px"  />
-                            </th>
-                            <th style="width:200px">
-                                <button class="btn btn-sm btn-outline-secondary btnSearchWriter"> 搜尋 </button>
-                            </th>
-
-                        </tr>
-
-                        <tr>
-
-                            <th>
-                                <label>編號</label>
-                            </th>
-                            <th>
-                                <label>姓名</label>
-                            </th>
-                            <th>
-                                <label>信箱</label>
-                            </th>
-                          
-                        </tr>
+            <div class="mt-3 searhwriterform dontDisplay">
 
 
-                      
+                <table class="table">
+                    <tr>
+                        <th style="width:80px; padding-top:15px;">
+                            <span style="margin-top:5px">姓名</span>
+                        </th>
+                        <th style="width:150px">
+                            <input type="text" class="searchWriter form-control" id="searchWriter" style="height:30px" />
+                        </th>
+                        <th style="width:200px">
+                            <button class="btn btn-sm btn-outline-secondary btnSearchWriter"> 搜尋 </button>
+                        </th>
 
-                        <tbody id="writerListBody"></tbody>
+                    </tr>
 
-                    </table>
-                </div>
-           
+                    <tr>
+
+                        <th>
+                            <label>編號</label>
+                        </th>
+                        <th>
+                            <label>姓名</label>
+                        </th>
+                        <th>
+                            <label>信箱</label>
+                        </th>
+
+                    </tr>
+
+
+
+
+                    <tbody id="writerListBody"></tbody>
+
+                </table>
+            </div>
+
+            <div class="mt-3 searhbookform dontDisplay">
+
+
+                <table class="table">
+                    <tr>
+                        <th style="width:150px; padding-top:15px;">
+                            <span style="margin-top:5px">書名</span>
+                        </th>
+                        <th style="width:200px">
+                            <input type="text" class="searchBook form-control" id="searchBook" style="height:30px" />
+                        </th>
+                        <th style="width:220px">
+                            <button class="btn btn-sm btn-outline-secondary btnSearchBook"> 搜尋 </button>
+                        </th>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+                            <label>書名</label>
+                        </th>
+                        <th>
+                            <label>書本分類</label>
+                        </th>
+                        <th>
+                            <label>出版商</label>
+                        </th>
+
+                    </tr>
+
+
+
+
+                    <tbody id="bookListBody">
+                    </tbody>
+
+                </table>
+            </div>
+
         </form>
     </div>
+
+
+ 
+
+
 </div>
 
 
@@ -198,7 +259,21 @@
                 }
             });
 
+            $('.showSearchWriter').each(function () {
+                $(this).on("click", function () {
+                    $(".searhbookform").addClass("dontDisplay");
+                    $(".searhwriterform").removeClass("dontDisplay");
 
+                })
+            });
+
+            $('.showSearchBook').each(function () {
+                $(this).on("click", function () {
+                    $(".searhwriterform").addClass("dontDisplay");
+                    $(".searhbookform").removeClass("dontDisplay");
+
+                })
+            });
 
 
             $(".btnSearchWriter").each(function () {
@@ -221,7 +296,7 @@
                                     var writerName = $(this).attr("data-name");
                                     $('#writerName').val(writerName);
                                     $('#writerId').val(writerId);
-                                    $(".right-column").addClass("dontDisplay");
+                                    $(".searhwriterform").addClass("dontDisplay");
 
                                 })
                             })
@@ -243,7 +318,47 @@
 
             })
 
-           
+            $(".btnSearchBook").each(function () {
+
+
+                $(this).on("click", function () {
+
+                    var searchBookInput = $(this).parent().parent().find('#searchBook').val();
+
+                    $.ajax({
+                        url: "/Articles/BookIndex",
+                        type: "GET",
+                        data: { bookName: searchBookInput },
+                        success: function (result) {
+                            $("#bookListBody").html(result);
+                            $('.book-show').each(function () {
+
+                                $(this).on("click", function () {
+                                    var bookId = $(this).attr("data-id");
+                                    var bookName = $(this).attr("data-name");
+                                    $('#bookName').val(bookName);
+                                    $('#bookId').val(bookId);
+                                    $(".searhbookform").addClass("dontDisplay");
+
+                                })
+                            })
+
+
+
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(error);
+                        }
+                    });
+
+
+
+                })
+
+
+
+
+            })
            
 
         })
