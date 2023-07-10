@@ -18,20 +18,29 @@ namespace EBookStore.Site.Models.Infra
             _connStr = System.Configuration.ConfigurationManager.ConnectionStrings["AppDbContext"].ConnectionString;
         }
 
-        public IEnumerable<OrdersEditItemDapperVM> PostOrdersShippingStatusIdByOrderId(long OrderId)
+        public IEnumerable<OrdersEditItemDapperVM> PostOrdersShippingStatusIdByOrderId(long OrderId, int ShippingStatusId)
         {
-            string sql = $@"
-                            update Orders
-                            set
-                            ShippingStatusId='3'
-                            ,ShippingTime=GETDATE()
-                            where
-                            Id=@Id";
+            string sql = @"
+        UPDATE Orders
+        SET
+        ShippingStatusId = @ShippingStatusId,
+        ShippingTime = REPLACE(CONVERT(nvarchar(19), GETDATE(), 120), '-', '/')
+        WHERE
+        Id = @Id";
 
-            IEnumerable<OrdersEditItemDapperVM> cartItems = new SqlConnection(_connStr)
-                .Query<OrdersEditItemDapperVM>(sql, new { Id = OrderId });
+            using (var connection = new SqlConnection(_connStr))
+            {
+                connection.Execute(sql, new { Id = OrderId, ShippingStatusId = ShippingStatusId });
+            }
 
-            return cartItems.ToList();
+            using (var connection = new SqlConnection(_connStr))
+            {
+                // 執行更新後，您可以再次查詢相關資料並回傳
+                string selectSql = "SELECT * FROM Orders WHERE Id = @Id";
+                IEnumerable<OrdersEditItemDapperVM> cartItems = connection.Query<OrdersEditItemDapperVM>(selectSql, new { Id = OrderId });
+
+                return cartItems.ToList();
+            }
         }
     }
 
@@ -84,7 +93,7 @@ namespace EBookStore.Site.Models.Infra
         [Display(Name = "發票編號")]
         public string ShippingNumber { get; set; }
 
-        [Display(Name = "出貨時間")]
+        [Display(Name = "物流狀態更新日期")]
         public DateTime? ShippingTime { get; set; }
 
         [Display(Name = "運費")]

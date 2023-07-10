@@ -1,0 +1,83 @@
+﻿@model EBookStore.Site.Models.BooksViewsModel.PurchaseOrderDapperVM
+
+@{
+    ViewBag.Title = "Details";
+}
+@section cdn{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/bookstyle.css" />
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
+
+}
+<!DOCTYPE html>
+
+<div id="newbackground" class="table-container">
+    <h2>詳細資料</h2>
+
+    <div>
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.BookName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BookName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PublisherName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PublisherName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreateTime)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreateTime)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Qty)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Qty)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Detail)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Detail)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PurchasePrice)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PurchasePrice)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("返回目錄", "HistoryIndex", null, new { @class = "btn btn-secondary btn-sm" })
+        </p>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/Content/book.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}

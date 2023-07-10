@@ -15,6 +15,9 @@ namespace EBookStore.Site.Models.EFModels
             OrderItems = new HashSet<OrderItem>();
         }
 
+        //[RegularExpression(@"^.*\.(xls|xlsx)$", ErrorMessage = "請選擇副檔名為.xls或.xlsx的文件")]
+        //public string XlsFile { get; set; }
+
         public long Id { get; set; }
 
         public int UserId { get; set; }
