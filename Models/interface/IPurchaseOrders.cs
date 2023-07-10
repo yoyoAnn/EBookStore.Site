@@ -29,5 +29,7 @@ namespace EBookStore.Site.Models
         /// </summary>
         /// <returns></returns>
         List<PurchaseOrderDapperVM> GetAll();
+
+        void Edit(PurchaseOrderDapperVM vm);
     }
 }

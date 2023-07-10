@@ -29,8 +29,6 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
 
         public void Create(PurchaseOrderDapperVM vm)
         {
-
-
             var purchaseOrder = new PurchaseOrderDapperVM
             {
                 BookId = vm.BookId,
@@ -47,6 +45,24 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
 
             _connection.Execute(sql, purchaseOrder);
         }
+
+        public void Edit(PurchaseOrderDapperVM vm)
+        {
+            var purchaseOrder = new PurchaseOrderDapperVM
+            {
+                BookId = vm.BookId,
+                PublisherId = vm.PublisherId,
+                Qty = vm.Qty,
+                Detail = vm.Detail,
+                PurchasePrice = vm.PurchasePrice,
+                CreateTime = vm.CreateTime
+            };
+
+            string sql = @"Update PurchaseOrders SET Qty = @Qty,Detail = @Detail,PurchasePrice = @PurchasePrice WHERE Id = @Id ";
+
+            _connection.Execute(sql, new { Qty = vm.Qty ,Detail = vm.Detail,Id = vm.Id,PurchasePrice = vm.PurchasePrice});
+        }
+
 
 
         public int GetOrCreatePublisherId(string publisherName)
@@ -89,7 +105,10 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             _connection.Execute(sql, new { BookId = vm.BookId, Qty = vm.Qty });
 
         }
-
+        /// <summary>
+        /// 取得所有訂單明細並全部加入歷史訂單
+        /// </summary>
+        /// <param name="vmList"></param>
         public void ConfirmOrder(IEnumerable<PurchaseOrderDapperVM> vmList)
         {
             string sql = @"
@@ -97,10 +116,10 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             SET Stock = Stock + @Qty
             WHERE Id = @BookId;
         ";
-            foreach(var vm in vmList)
+            foreach (var vm in vmList)
             {
                 _connection.Execute(sql, new { BookId = vm.BookId, Qty = vm.Qty });
-
+                CreateInHistory(vm);
                 Delete(vm.Id);
             }
         }

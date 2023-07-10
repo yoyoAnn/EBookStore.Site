@@ -162,8 +162,7 @@ namespace EBookStore.Site.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(purchaseOrderDapperVM).State = EntityState.Modified;
-                db.SaveChanges();
+                _repository.Edit(purchaseOrderDapperVM);
                 return RedirectToAction("Index");
             }
             return View(purchaseOrderDapperVM);
