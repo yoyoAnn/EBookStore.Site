@@ -1,8 +1,10 @@
-﻿using Dapper;
+﻿using ClosedXML.Excel;
+using Dapper;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using EBookStore.Site.Models.BooksViewsModel;
 using EBookStore.Site.Models.DTOs;
 using EBookStore.Site.Models.EFModels;
+using EBookStore.Site.Models.Servives;
 using EBookStore.Site.Models.ViewsModel;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
     {
         private readonly IDbConnection _connection;
         private readonly AppDbContext _db;
+        public List<string> NonExistingBooks { get; } = new List<string>();//儲存不存在的書籍名稱
 
         public PurchaseOrdersDapper(AppDbContext db)
         {
@@ -24,6 +27,59 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             string connStr = "data source=.;initial catalog=EBookStore;user id=ebookLogin;password=123;MultipleActiveResultSets=True;App=EntityFramework\" providerName=\"System.Data.SqlClient";
 
             _connection = new SqlConnection(connStr);
+        }
+
+
+      
+
+        public void CreateFromExcel(IEnumerable<HttpPostedFileBase> excelFiles, string excelSheetName)
+        {
+  
+            foreach (var excelFile in excelFiles)
+            {
+                using (var workbook = new XLWorkbook(excelFile.InputStream))
+                {
+                    if (workbook.TryGetWorksheet(excelSheetName, out var worksheet))
+                    {
+                        foreach (var row in worksheet.RowsUsed().Skip(1))
+                        {
+                            var bookname = row.Cell(1).Value.ToString();
+                            var publisherName = row.Cell(2).Value.ToString();
+                            var qty = row.Cell(3).GetValue<int>();
+                            var detail = row.Cell(4).Value.ToString();
+                            var price = row.Cell(5).GetValue<decimal>();
+
+                            var purchaseOrder = new PurchaseOrderDapperVM
+                            {
+                                BookName = bookname,
+                                PublisherName = publisherName,
+                                PublisherId = GetOrCreatePublisherId(publisherName),
+                                BookId = GetOrCreateBookId(bookname),
+                                Qty = qty,
+                                Detail = detail,
+                                PurchasePrice = price,
+                            };
+
+                            if (purchaseOrder.BookId == 0)
+                            {
+                                NonExistingBooks.Add(bookname);
+                            }
+
+                            if (purchaseOrder.PublisherId == 0)
+                            {
+                                var services = new PublishersServices(_db);
+                                var vm = new PublishersVM();
+                                vm.Name = publisherName;
+
+                                services.CreatePublisher(vm.ToDto());
+                            }
+                            Create(purchaseOrder);
+
+                        }
+                    }
+
+                }
+            }
         }
 
 
@@ -60,7 +116,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
 
             string sql = @"Update PurchaseOrders SET Qty = @Qty,Detail = @Detail,PurchasePrice = @PurchasePrice WHERE Id = @Id ";
 
-            _connection.Execute(sql, new { Qty = vm.Qty ,Detail = vm.Detail,Id = vm.Id,PurchasePrice = vm.PurchasePrice});
+            _connection.Execute(sql, new { Qty = vm.Qty, Detail = vm.Detail, Id = vm.Id, PurchasePrice = vm.PurchasePrice });
         }
 
 

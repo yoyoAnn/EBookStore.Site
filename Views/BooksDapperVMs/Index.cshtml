@@ -19,7 +19,10 @@
 {
     <div class="alert alert-success">@ViewBag.SuccessMessage</div>
 }
-
+@if (!string.IsNullOrEmpty(ViewBag.NonExistingBooks))
+{
+    <div class="alert alert-danger">@ViewBag.NonExistingBooks</div>
+}
 
 
 <div id="newbackground" class="table-container">
@@ -121,8 +124,12 @@
 
          $(document).ready(function () {
             var successMessage = '@ViewBag.SuccessMessage';
-            if (successMessage !== '') {
-                alert(successMessage);
+             if (successMessage !== '') {
+                 alert(successMessage);
+                 setTimeout(function () {
+                     '@ViewBag.SuccessMessage' = '';
+                 }, 100);
+             }
             }
          });
 

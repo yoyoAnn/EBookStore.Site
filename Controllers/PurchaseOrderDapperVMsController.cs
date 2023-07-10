@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
+using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Vml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using EBookStore.Site.Models.BooksViewsModel;
@@ -34,6 +36,11 @@ namespace EBookStore.Site.Controllers
             {
                 ViewBag.SuccessMessage = TempData["SuccessMessage"] as string;
             }
+            if (TempData.ContainsKey("NonExistingBooks"))
+            {
+                ViewBag.NonExistingBooks = TempData["NonExistingBooks"];
+            }
+
             return View(purchaseOrders);
         }
 
@@ -111,6 +118,42 @@ namespace EBookStore.Site.Controllers
 
             return View(vm);
         }
+
+
+        public ActionResult CreateFromExcel()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateFromExcel(HttpPostedFileBase excelFiles, string excelSheetName)
+        {
+            if (excelFiles != null && excelFiles.ContentLength > 0)
+            {
+                using (var workbook = new XLWorkbook(excelFiles.InputStream))
+                {                   
+                    var sheetNames = workbook.Worksheets.Select(sheet => sheet.Name).ToList();
+            
+                    if (!sheetNames.Contains(excelSheetName))
+                    {
+                        ModelState.AddModelError("excelSheetName", "指定的表單名稱不存在於 Excel 檔案中。");
+                       
+                        return View();
+                    }
+                    _repository.CreateFromExcel(new[] { excelFiles }, excelSheetName);
+                    var nonExistingBooks = _repository.NonExistingBooks;
+
+                    TempData["NonExistingBooks"] = nonExistingBooks;
+                    TempData["SuccessMessage"] = "從 Excel 創建進貨訂單成功";
+
+                    return RedirectToAction("Index");
+                }
+            }
+            return View();
+        }
+
 
 
         public ActionResult UpdateBookStock(int id)

@@ -40,5 +40,7 @@ namespace EBookStore.Site.Models.BooksViewsModel
         [Display(Name = "進貨價格")]
         [Range(1, double.MaxValue, ErrorMessage = "進貨價格必須大於0")]
         public Decimal PurchasePrice { get; set; }
+
+        public string excelSheetName { get; set; }
     }
 }

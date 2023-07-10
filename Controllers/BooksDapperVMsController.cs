@@ -62,6 +62,7 @@ namespace EBookStore.Site.Controllers
             try
             {
                 _repository.CreateBookWithAuthor(vm);
+                TempData["SuccessMessage"] = "創建書籍成功";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -135,6 +136,7 @@ namespace EBookStore.Site.Controllers
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
             ViewBag.PublisherId = new SelectList(db.Publishers, "Id", "Name");
+            TempData["SuccessMessage"] = "修改成功";
 
             return View(book);
         }
