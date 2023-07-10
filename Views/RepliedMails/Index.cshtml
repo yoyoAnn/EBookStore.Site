@@ -38,9 +38,9 @@
 
 <div class="container-fluid" style="width:90%">
 	<h2 class="text-center">已回信件</h2>
-	<p>
+	@*<p>
 		@Html.ActionLink("Create New", "Create")
-	</p>
+	</p>*@
 	<form method="get">
 		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6">
 			<div class="col">
@@ -105,7 +105,7 @@
 						</td>
 						<td style="border-bottom: none;">
 							<div class="d-grid gap-2">
-								@Html.ActionLink("編輯", "Edit", new { id = item.Id }, new { @class = "btn btn-sm btn-outline-primary" })
+								@Html.ActionLink("修改", "Edit", new { id = item.Id }, new { @class = "btn btn-sm btn-outline-primary" })
 								@Html.ActionLink("詳細資料", "Details", new { id = item.Id }, new { @class = "btn btn-sm btn-outline-info" })
 								<form id="deleteForm" action="/RepliedMails/Delete" method="POST" class="d-inline">
 									<input type="hidden" name="deleteId" value="@item.Id">

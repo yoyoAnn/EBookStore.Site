@@ -5,11 +5,11 @@
 }
 
 
-<div class="container-fluid" style="width:90%">
+<div class="container-fluid" style="width:500px">
     <h2 class="text-center">信件內容</h2>
     <hr />
-    <div class="row row-cols-1 row-cols-sm-2">
-        <div class="col mt-3">
+    <div class="row row-cols-1">
+        <div class="col">
             <label class="form-label">會員帳號</label>
             @Html.EditorFor(model => model.UserAccount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
         </div>
@@ -34,9 +34,6 @@
         </div>
     </div>
 </div>
-@*<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>*@
 
 @section scripts{
     @Scripts.Render("~/bundles/jquery")

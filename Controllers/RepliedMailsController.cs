@@ -98,10 +98,17 @@ namespace EBookStore.Site.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 			var query = new RepliedMailDapperRepository().GetRepliedMailById(id);
+
 			if (query == null)
             {
                 return HttpNotFound();
             }
+
+            var csMailDetail = db.CustomerServiceMails.Find(query.CSId);
+            var pId = csMailDetail.ProblemTypeId;
+            query.ProblemTypeName = db.ProblemTypes.Find(pId).Name;
+            query.ProblemStatement = csMailDetail.ProblemStatement;
+            query.ProblemCreatedTime = csMailDetail.CreatedTime;
 
             return View(query);
         }

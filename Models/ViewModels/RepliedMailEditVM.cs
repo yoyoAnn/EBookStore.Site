@@ -35,5 +35,12 @@ namespace EBookStore.Site.Models.ViewModels
 
 		[Display(Name = "回覆時間")]
 		public DateTime CreatedTime { get; set; }
+
+		[Display(Name = "問題種類")]
+		public string ProblemTypeName { get; set; }
+		[Display(Name = "問題敘述")]
+		public string ProblemStatement { get; set; }
+		[Display(Name = "發問時間")]
+		public DateTime ProblemCreatedTime { get; set; }
 	}
 }
