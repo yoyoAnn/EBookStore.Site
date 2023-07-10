@@ -22,7 +22,7 @@ namespace EBookStore.Site.Controllers
 
 
         // GET: Employees
-        //[Authorize(Roles = "執行長")]
+        [Authorize(Roles = "執行長")]
         public ActionResult Index(EmployeeCriteria criteria)
         {
             PrepareCategoryDataSource(criteria.RoleId);
