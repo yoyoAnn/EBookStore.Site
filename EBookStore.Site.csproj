@@ -260,6 +260,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Content Include="Content\bookstyle2.css" />
     <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BooksDapperVMsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
