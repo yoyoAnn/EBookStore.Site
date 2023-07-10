@@ -4,87 +4,94 @@
     ViewBag.Title = "刪除員工";
 }
 
-<h2>刪除員工</h2>
+<html>
 
-@*<h3>您確定要刪除此員工?</h3>*@
-<h3 class="text-danger">您確定要刪除此員工?</h3>
-<div>
-    @*<h4>Employee</h4>*@
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Role.Name)
-        </dt>
+<head>
+    <style>
+        .page-content {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Role.Name)
-        </dd>
+        .form-container {
+            width: 400px;
+            text-align: center;
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Account)
-        </dt>
+        h3.text-danger {
+            color: red;
+            font-size: 24px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Account)
-        </dd>
+        .dl-horizontal dt {
+            font-weight: bold;
+        }
 
-        @*<dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
+        .dl-horizontal dd {
+            margin-left: 0;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>*@
+        .form-actions {
+            margin-top: 30px;
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+        .form-actions input[type="submit"] {
+            margin-right: 10px;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+        .form-actions a {
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+<body>
+    <div class="page-content">
+        <div class="form-container">
+            <h3 class="text-danger">您確定要刪除此員工?</h3>
+            <hr />
+            <div>
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.Role.Name)</dt>
+                    <dd>@Html.DisplayFor(model => model.Role.Name)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+                    <dt>@Html.DisplayNameFor(model => model.Account)</dt>
+                    <dd>@Html.DisplayFor(model => model.Account)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
+                    <dt>@Html.DisplayNameFor(model => model.Email)</dt>
+                    <dd>@Html.DisplayFor(model => model.Email)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
+                    <dt>@Html.DisplayNameFor(model => model.Name)</dt>
+                    <dd>@Html.DisplayFor(model => model.Name)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
+                    @*<dt>@Html.DisplayNameFor(model => model.Gender)</dt>
+                    <dd>@Html.DisplayFor(model => model.Gender)</dd>*@
 
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
+                    <dt>@Html.DisplayNameFor(model => model.Phone)</dt>
+                    <dd>@Html.DisplayFor(model => model.Phone)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedTime)
-        </dt>
+                    <dt>@Html.DisplayNameFor(model => model.CreatedTime)</dt>
+                    <dd>@Html.DisplayFor(model => model.CreatedTime)</dd>
+                </dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreatedTime)
-        </dd>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
 
-    </dl>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            @Html.ActionLink("Back to List", "Index")
+                    <div class="form-actions">
+                        <input type="submit" value="刪除" class="btn btn-danger" />
+                        @Html.ActionLink("返回列表", "Index", null, new { @class = "btn btn-primary" })
+                    </div>
+                }
+            </div>
+            <hr /> 
         </div>
-    }
-</div>
+    </div>
+</body>
+
+</html>

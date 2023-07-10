@@ -16,7 +16,7 @@ namespace EBookStore.Site.Controllers
 		private AppDbContext db = new AppDbContext();
 
         // GET: Users
-        [Authorize(Roles = "執行長,專欄作家")]
+        //[Authorize(Roles = "執行長,專欄作家")]
         public ActionResult Index(UserCriteria criteria)
 		{
 			ViewBag.Criteria = criteria;

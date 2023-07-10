@@ -294,6 +294,9 @@
     <Compile Include="Models\ViewModels\ArticleCreateVm.cs" />
     <Compile Include="Models\ViewModels\ArticleEditVm.cs" />
     <Compile Include="Models\ViewModels\ArticleIndexVm.cs" />
+    <Compile Include="Models\ViewModels\EditPasswordVM.cs" />
+    <Compile Include="Models\ViewModels\EditProfileVM.cs" />
+    <Compile Include="Models\ViewModels\ForgetPasswordVM.cs" />
     <Compile Include="Models\ViewModels\LoginVM.cs" />
     <Compile Include="Models\ViewModels\ProductCriteria.cs" />
     <Compile Include="Models\ViewModels\CommentIndexVm.cs" />
@@ -448,6 +451,10 @@
     <Content Include="Views\RepliedMails\Index.cshtml" />
     <Content Include="Views\Employees\Login.cshtml" />
     <Content Include="Views\Employees\Error.cshtml" />
+    <Content Include="Views\Employees\PersonalIndex.cshtml" />
+    <Content Include="Views\Employees\EditProfile.cshtml" />
+    <Content Include="Views\Employees\EditPassword.cshtml" />
+    <Content Include="Views\Employees\ForgetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
