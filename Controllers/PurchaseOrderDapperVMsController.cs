@@ -145,7 +145,13 @@ namespace EBookStore.Site.Controllers
                     _repository.CreateFromExcel(new[] { excelFiles }, excelSheetName);
                     var nonExistingBooks = _repository.NonExistingBooks;
 
-                    TempData["NonExistingBooks"] = nonExistingBooks + "未成功加入訂單，要先加入這些書籍";
+                    string nonbook ="";
+                    foreach(var non in nonExistingBooks)
+                    {
+                        nonbook += non+",";
+                    }
+
+                    TempData["NonExistingBooks"] = nonbook + "未成功加入訂單，請先加入這些書籍";
                     TempData["SuccessMessage"] = "從 Excel 創建進貨訂單成功";
 
                     return RedirectToAction("Index");

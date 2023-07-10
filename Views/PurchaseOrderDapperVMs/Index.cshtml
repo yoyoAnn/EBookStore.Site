@@ -8,6 +8,11 @@
 {
     <div class="alert alert-success">@ViewBag.SuccessMessage</div>
 }
+@if (!string.IsNullOrEmpty(ViewBag.NonExistingBooks))
+{
+    <div class="alert alert-danger">@ViewBag.NonExistingBooks</div>
+}
+
 @section cdn{
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
     <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
@@ -20,9 +25,9 @@
     <H2>進貨管理</H2>
     <div class="row mb-3">
         <div class="col-6 d-flex justify-content-start">
-            @Html.ActionLink("新增訂單", "Create", null, new { @class = "btn btn-primary mr-2" }) 
-            @Html.ActionLink("從Excel創建", "CreateFromExcel", null, new { @class = "btn btn-primary mr-2" }) 
-            <button id="submitAllBtn" class="btn btn-primary mr-2">全部送出</button> 
+            @Html.ActionLink("新增訂單", "Create", null, new { @class = "btn btn-primary mr-2" })
+            @Html.ActionLink("從Excel創建", "CreateFromExcel", null, new { @class = "btn btn-primary mr-2" })
+            <button id="submitAllBtn" class="btn btn-primary mr-2">全部送出</button>
             <button id="DeleteAllBtn" class="btn btn-primary">一鍵刪除</button>
         </div>
     </div>
@@ -130,7 +135,7 @@
     <script>
         $("#DeleteAllBtn").click(function () {
             $.ajax({
-                url: "/PurchaseOrderDapperVMs/DeleteAll", 
+                url: "/PurchaseOrderDapperVMs/DeleteAll",
                 type: "POST",
                 success: function (response) {
                     window.location.reload();

@@ -63,6 +63,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                             if (purchaseOrder.BookId == 0)
                             {
                                 NonExistingBooks.Add(bookname);
+                                continue;
                             }
 
                             if (purchaseOrder.PublisherId == 0)
