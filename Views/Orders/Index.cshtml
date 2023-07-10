@@ -71,9 +71,10 @@
 
 <section class="container">
     <form method="get">
+        @Html.AntiForgeryToken()
         <div class="row">
             <div class="col-md-12 d-flex justify-content-center">
-                <div class="mb-3 col-md-k3">
+                <div class="mb-3 col-md-3">
                     <label for="s_categoryId">訂單狀態</label>
                     <select name="OrderId" id="s_categoryId" class="form-select form-control">
                         <option value="">全部</option>
@@ -104,8 +105,19 @@
                     <button class="btn btn-primary">Search</button>
                 </div>
 
+
+
+            </div>
+            <div class="mb-3 col-md-12 d-flex px-5">
+                <div class="fa-solid fa-arrow-rotate-left fa-xl"></div>
+                @*<input type="submit" value="出貨" class="btn btn-primary btn-lg ml-auto" />*@
+                @*<button type="button" class="btn btn-danger btn-lg" id="CancelOrder">取消訂單</button>*@
+
+                @Html.ActionLink("新增批次訂單", "Create", null, new { @class = "btn btn-light ml-auto" })
             </div>
         </div>
+
+
     </form>
 </section>
 
@@ -214,7 +226,7 @@
                     </td>
                     <td>
                         @Html.ActionLink("編輯", "Edit", new { id = item.Id }, new { @class = "btn btn-warning " }) |
-                        <button class="deleteButton btn btn-danger" data-orderId="@item.Id">刪除</button>
+                        <button class="deleteButton btn btn-danger" id="deleteButton" data-orderId="@item.Id">刪除</button>
                     </td>
                 </tr>
             }
@@ -286,6 +298,10 @@
                         $.ajax({
                             url: "/Orders/Delete2",
                             type: "POST",
+                            data: {
+                                __RequestVerificationToken: antiForgeryToken
+                                , name: $("#deleteButton").val()
+                            },
 
                             data: { id: orderId },
                             success: function (result) {

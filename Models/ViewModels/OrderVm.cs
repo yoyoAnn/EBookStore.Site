@@ -39,7 +39,7 @@ namespace EBookStore.Site.Models.ViewModels
         public string ReceiverAddress { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [RegularExpression("^[0-9]{10}$", ErrorMessage = "收件人電話必須為 10 位數字。")]
         [Display(Name = "收件人電話")]
         public string ReceiverPhone { get; set; }
 

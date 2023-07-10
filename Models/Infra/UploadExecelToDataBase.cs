@@ -20,30 +20,20 @@ namespace EBookStore.Site.Models.Infra
             _connStr = System.Configuration.ConfigurationManager.ConnectionStrings["AppDbContext"].ConnectionString;
         }
 
-        public void Upload(string fullName)
+        public void Upload(string fullName, string OrderId)
         {
-            var dt= ExecToDataBase(fullName);
-
+            var dt = ExecToDataBase(fullName, OrderId);
 
             SqlBulkCopy sqlbulkcopy = new SqlBulkCopy(_connStr, SqlBulkCopyOptions.UseInternalTransaction);
             sqlbulkcopy.DestinationTableName = "OrderItems";//資料庫中的表名
-            //sqlbulkcopy.WriteToServer(dataset.Tables[0]);
-
-
-            //            string sql = $@"
-            //SELECT [Books].[Id], [Books].[Name], [Books].[Price], [OrderItems].[Qty], [Books].[Price] * [OrderItems].[Qty] AS [TotalPrice]
-            //FROM [OrderItems]
-            //LEFT JOIN [dbo].[Books] ON [OrderItems].[BookId] = [Books].[Id]
-            //where OrderId=@OrderId";
-
-            //            IEnumerable<DetailDapperVM> DetailItems = new SqlConnection(_connStr)
-            //                .Query<DetailDapperVM>(sql, new { OrderId = orderId });
-
-            //            return DetailItems.ToList();
-
+            sqlbulkcopy.ColumnMappings.Add("Id", "OrderId");
+            sqlbulkcopy.ColumnMappings.Add("品名", "BookId");
+            sqlbulkcopy.ColumnMappings.Add("金額", "Price");
+            sqlbulkcopy.ColumnMappings.Add("個數", "Qty");
+            sqlbulkcopy.WriteToServer(dt);
         }
 
-        private DataTable ExecToDataBase(string fullName)
+        private DataTable ExecToDataBase(string fullName, string OrderId)
         {
             DataTable dt = new DataTable();
             FileStream file = null;
@@ -64,12 +54,15 @@ namespace EBookStore.Site.Models.Infra
                     if (Workbook != null)
                     {
                         ISheet sheet = Workbook.GetSheetAt(0); //讀取第一個sheet 
-                        System.Collections.IEnumerator rows = sheet.GetRowEnumerator();
+                        //System.Collections.IEnumerator rows = sheet.GetRowEnumerator();
 
-                        //得到Excel工作表的行
+                        //得到Excel工作表標題的欄位
                         IRow headerRow = sheet.GetRow(0);
                         //得到Excel工作表的總列數  
                         int cellCount = headerRow.LastCellNum;
+
+                        // 新增 "ID" 欄位
+                        dt.Columns.Add("ID", typeof(long));
 
                         for (int j = 0; j < cellCount; j++)
                         {
@@ -83,10 +76,13 @@ namespace EBookStore.Site.Models.Infra
                             IRow row = sheet.GetRow(i);
                             DataRow dataRow = dt.NewRow();
 
+                            dataRow["ID"] = Convert.ToInt64(OrderId);
+
                             for (int j = row.FirstCellNum; j < cellCount; j++)
                             {
+                                int k = j + 1;
                                 if (row.GetCell(j) != null)
-                                    dataRow[j] = row.GetCell(j).ToString();
+                                    dataRow[k] = row.GetCell(j).ToString();
                             }
                             dt.Rows.Add(dataRow);
                         }
@@ -186,8 +182,8 @@ namespace EBookStore.Site.Models.Infra
                                 case CellType.Error:
                                     dataRow[j] = cell.ErrorCellValue;
                                     break;
-                                    case CellType.Formula:
-                                 default:
+                                case CellType.Formula:
+                                default:
                                     dataRow[j] = " = " + cell.CellFormula;
                                     break;
                             }

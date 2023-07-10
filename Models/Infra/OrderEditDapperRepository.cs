@@ -21,12 +21,12 @@ namespace EBookStore.Site.Models.Infra
         public IEnumerable<OrdersEditItemDapperVM> PostOrdersShippingStatusIdByOrderId(long OrderId, int ShippingStatusId)
         {
             string sql = @"
-        UPDATE Orders
-        SET
-        ShippingStatusId = @ShippingStatusId,
-        ShippingTime = REPLACE(CONVERT(nvarchar(19), GETDATE(), 120), '-', '/')
-        WHERE
-        Id = @Id";
+                            UPDATE Orders
+                            SET
+                            ShippingStatusId = @ShippingStatusId,
+                            ShippingTime = REPLACE(CONVERT(nvarchar(19), GETDATE(), 120), '-', '/')
+                            WHERE
+                            Id = @Id";
 
             using (var connection = new SqlConnection(_connStr))
             {

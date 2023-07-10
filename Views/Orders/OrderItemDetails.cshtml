@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "OrderItemDetails";
+    var OrderId = ViewBag.OrderId;
+    var OrderItem = ViewBag.OrderItem;
 }
 
 <style>
@@ -17,6 +19,14 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4" id="block1">
     <div class="col-md-12 d-flex px-5">
         <h2 class="ml-auto"></h2>
+        @*@Html.ActionLink("匯出", "DownloadXlsx", null, new { @class = "btn btn-danger btn-lg ml-auto" })*@
+        @using (Html.BeginForm("DownloadXlsx", "Orders", FormMethod.Post))
+            {
+
+                <button type="submit" class="btn btn-danger btn-lg ml-auto">匯出</button>
+            }
+
+        @*<button type="button" class="" id="PrintItemXlsx">匯出</button>*@
         <button type="button" class="btn btn-danger btn-lg ml-auto" id="PrintOrder">列印</button>
     </div>
 </div>
