@@ -150,8 +150,11 @@ namespace EBookStore.Site.Controllers
                     {
                         nonbook += non+",";
                     }
-
-                    TempData["NonExistingBooks"] = nonbook + "未成功加入訂單，請先加入這些書籍";
+                    if (!string.IsNullOrEmpty(nonbook))
+                    {
+                        TempData["NonExistingBooks"] = nonbook + "未成功加入訂單，請先加入這些書籍";
+                    }
+    
                     TempData["SuccessMessage"] = "從 Excel 創建進貨訂單成功";
 
                     return RedirectToAction("Index");
