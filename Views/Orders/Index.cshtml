@@ -40,6 +40,15 @@
             background-color: white;
         }
 
+        .pink-row {
+            background-color: lightpink !important;
+            color: black !important;
+        }
+
+        .other-row {
+            color: black !important;
+        }
+
         .paid-row {
             background-color: lightgreen !important;
             color: black !important;
@@ -179,7 +188,7 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr class="@(item.OrderStatusesName == "已完成" ? "paid-row" : (item.OrderStatusesName == "已取消" ? "cancelled-row" : (item.OrderStatusesName == "已付款" ? "AlreadyPaid-row" : "")))">
+                <tr class="@(item.OrderStatusesName == "已完成" ? "paid-row" : (item.OrderStatusesName == "已取消" ? "cancelled-row" : (item.OrderStatusesName == "已付款" ? "AlreadyPaid-row" : (item.OrderStatusesName == "待退款" ? "pink-row" : "other-row"))))">
                     <td class="badge bg-dark ">
                         @Html.ActionLink("訂單明細", "OrderItemDetails", new { orderId = item.OrdersId }, new { @class = "text-white" })
                     </td>
