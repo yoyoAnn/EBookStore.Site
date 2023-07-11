@@ -10,7 +10,8 @@ using EBookStore.Site.Models.EFModels;
 
 namespace EBookStore.Site.Controllers
 {
-    public class WritersController : Controller
+	[Authorize(Roles = "執行長,專欄作家")]
+	public class WritersController : Controller
     {
         private AppDbContext db = new AppDbContext();
 

@@ -122,7 +122,7 @@ namespace EBookStore.Site.Controllers
                 return HttpNotFound();
             }
 
-            PrepareEmployeeDataSource(employee.Id);
+            PrepareEmployeeDataSource(employee.RoleId);
    
             return View(employee);
         }
