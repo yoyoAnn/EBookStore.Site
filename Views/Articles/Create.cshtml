@@ -112,7 +112,7 @@
 
             <label class="form-label" for="@Html.NameFor(model => model.Content)">@Html.DisplayNameFor(model => model.Content)</label>
 
-            @Html.TextAreaFor(model => model.Content, new { @class = "form-control", style = "width:  500px; max-width: 100%; max-height:300px; overflow-y: auto;", rows = "18", cols = "50" })
+            @Html.TextAreaFor(model => model.Content, new { @class = "form-control", style = "width:  500px; max-width: 100%; max-height:800px; overflow-y: auto;", rows = "18", cols = "50" })
             @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
         </div>
 
