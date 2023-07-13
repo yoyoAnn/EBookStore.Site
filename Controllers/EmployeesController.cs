@@ -191,7 +191,7 @@ namespace EBookStore.Site.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name", employee.RoleId);
+            ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
             return View();
         }
 
