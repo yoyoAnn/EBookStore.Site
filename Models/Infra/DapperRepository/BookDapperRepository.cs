@@ -18,12 +18,13 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
     {
         private readonly IDbConnection _connection;
         private readonly AppDbContext _db;
+        private readonly string connStr;
 
         public BookDapperRepository(AppDbContext db)
         {
 
             _db = db;
-            string connStr = "data source=.;initial catalog=EBookStore;user id=ebookLogin;password=123;MultipleActiveResultSets=True;App=EntityFramework\" providerName=\"System.Data.SqlClient";
+            connStr = System.Configuration.ConfigurationManager.ConnectionStrings["AppDbContext"].ConnectionString;
 
             _connection = new SqlConnection(connStr);
         }
@@ -131,7 +132,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                 Discount = vm.Discount
             };
         }
-        public void UpdateBook(BooksDapperVM vm,int categoryId,int PublisherId)
+        public void UpdateBook(BooksDapperVM vm, int categoryId, int PublisherId)
         {
 
 
@@ -224,7 +225,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                             var isbn = row.Cell(5).Value.ToString();
                             var price = row.Cell(6).GetValue<decimal>();
                             var summary = row.Cell(7).Value.ToString();
-                            int publisherId = GetOrCreatePublisherId(excelFiles,publisherName, CategoryName);
+                            int publisherId = GetOrCreatePublisherId(excelFiles, publisherName, CategoryName);
                             int categoryId = GetCategoryIdByName(CategoryName);
 
                             var bookVm = new BooksDapperVM
@@ -266,7 +267,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
         }
 
 
-        private int GetOrCreatePublisherId(IEnumerable<HttpPostedFileBase> excelFiles,string publisherName,string CategoryName)
+        private int GetOrCreatePublisherId(IEnumerable<HttpPostedFileBase> excelFiles, string publisherName, string CategoryName)
         {
             string sql = "SELECT Id FROM Publishers WHERE Name = @PublisherName";
             int publisherId = _connection.QuerySingleOrDefault<int>(sql, new { PublisherName = publisherName });

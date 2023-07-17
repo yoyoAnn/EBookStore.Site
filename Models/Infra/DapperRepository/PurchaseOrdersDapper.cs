@@ -20,12 +20,12 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
         private readonly IDbConnection _connection;
         private readonly AppDbContext _db;
         public List<string> NonExistingBooks { get; } = new List<string>();//儲存不存在的書籍名稱
-
+        private readonly string connStr;
+       
         public PurchaseOrdersDapper(AppDbContext db)
         {
             _db = db;
-            string connStr = "data source=.;initial catalog=EBookStore;user id=ebookLogin;password=123;MultipleActiveResultSets=True;App=EntityFramework\" providerName=\"System.Data.SqlClient";
-
+            connStr = System.Configuration.ConfigurationManager.ConnectionStrings["AppDbContext"].ConnectionString;
             _connection = new SqlConnection(connStr);
         }
 
