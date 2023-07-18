@@ -11,7 +11,8 @@ using EBookStore.Site.Models.ViewModels;
 
 namespace EBookStore.Site.Controllers
 {
-    public class CommentsController : Controller
+	[Authorize(Roles = "執行長")]
+	public class CommentsController : Controller
     {
 
         public ActionResult Index()

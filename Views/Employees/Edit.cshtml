@@ -31,87 +31,90 @@
 	<div class="container-fluid" style="width:500px">
 		<h2 class="text-center">修改員工資料</h2>
 		<hr />
-		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-		@Html.HiddenFor(model => model.Id, new { id = "OrderId" })
+        <form action="/RepliedMails/Edit" method="POST">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id, new { id = "OrderId" })
 
 
-		<div class="form-group">
-			@Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
-			@*<div class="col-md-10">
-					@Html.EditorFor(model => model.RoleId, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
-				</div>*@
-			<div class="col-md-10">
-				@Html.DropDownList("RoleId", null, htmlAttributes: new { @class = "form-control", @id = "DropDownRoleId" })
-				@Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
-			</div>
-		</div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
+                @*<div class="col-md-10">
+                    @Html.EditorFor(model => model.RoleId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                </div>*@
+                <div class="col-md-10">
+                    @Html.DropDownList("RoleId", null, htmlAttributes: new { @class = "form-control", @id = "DropDownRoleId" })
+                    @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-		<div class="form-group">
-			@Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-10">
-				@Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
-			</div>
-		</div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-		@*<div class="form-group">
-				@Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-10">
-					@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-				</div>
-			</div>*@
+            @*<div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
-		<div class="form-group">
-			@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-10">
-				@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-			</div>
-		</div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-		<div class="form-group">
-			@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-10">
-				@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-			</div>
-		</div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-		@*<div class="form-group">
-				@Html.LabelFor(model => model.GenderText, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-10">
-					<div class="checkbox">
-						@Html.EditorFor(model => model.GenderText)
-						@Html.ValidationMessageFor(model => model.GenderText, "", new { @class = "text-danger" })
-					</div>
-				</div>
-			</div>*@
+            @*<div class="form-group">
+            @Html.LabelFor(model => model.GenderText, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.GenderText)
+                    @Html.ValidationMessageFor(model => model.GenderText, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>*@
 
-		<div class="form-group">
-			@Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-10">
-				@Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-			</div>
-		</div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-		@*<div class="form-group">
-				@Html.LabelFor(model => model.CreatedTime, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-10">
-					@Html.EditorFor(model => model.CreatedTime, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.CreatedTime, "", new { @class = "text-danger" })
-				</div>
-			</div>*@
+            @*<div class="form-group">
+            @Html.LabelFor(model => model.CreatedTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CreatedTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CreatedTime, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
-		<div class="form-group">
-			<div class="col-md-offset-2 col-md-10">
-				@*<input type="submit" value="Save" class="btn btn-default" />*@
-				<a href="@Url.Action("Index")" class="btn btn-primary btn-lg ml-auto">返回</a>
-				<button type="button" class="btn btn-primary btn-lg ml-auto" id="ToShip">送出</button>
-			</div>
-		</div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @*<input type="submit" value="Save" class="btn btn-default" />*@
+                    <a href="@Url.Action("Index")" class="btn btn-primary btn-lg ml-auto">返回</a>
+                    @*<button type="submit" class="btn btn-primary btn-lg ml-auto" id="ToShip">送出</button>*@
+                    <input type="submit" value="送出" class="btn btn-primary btn-lg ml-auto" />
+                </div>
+            </div>
+        </form>
 	</div>
 }
 
@@ -128,39 +131,39 @@
 
 
 
-		$("#ToShip").click(function () {
-			var orderId = $("#OrderId").val(); // 訂單ID
-			var ShippingStatusId = $("#DropDownRoleId").val();
+		//$("#ToShip").click(function () {
+		//	var orderId = $("#OrderId").val(); // 訂單ID
+		//	var ShippingStatusId = $("#DropDownRoleId").val();
 
-			// 顯示SweetAlert的確認對話框
-			Swal.fire({
-				title: '確認',
-				text: '確定修改員工資料？',
-				icon: 'question',
-				showCancelButton: true,
-				confirmButtonText: '確定',
-				cancelButtonText: '取消'
-			}).then((result) => {
-				if (result.isConfirmed) {
-					// 使用者點擊了確定按鈕
-					$.ajax({
-						url: "/Employees/EditRoleId", // 根據控制器和方法的路由設定進行調整
-						type: "POST",
-						data: { Id: orderId, RoleId: ShippingStatusId },
-						success: function (result) {
-							// 成功處理後的操作，例如重新導向或顯示訊息
-							/*Swal.fire('成功', '自訂按鈕觸發成功！', 'success').then(() => {*/
-							location.href = "/Employees/Index";
-							/*});*/
-						},
-						error: function () {
-							// 錯誤處理，例如顯示錯誤訊息
-							Swal.fire('錯誤', '發生未知的錯誤！', 'error');
-						}
-					});
-				}
-			});
-		});
+		//	// 顯示SweetAlert的確認對話框
+		//	Swal.fire({
+		//		title: '確認',
+		//		text: '確定修改員工資料？',
+		//		icon: 'question',
+		//		showCancelButton: true,
+		//		confirmButtonText: '確定',
+		//		cancelButtonText: '取消'
+		//	}).then((result) => {
+		//		if (result.isConfirmed) {
+		//			// 使用者點擊了確定按鈕
+		//			$.ajax({
+		//				url: "/Employees/EditRoleId", // 根據控制器和方法的路由設定進行調整
+		//				type: "POST",
+		//				data: { Id: orderId, RoleId: ShippingStatusId },
+		//				success: function (result) {
+		//					// 成功處理後的操作，例如重新導向或顯示訊息
+		//					/*Swal.fire('成功', '自訂按鈕觸發成功！', 'success').then(() => {*/
+		//					location.href = "/Employees/Index";
+		//					/*});*/
+		//				},
+		//				error: function () {
+		//					// 錯誤處理，例如顯示錯誤訊息
+		//					Swal.fire('錯誤', '發生未知的錯誤！', 'error');
+		//				}
+		//			});
+		//		}
+		//	});
+		//});
 
 
 

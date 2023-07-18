@@ -19,7 +19,7 @@ namespace EBookStore.Site.Models.ViewModels
         public string Account { get; set; }
 
         [Display(Name = "密碼")]
-        [Required]
+        //[Required]
         [StringLength(255)]
         public string Password { get; set; }
 
