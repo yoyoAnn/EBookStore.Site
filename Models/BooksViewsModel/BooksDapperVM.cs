@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace EBookStore.Site.Models.BooksViewsModel
 {
@@ -53,6 +54,7 @@ namespace EBookStore.Site.Models.BooksViewsModel
 
         [Display(Name = "上架狀況")]
         public bool Status { get; set; } = true;
+
 
         [Display(Name = "價格")]
         public decimal Price { get; set; }

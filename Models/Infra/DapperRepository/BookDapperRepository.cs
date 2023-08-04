@@ -114,24 +114,24 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
         }
 
 
-        public void UpdateBook(BooksDapperVM vm, int authorId)
-        {
-            var book = new Book
-            {
-                Id = vm.Id,
-                Name = vm.Name,
-                CategoryId = vm.CategoryId,
-                PublisherId = vm.PublisherId,
-                PublishDate = DateTime.Parse(vm.PublishDatetxt),
-                Summary = vm.Summary,
-                ISBN = vm.ISBN,
-                EISBN = vm.EISBN,
-                Stock = vm.Stock,
-                Status = vm.Status,
-                Price = vm.Price,
-                Discount = vm.Discount
-            };
-        }
+        //public void UpdateBook(BooksDapperVM vm, int authorId)
+        //{
+        //    var book = new Book
+        //    {
+        //        Id = vm.Id,
+        //        Name = vm.Name,
+        //        CategoryId = vm.CategoryId,
+        //        PublisherId = vm.PublisherId,
+        //        PublishDate = DateTime.Parse(vm.PublishDatetxt),
+        //        Summary = vm.Summary,
+        //        ISBN = vm.ISBN,
+        //        EISBN = vm.EISBN,
+        //        Stock = vm.Stock,
+        //        Status = vm.Status,
+        //        Price = vm.Price,
+        //        Discount = vm.Discount
+        //    };
+        //}
         public void UpdateBook(BooksDapperVM vm, int categoryId, int PublisherId)
         {
 

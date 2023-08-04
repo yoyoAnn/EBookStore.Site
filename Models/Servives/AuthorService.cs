@@ -28,6 +28,40 @@ namespace EBookStore.Site.Models.Servives
             return _db.Authors.Count();
         }
 
+        //開發中
+        public void CreateAuthordataFromExcel(IEnumerable<HttpPostedFileBase> excelFiles, string CategoryName)
+        {
+
+
+            foreach (var excelFile in excelFiles)
+            {
+                using (var workbook = new XLWorkbook(excelFile.InputStream))
+                {
+                    //var worksheet = workbook.Worksheet(CategoryName);
+
+                    if (workbook.TryGetWorksheet(CategoryName, out var worksheet))
+                    {
+                        foreach (var row in worksheet.RowsUsed().Skip(1))
+                        {
+                            var delimiters = new char[] { ',', '、' };
+                            var names = row.Cell(1).Value.ToString().Split(delimiters);
+                            foreach (var name in names)
+                            {
+                                var trimmedName = name.Trim();
+                                AuthorHelper.AddAuthorIfNotExists(trimmedName);
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"工作表 '{CategoryName}' 不存在。");
+                    }
+
+                }
+            }
+        }
+
 
         public void CreateAuthorsFromExcel(IEnumerable<HttpPostedFileBase> excelFiles, string CategoryName)
         {
