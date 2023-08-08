@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Configuration.Provider;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -194,13 +195,14 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
         public List<BooksDapperVM> GetBookItems()
         {
 
-            string sql = $@"SELECT C.Name as CategoryName,B.ID as Id,B.Name as Name,P.Name as PublisherName ,A.Name as Author,
-                         B.PublishDate as PublishDate,B.ISBN,B.EISBN,B.Price,B.Summary,B.Stock,
-                         B.Status FROM Books as B
+            string sql = $@" SELECT BI.Image as BookImage, C.Name as CategoryName,B.ID as Id,B.Name as Name,P.Name as PublisherName ,
+                         A.Name as Author,B.PublishDate as PublishDate,B.ISBN,B.EISBN,B.Price,B.Summary,
+                         B.Stock,B.Status FROM Books as B
                          LEFT JOIN BookAuthors as BA ON BA.BookId = B.Id
                          LEFT JOIN Authors as A ON A.Id = BA.AuthorId
                          LEFT JOIN Publishers as P ON P.Id = B.PublisherId
-                         LEFT JOIN Categories as C ON C.Id = B.CategoryId";
+                         LEFT JOIN Categories as C ON C.Id = B.CategoryId
+						 LEFT JOIN BookImages as BI ON BI.BookId = B.Id";
 
             IEnumerable<BooksDapperVM> bookitems = _connection.Query<BooksDapperVM>(sql);
 
@@ -257,7 +259,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             }
         }
 
-
+      
         public int GetBooksCount()
         {
             string query = "SELECT COUNT(*) FROM Books";

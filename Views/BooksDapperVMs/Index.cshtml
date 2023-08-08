@@ -41,6 +41,9 @@
         <thead>
             <tr>
                 <th>
+                    @Html.DisplayNameFor(model => model.BookImage)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.CategoryName)
                 </th>
                 <th>
@@ -75,6 +78,10 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.CategoryName)*@
+                        <img src="~/Uploads/@item.BookImage" style="width:50px" />
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CategoryName)
                     </td>
