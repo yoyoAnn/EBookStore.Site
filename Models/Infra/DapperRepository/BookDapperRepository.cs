@@ -11,6 +11,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 
 namespace EBookStore.Site.Models.Infra.DapperRepository
@@ -227,6 +228,21 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                             var isbn = row.Cell(5).Value.ToString();
                             var price = row.Cell(6).GetValue<decimal>();
                             var summary = row.Cell(7).Value.ToString();
+
+                            var imageNameCell = row.Cell(8);
+                            imageNameCell.Value = imageNameCell.CachedValue;
+
+                            string imageName = "";
+                            string imageURL = "";
+                            if (imageNameCell.HasHyperlink)
+                            {
+                                var hyperlink = imageNameCell.GetHyperlink();
+                                imageURL = hyperlink.ExternalAddress.AbsoluteUri;
+
+                                imageName = SaveImageFromHyperlink(imageURL);
+                            }
+
+
                             int publisherId = GetOrCreatePublisherId(excelFiles, publisherName, CategoryName);
                             int categoryId = GetCategoryIdByName(CategoryName);
 
@@ -241,16 +257,17 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                                 Summary = summary,
                                 ISBN = isbn,
                                 Price = price,
+                                BookImage = imageName,
                                 Status = true,
                                 Stock = 1,//預設庫存都是1
                                 Discount = 1//預設沒折扣
                             };
 
+
                             if (BookHelper.IsBooksNameExists(_db, name))
                             {
                                 continue; // 如果書名已存在，跳過此本書籍，處理下一本
                             }
-
                             CreateBookWithAuthor(bookVm);
                         }
                     }
@@ -259,7 +276,37 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             }
         }
 
-      
+        private string SaveImageFromHyperlink(string imageUrl)
+        {
+            string imageFolderPath = HttpContext.Current.Server.MapPath("~/uploads/NewsImage");
+
+
+            string imageName = Guid.NewGuid().ToString();
+            string imagePath = Path.Combine(imageFolderPath, imageName)+".jpg";
+
+            // Use a WebClient to download the image
+            using (WebClient client = new WebClient())
+            {
+                client.DownloadFile(imageUrl, imagePath);
+            }
+
+            return imagePath;
+        }
+
+
+        //private string SaveImage(Stream imageStream, string imageName)
+        //{
+        //    string imageFolderPath = "~/uploads";
+        //    string imagePath = Path.Combine(imageFolderPath, imageName);
+
+        //    using (FileStream fileStream = new FileStream(imagePath, FileMode.Create))
+        //    {
+        //        imageStream.CopyTo(fileStream);
+        //    }
+
+        //    return imagePath;
+        //}
+
         public int GetBooksCount()
         {
             string query = "SELECT COUNT(*) FROM Books";
