@@ -75,7 +75,11 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
             SELECT SCOPE_IDENTITY();
         ";
 
+        
+
             int bookId = _connection.ExecuteScalar<int>(sql, book);
+
+            CreateBookImageRelationship(bookId, vm.BookImage);
 
             return bookId;
         }
@@ -257,7 +261,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                                 Summary = summary,
                                 ISBN = isbn,
                                 Price = price,
-                                BookImage = imageName,
+                                BookImage = !string.IsNullOrEmpty(imageName) ? imageName+".jpg": "default.jpg",
                                 Status = true,
                                 Stock = 1,//預設庫存都是1
                                 Discount = 1//預設沒折扣
@@ -282,7 +286,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
 
 
             string imageName = Guid.NewGuid().ToString();
-            string imagePath = Path.Combine(imageFolderPath, imageName)+".jpg";
+            string imagePath = Path.Combine(imageFolderPath, imageName) + ".jpg";
 
             // Use a WebClient to download the image
             using (WebClient client = new WebClient())
@@ -290,9 +294,20 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                 client.DownloadFile(imageUrl, imagePath);
             }
 
-            return imagePath;
+            return imageName;
         }
 
+
+        public void CreateBookImageRelationship(int bookId, string BookImageName)
+        {
+            // 在 BookAuthor 表中創建新的關聯紀錄
+            string sql = @"
+            INSERT INTO BookImages (BookId, Image)
+            VALUES (@BookId, @BookImage);
+        ";
+
+            _connection.Execute(sql, new { BookId = bookId, BookImage = BookImageName });
+        }
 
         //private string SaveImage(Stream imageStream, string imageName)
         //{

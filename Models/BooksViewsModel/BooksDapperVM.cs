@@ -18,7 +18,7 @@ namespace EBookStore.Site.Models.BooksViewsModel
         public string Name { get; set; }
 
         [Display(Name = "書本圖片")]
-        public string BookImage { get; set; } = "default.jpg";
+        public string BookImage { get; set; }
 
         public int PublisherId { get; set; }
 
