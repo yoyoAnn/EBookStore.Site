@@ -102,11 +102,11 @@ namespace EBookStore.Site.Controllers
                     int newCount = _repository.GetBooksCount();
                     if (newCount > initialCount)
                     {
-                        TempData["SuccessMessage"] = "從 Excel 創建書籍成功";
+                        TempData["SuccessMessage"] = $"從{categoryName} 創建書籍成功";
                     }
                     else
                     {
-                        TempData["SuccessMessage"] = "Excel 中的所有書籍都已存在";
+                        TempData["SuccessMessage"] = $"{categoryName} 中的所有書籍都已存在";
                     }
 
                     return RedirectToAction("Index");
@@ -151,7 +151,7 @@ namespace EBookStore.Site.Controllers
                 try
                 {
                     // 更新書籍資訊
-                    _repository.UpdateBook(vm,vm.CategoryId,vm.PublisherId);
+                    _repository.UpdateBook(vm, vm.CategoryId, vm.PublisherId);
 
                     return RedirectToAction("Index");
                 }

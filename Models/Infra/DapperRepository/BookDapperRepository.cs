@@ -104,6 +104,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
 
         public int GetOrCreateAuthorId(string authorName)
         {
+            authorName = authorName.Trim();
             // 檢查作者是否存在於 Author 表中，如果不存在，則在 Author 表中創建新的作者紀錄並獲取其 Id
             string sql = "SELECT Id FROM Authors WHERE Name = @AuthorName";
             int authorId = _connection.QuerySingleOrDefault<int>(sql, new { AuthorName = authorName });
@@ -226,7 +227,13 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                         foreach (var row in worksheet.RowsUsed().Skip(1))
                         {
                             var name = row.Cell(1).Value.ToString();
-                            var publisherName = row.Cell(2).Value.ToString();
+                            if (BookHelper.IsBooksNameExists(_db, name))
+                            {
+                                continue; // 如果書名已存在，跳過此本書籍，處理下一本
+                            }
+
+
+                            var publisherName = row.Cell(2).Value.ToString().Trim();
                             var publishDate = row.Cell(3).GetDateTime();
                             var authors = row.Cell(4).Value.ToString();
                             var isbn = row.Cell(5).Value.ToString();
@@ -268,10 +275,7 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
                             };
 
 
-                            if (BookHelper.IsBooksNameExists(_db, name))
-                            {
-                                continue; // 如果書名已存在，跳過此本書籍，處理下一本
-                            }
+                           
                             CreateBookWithAuthor(bookVm);
                         }
                     }
