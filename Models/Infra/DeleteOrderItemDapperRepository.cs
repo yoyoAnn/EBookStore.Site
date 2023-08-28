@@ -21,8 +21,8 @@ namespace EBookStore.Site.Models.Infra
         public IEnumerable<DeleteOrderItemVM> DeleteOrderItem(long orderId)
         {
             string sql = $@"
-  delete [OrderItems]
-  where OrderId=@UserId";
+                            delete [OrderItems]
+                            where OrderId=@UserId";
 
             IEnumerable<DeleteOrderItemVM> DetailItems = new SqlConnection(_connStr)
                 .Query<DeleteOrderItemVM>(sql, new { UserId = orderId });

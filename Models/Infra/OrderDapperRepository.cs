@@ -42,7 +42,7 @@ LEFT JOIN OrderItems ON Orders.Id = OrderItems.OrderId";
     public class OrdersItemDapperVM
     {
         [Display(Name = "訂單編號")]
-        public long Id { get; set; }
+        public string Id { get; set; }
 
         public int UserId { get; set; }
 
@@ -88,7 +88,7 @@ LEFT JOIN OrderItems ON Orders.Id = OrderItems.OrderId";
         [Display(Name = "貨運編號")]
         public string ShippingNumber { get; set; }
 
-        [Display(Name = "出貨時間")]
+        [Display(Name = "到貨時間")]
         public DateTime? ShippingTime { get; set; }
 
         [Display(Name = "運費")]

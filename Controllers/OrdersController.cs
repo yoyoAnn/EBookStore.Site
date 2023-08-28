@@ -325,7 +325,7 @@ namespace EBookStore.Site.Controllers
                 // 將 view model轉型為 Product
                 Order orders = order.ToEntity();
 
-                orders.Id = Convert.ToInt64(OrderId);
+                orders.Id = (OrderId);
                 //orders.ShippingStatusId = 2;
                 //orders.OrderStatusId = 7;
                 orders.OrderTime = DateTime.Now;
@@ -384,7 +384,7 @@ namespace EBookStore.Site.Controllers
 
 
         // GET: Orders/Edit/5
-        public ActionResult Edit(long? id)
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
@@ -426,9 +426,9 @@ namespace EBookStore.Site.Controllers
 
         // 新增的方法，處理自訂按鈕的觸發事件
         [HttpPost]
-        public ActionResult CustomAction(long orderId, int ShippingStatusId)
+        public ActionResult CustomAction(string orderId, int ShippingStatusId, int OrderStatusId)
         {
-            new OrderEditDapperRepository().PostOrdersShippingStatusIdByOrderId(orderId, ShippingStatusId);
+            new OrderEditDapperRepository().PostOrdersShippingStatusIdByOrderId(orderId, ShippingStatusId, OrderStatusId);
 
             return RedirectToAction("Index"); // 重新導向到訂單列表頁面或其他適當的頁面
 
@@ -472,6 +472,7 @@ namespace EBookStore.Site.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete2(long id)
         {
             Order order = db.Orders.Find(id);

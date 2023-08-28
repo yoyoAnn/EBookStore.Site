@@ -98,7 +98,7 @@
         <div class="col-md-3">
             @Html.LabelFor(model => model.OrderStatusId, "訂單狀態", htmlAttributes: new { @class = "col-12" })
             <div class="mb-5">
-                @Html.DropDownList("OrderStatusId", null, htmlAttributes: new { @class = "form-control", @id = "DropDownOrderStatusId", @disabled = "disabled" })
+                @Html.DropDownList("OrderStatusId", null, htmlAttributes: new { @class = "form-control", @id = "DropDownOrderStatusId" })
                 @Html.ValidationMessageFor(model => model.OrderStatusId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -153,6 +153,7 @@
 
         <div class="col-md-12 d-flex px-5">
             @Html.ActionLink("返回", "Index", "Orders", new { @class = "fa-solid fa-arrow-rotate-left fa-xl" })
+            @*<a href="@Url.Action("Index", "Orders", new { area = "" })" class="btn btn-danger ms-4">返回</a>*@
             @*<input type="submit" value="出貨" class="btn btn-primary btn-lg ml-auto" />*@
             @*<button type="button" class="btn btn-danger btn-lg" id="CancelOrder">取消訂單</button>*@
 
@@ -192,6 +193,7 @@
         $("#ToShip").click(function () {
             var orderId = $("#OrderId").val(); // 訂單ID
             var ShippingStatusId = $("#DropDownShippingStatusId").val();
+            var OrderStatusId = $("#DropDownOrderStatusId").val();
 
             // 顯示SweetAlert的確認對話框
             Swal.fire({
@@ -207,7 +209,7 @@
                     $.ajax({
                         url: "/Orders/CustomAction", // 根據控制器和方法的路由設定進行調整
                         type: "POST",
-                        data: { orderId: orderId, ShippingStatusId: ShippingStatusId },
+                        data: { orderId: orderId, ShippingStatusId: ShippingStatusId, OrderStatusId: OrderStatusId },
                         success: function (result) {
                             // 成功處理後的操作，例如重新導向或顯示訊息
                             /*Swal.fire('成功', '自訂按鈕觸發成功！', 'success').then(() => {*/

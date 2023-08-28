@@ -16,7 +16,7 @@ namespace EBookStore.Site.Models.EFModels
         }
 
 
-        public long? Id { get; set; }
+        public string Id { get; set; }
 
         public int? UserId { get; set; }
 

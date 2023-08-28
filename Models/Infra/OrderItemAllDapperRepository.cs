@@ -21,9 +21,9 @@ namespace EBookStore.Site.Models.Infra
         public ItemDetailDapperVM GetAllItemByOrderId(long orderId)
         {
             string sql = $@"
-SELECT Price * Qty AS [TotalPrice]
-FROM [OrderItems]
-where OrderId=@OrderId";
+                            SELECT Price * Qty AS [TotalPrice]
+                            FROM [OrderItems]
+                            where OrderId=@OrderId";
 
             IEnumerable<ItemDetailDapperVM> DetailItems = new SqlConnection(_connStr)
                 .Query<ItemDetailDapperVM>(sql, new { OrderId = orderId });

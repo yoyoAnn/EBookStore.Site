@@ -18,19 +18,20 @@ namespace EBookStore.Site.Models.Infra
             _connStr = System.Configuration.ConfigurationManager.ConnectionStrings["AppDbContext"].ConnectionString;
         }
 
-        public IEnumerable<OrdersEditItemDapperVM> PostOrdersShippingStatusIdByOrderId(long OrderId, int ShippingStatusId)
+        public IEnumerable<OrdersEditItemDapperVM> PostOrdersShippingStatusIdByOrderId(string OrderId, int ShippingStatusId,int OrderStatusId)
         {
             string sql = @"
                             UPDATE Orders
                             SET
                             ShippingStatusId = @ShippingStatusId,
+                            OrderStatusId = @OrderStatusId,
                             ShippingTime = REPLACE(CONVERT(nvarchar(19), GETDATE(), 120), '-', '/')
                             WHERE
                             Id = @Id";
 
             using (var connection = new SqlConnection(_connStr))
             {
-                connection.Execute(sql, new { Id = OrderId, ShippingStatusId = ShippingStatusId });
+                connection.Execute(sql, new { Id = OrderId, ShippingStatusId = ShippingStatusId, OrderStatusId= OrderStatusId });
             }
 
             using (var connection = new SqlConnection(_connStr))
@@ -47,7 +48,7 @@ namespace EBookStore.Site.Models.Infra
     public class OrdersEditItemDapperVM
     {
         [Display(Name = "訂單編號")]
-        public long Id { get; set; }
+        public string Id { get; set; }
 
         public int UserId { get; set; }
 

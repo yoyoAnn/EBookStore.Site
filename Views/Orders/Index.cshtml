@@ -40,8 +40,17 @@
             background-color: white;
         }
 
+        .other-row {
+            color: black !important;
+        }
+
         .paid-row {
             background-color: lightgreen !important;
+            color: black !important;
+        }
+
+        .pink-row {
+            background-color: lightpink !important;
             color: black !important;
         }
 
@@ -179,7 +188,7 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr class="@(item.OrderStatusesName == "已完成" ? "paid-row" : (item.OrderStatusesName == "已取消" ? "cancelled-row" : (item.OrderStatusesName == "已付款" ? "AlreadyPaid-row" : "")))">
+                <tr class="@(item.OrderStatusesName == "已完成" ? "paid-row" : (item.OrderStatusesName == "已取消" ? "cancelled-row" : (item.OrderStatusesName == "已付款" ? "AlreadyPaid-row" : (item.OrderStatusesName == "待退款" ? "pink-row" : "other-row"))))">
                     <td class="badge bg-dark ">
                         @Html.ActionLink("訂單明細", "OrderItemDetails", new { orderId = item.OrdersId }, new { @class = "text-white" })
                     </td>
@@ -247,52 +256,51 @@
     <script>
         $(document).ready(function () {
 
-            $(".deleteButton").click(function (event) {
+            $(".deleteButton").click(async function (event) {
                 event.preventDefault();
                 var orderId = $(this).data('orderid'); // 獲取訂單ID
 
                 // 顯示SweetAlert的確認對話框
-                Swal.fire({
+                let result = await Swal.fire({
                     title: '確認',
                     text: '確定刪除整筆訂單？',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: '確定',
                     cancelButtonText: '取消'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // 獲取防偽權杖的值
-                        var antiForgeryToken = $('input[name="__RequestVerificationToken"]').val();
-                        //// 創建 FormData 物件
-                        //var formData = new FormData();
-                        //var formData2 = new FormData();
-                        //formData2.append('__RequestVerificationToken', antiForgeryToken);
-                        //formData.append('id', orderId);
-
-                        $.ajax({
-                            url: "/Orders/Delete2",
-                            type: "POST",
-                            data: {
-                                __RequestVerificationToken: antiForgeryToken
-                                , name: $(".deleteButton").val()
-                            },
-
-                            data: { id: orderId },
-                            success: function (result) {
-                                // 成功處理後的操作，例如重新導向或顯示訊息
-                                location.href = "/Orders/Index";
-                            },
-                            error: function () {
-                                // 錯誤處理，例如顯示錯誤訊息
-                                Swal.fire('錯誤', '發生未知的錯誤！', 'error');
-                            }
-                        });
-                    }
                 });
+
+                if (result.isConfirmed) {
+                    // 獲取防偽權杖的值
+                    //var antiForgeryToken = $('input[name="__RequestVerificationToken"]').val();
+                    let antiForgeryToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+                    //// 創建 FormData 物件
+                    //var formData = new FormData();
+                    //var formData2 = new FormData();
+                    //formData2.append('__RequestVerificationToken', antiForgeryToken);
+                    //formData.append('id', orderId);
+                    
+                    let result = await $.ajax({
+                        url: "/Orders/Delete2",
+                        type: "POST",
+                        data: {
+                            __RequestVerificationToken: antiForgeryToken,
+                            name: $(".deleteButton").val(),
+                            id: orderId
+                        },
+                        error: function () {
+                            // 錯誤處理，例如顯示錯誤訊息
+                            Swal.fire('錯誤', '發生未知的錯誤！', 'error');
+                        }
+                    });
+                    location.href = "/Orders/Index";
+
+                }
             });
 
             $('#orderTable').DataTable({
                 /*                pageLength: 3,*/
+                lengthMenu: [6,10, 20],
                 order: [[9, 'desc']],
                 language: {
                     "searchPlaceholder": "關鍵字搜尋",
