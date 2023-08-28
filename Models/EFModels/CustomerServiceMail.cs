@@ -29,7 +29,7 @@ namespace EBookStore.Site.Models.EFModels
         [StringLength(500)]
         public string ProblemStatement { get; set; }
 
-        public long? OrderId { get; set; }
+        public string OrderId { get; set; }
 
         public bool IsRead { get; set; }
 

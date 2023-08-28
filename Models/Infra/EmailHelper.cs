@@ -58,7 +58,7 @@ namespace EBookStore.Site.Models.Infra
 			var SmtpPort = 587;
 
 			var mms = new MailMessage();
-			mms.From = new MailAddress(smtpAccount,"EBookStore.Site");
+			mms.From = new MailAddress(smtpAccount,"布可網路書店");
 			mms.Subject = subject;
 			mms.Body = body;
 			mms.IsBodyHtml = true;
