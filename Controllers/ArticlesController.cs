@@ -252,7 +252,7 @@ namespace EBookStore.Site.Controllers
 		private IEnumerable<ArticleIndexVm> GetArticleList()
 		{
 			var db = new AppDbContext();
-			return db.Articles.Include(x => x.Book).Include(x => x.Writer).OrderBy(x => x.CreatedTime).Select(x => new ArticleIndexVm
+			return db.Articles.Include(x => x.Book).Include(x => x.Writer).OrderByDescending(x => x.CreatedTime).Select(x => new ArticleIndexVm
 			{
 				Id = x.Id,
 				BookName = x.Book.Name,

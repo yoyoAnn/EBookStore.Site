@@ -1,50 +1,67 @@
 ﻿@model EBookStore.Site.Models.EFModels.Comment
 
 @{
-    ViewBag.Title = "Delete";
+	ViewBag.Title = "Delete";
 }
 
-
-<div style="margin-left:8px">
-    <h2>評論內容</h2>
-</div>
-
-<div style="margin-left:2px">
-<table class="table">
-    <tbody>
-        <tr>
-            <th>書名</th>
-            <td>@Html.DisplayFor(model => model.Book.Name)</td>
-        </tr>
-        <tr>
-            <th>帳號</th>
-            <td>@Html.DisplayFor(model => model.User.Account)</td>
-        </tr>
-        <tr>
-            <th>評分</th>
-            <td>@Html.DisplayFor(model => model.Scores)</td>
-        </tr>
-        <tr>
-            <th>評論內容</th>
-            <td>@Html.DisplayFor(model => model.Content)</td>
-        </tr>
-    </tbody>
-</table>
-
-@using (Html.BeginForm())
+@section Style
 {
-    @Html.AntiForgeryToken()
+	<style>
+		.container-fluid {
+			font-family: DFYuanBold-B5;
+			background-color: #FFFFDF;
+			border: 3px solid gray;
+			padding: 20px;
+		}
 
-<div class="form-actions no-color" style="margin-left:9px">
-    
-    <a href="@Url.Action("Delete")">
-        <button class="btn btn-outline-danger btn-sm">刪除</button>
-    </a>
-
-    <a href="@Url.Action("Index")" class="btn btn-sm btn-outline-secondary">回到主頁</a>
-</div>
-
-  
+		h2 {
+			color: #696969;
+		}
+	</style>
 }
+<div class="container-fluid" style="width:90%">
+
+	<div style="margin-left:8px">
+		<h2>評論內容</h2>
+	</div>
+
+	<div style="margin-left:2px">
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>書名</th>
+					<td>@Html.DisplayFor(model => model.Book.Name)</td>
+				</tr>
+				<tr>
+					<th>帳號</th>
+					<td>@Html.DisplayFor(model => model.User.Account)</td>
+				</tr>
+				<tr>
+					<th>評分</th>
+					<td>@Html.DisplayFor(model => model.Scores)</td>
+				</tr>
+				<tr>
+					<th>評論內容</th>
+					<td>@Html.DisplayFor(model => model.Content)</td>
+				</tr>
+			</tbody>
+		</table>
+
+		@using (Html.BeginForm())
+		{
+			@Html.AntiForgeryToken()
+
+			<div class="form-actions no-color" style="margin-left:9px">
+
+				<a href="@Url.Action("Delete")">
+					<button class="btn btn-outline-danger btn-sm">刪除</button>
+				</a>
+
+				<a href="@Url.Action("Index")" class="btn btn-sm btn-outline-secondary">回到主頁</a>
+			</div>
+
+
+		}
+	</div>
 </div>
 

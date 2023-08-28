@@ -12,21 +12,22 @@
    
 
     <style>
-        body {
-            /* background: linear-gradient(to bottom, #ffff00, #ffffff);
+		body {
+			/* background: linear-gradient(to bottom, #ffff00, #ffffff);
             background: linear-gradient(to bottom, #ffff00, #0069d9);*/
-            background: linear-gradient(135deg, #ffff00, #0069d9);
-        }
-
-        .login-container {
-            max-width: 400px;
-            margin: 0 auto;
-            margin-top: 150px;
-            padding: 20px;
-            border-radius: 4px;
-            background-color: #fff;
-            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-        }
+			/*background: linear-gradient(135deg, #ffff00, #0069d9);*/
+			background-image: url('../../img/bglogin.png');
+		}
+		.login-container {
+			max-width: 400px;
+			margin: 0 auto;
+			margin-top: 250px;
+			padding: 20px;
+			border: 8px double gray /*rgb(253,211,0)*/;
+			border-radius: 4px;
+			background-color: #fff;
+			box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+		}
 
         .login-title {
             font-size: 24px;
@@ -43,16 +44,25 @@
             height: 40px;
         }
 
-        .btn-primary {
-            width: 100%;
-            height: 40px;
-            font-size: 16px;
-            font-weight: bold;
-        }
+		.btn-primary {
+            margin-top:20px;
+			background-color: rgb(253,211,0);
+			border-color: rgb(253,211,0);
+			width: 100%;
+			height: 40px;
+			font-size: 16px;
+			font-weight: bold;
+		}
 
-        .btn-primary:hover {
+		.btn-primary:hover,
+		.btn-primary:focus {
+			background-color: goldenrod;
+			border-color: goldenrod;
+		}
+
+       /* .btn-primary:hover {
             background-color: #0069d9;
-        }
+        }*/
 
         /*.swal2-popup {
             background: linear-gradient(to bottom, #ffff00, #ffffff);

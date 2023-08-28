@@ -1,120 +1,147 @@
 ﻿@model IEnumerable<EBookStore.Site.Models.ViewModels.NewsIndexVm>
 
 @{
-    ViewBag.Title = "Index";
+	ViewBag.Title = "Index";
 
-    var statusList = ViewBag.statusList as SelectList;
-    var criteria = ViewBag.Criteria as EBookStore.Site.Models.ViewModels.NewsCriteria;
-    string s_status = criteria.Status==true || criteria.Status==false ? criteria.Status.ToString() : "";
+	var statusList = ViewBag.statusList as SelectList;
+	var criteria = ViewBag.Criteria as EBookStore.Site.Models.ViewModels.NewsCriteria;
+	string s_status = criteria.Status == true || criteria.Status == false ? criteria.Status.ToString() : "";
 
 }
 
+@section Style
+{
+	<style>
+		body {
+			font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+		}
 
-<div style="margin-left:5px">
-    <h2>最新消息</h2>
+		table {
+			font-size: 16px;
+			width: 500px;
+			margin: 0 auto;
+			background-color: #FFFFDF;
+		}
+
+		.fixed-cell {
+			/*width: 200px;*/ /* 根據需要調整固定寬度 */
+			white-space: nowrap;
+		}
+
+		h2 {
+			color: #696969;
+			font-family: DFYuanBold-B5;
+		}
+	</style>
+}
+
+<div class="container-fluid" style="width:90%">
+	<div style="margin-left:5px">
+		<h2>最新消息</h2>
+	</div>
+
+	<div>
+		<p>
+			<a href="@Url.Action("Create")" class="btn btn-m btn-outline-primary" style="margin-left:5px">撰寫新消息</a>
+		</p>
+	</div>
+
+	<section class="container" style="padding-left: 0px; margin-left: 0px;">
+		<form method="get" style="padding-left: 0px; margin-left: 0px;">
+			<div class="row" style="padding-left: 0px; margin-left: 0px;">
+				<div class="mb-3 col-md-3">
+					<label for="s_title">標題</label>
+					<input type="text" class="form-control" name="title" id="s_title" value="@criteria.Title">
+
+				</div>
+				<div class="mb-3 col-md-3">
+					<label for="s_status">狀態</label>
+					<div class="mb-3 col-md-9">
+						<select name="status" id="s_status" class="form-control" style="width:200px; height:32px ;">
+							@foreach (var item in statusList)
+							{
+
+								<option value="@item.Value" @(item.Value == s_status ? "Selected" : "")>@item.Text</option>
+							}
+
+						</select>
+					</div>
+				</div>
+				<div class="mb-3 col-md-4">
+					<label for="s_startDateTime" style="display: block">日期</label>
+					@{
+						string startDateTimeValue = criteria.StartDateTime.HasValue ? criteria.StartDateTime.Value.ToString("yyyy-MM-dd") : string.Empty;
+						string endDateTimeValue = criteria.EndDateTime.HasValue ? criteria.EndDateTime.Value.ToString("yyyy-MM-dd") : string.Empty;
+
+					}
+					<input type="date" class="form-control" name="startDateTime" id="s_startDateTime" style="width: 40%; display: inline;" value="@startDateTimeValue"> ~
+					<input type="date" class="form-control" name="endDateTime" id="s_endDateTime" style="width: 40%; display: inline;" value="@endDateTimeValue">
+
+				</div>
+				<div class="mb-3 col-md-2 align-self-end" style="padding-bottom:15px;">
+					<button class="btn btn-outline-secondary">搜尋</button>
+				</div>
+			</div>
+		</form>
+	</section>
+
+
+	<table class="table">
+		<thead class="table-light table-secondary">
+			<tr>
+				<th style="width:300px;">
+					@Html.DisplayNameFor(model => model.Title)
+				</th>
+
+				<th style="width:400px;">
+					@Html.DisplayNameFor(model => model.ContentText)
+				</th>
+				<th style="width:80px;">
+					@Html.DisplayNameFor(model => model.PageViews)
+				</th>
+				<th style="width:80px;">
+					@Html.DisplayNameFor(model => model.StatusText)
+				</th>
+				@*<th>
+						@Html.DisplayNameFor(model => model.Image)
+					</th>*@
+				<th style="width:150px;">
+					@Html.DisplayNameFor(model => model.CreatedTime)
+
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Title)
+				</td>
+
+				<td>
+					@Html.DisplayFor(modelItem => item.ContentText)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.PageViews)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.StatusText)
+				</td>
+				@*<td>
+						@Html.DisplayFor(modelItem => item.Image)
+					</td>*@
+				<td>
+					@Html.DisplayFor(modelItem => item.CreatedTime)
+				</td>
+				<td>
+					<button onclick="location.href='@Url.Action("Edit", new { id = item.Id })'" class="btn btn-outline-secondary btn-sm" style="margin-bottom:2px;">編輯</button>
+
+					<button onclick="location.href='@Url.Action("Delete", new { id = item.Id })'" class="btn btn-outline-danger btn-sm">刪除</button>
+
+				</td>
+			</tr>
+		}
+
+	</table>
 </div>
-
-<div>
-<p>
-    <a href="@Url.Action("Create")" class="btn btn-m btn-outline-primary" style="margin-left:5px">撰寫新消息</a>
-</p>
-</div>
-
-<section class="container" style="padding-left: 0px; margin-left: 0px;" >
-    <form method="get" style="padding-left: 0px; margin-left: 0px;" >
-        <div class="row" style="padding-left: 0px; margin-left: 0px;" >
-            <div class="mb-3 col-md-3">
-                <label for="s_title">標題</label>
-                <input type="text" class="form-control" name="title" id="s_title" value="@criteria.Title">
-
-            </div>
-            <div class="mb-3 col-md-3">
-                <label for="s_status">狀態</label>
-                <div class="mb-3 col-md-9">
-                    <select name="status" id="s_status" class="form-control" style="width:200px; height:32px ;">
-                        @foreach (var item in statusList)
-                        {
-                            
-                            <option value="@item.Value"  @(item.Value == s_status ? "Selected" : "") >@item.Text</option>
-                        }
-
-                    </select>
-                 </div>
-            </div>
-            <div class="mb-3 col-md-4">
-                <label for="s_startDateTime" style="display: block">日期</label>
-                @{
-                    string startDateTimeValue = criteria.StartDateTime.HasValue ? criteria.StartDateTime.Value.ToString("yyyy-MM-dd") : string.Empty;
-                    string endDateTimeValue = criteria.EndDateTime.HasValue ? criteria.EndDateTime.Value.ToString("yyyy-MM-dd") : string.Empty;
-
-                }
-                <input type="date" class="form-control" name="startDateTime" id="s_startDateTime" style="width: 40%; display: inline;" value="@startDateTimeValue"> ~
-                <input type="date" class="form-control" name="endDateTime" id="s_endDateTime" style="width: 40%; display: inline;" value="@endDateTimeValue">
-
-            </div>
-                <div class="mb-3 col-md-2 align-self-end" style="padding-bottom:15px;">
-                    <button class="btn btn-outline-secondary">搜尋</button>
-                </div>
-        </div>
-    </form>
-</section>
-
-
-<table class="table">
-    <thead class="table-light table-secondary">
-        <tr>
-            <th style="width:300px;">
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-
-            <th style="width:400px;">
-                @Html.DisplayNameFor(model => model.ContentText)
-            </th>
-            <th style="width:80px;">
-                @Html.DisplayNameFor(model => model.PageViews)
-            </th>
-            <th style="width:80px;">
-                @Html.DisplayNameFor(model => model.StatusText)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>*@
-            <th style="width:150px;">
-                @Html.DisplayNameFor(model => model.CreatedTime)
-
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.ContentText)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PageViews)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StatusText)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedTime)
-            </td>
-            <td>
-                <button onclick="location.href='@Url.Action("Edit", new { id = item.Id })'" class="btn btn-outline-secondary btn-sm" style="margin-bottom:2px;">編輯</button>
-
-                <button onclick="location.href='@Url.Action("Delete", new { id = item.Id })'" class="btn btn-outline-danger btn-sm">刪除</button>
-
-            </td>
-        </tr>
-    }
-
-</table>

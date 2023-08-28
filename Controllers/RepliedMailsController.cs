@@ -13,7 +13,8 @@ using EBookStore.Site.Models.ViewModels;
 
 namespace EBookStore.Site.Controllers
 {
-    public class RepliedMailsController : Controller
+	[Authorize(Roles = "執行長")]
+	public class RepliedMailsController : Controller
     {
         private AppDbContext db = new AppDbContext();
 
@@ -129,7 +130,7 @@ namespace EBookStore.Site.Controllers
             Result editResult = new RepliedMailDapperRepository().UpdateRepliedMails(vm);
             if (editResult.IsSuccess)
             {
-				//new EmailHelper().SendFromGmail(null, vm.Email, vm.Title, vm.Content);
+				new EmailHelper().SendFromGmail(null, vm.Email, vm.Title, vm.Content);
 
 				return RedirectToAction("Index");
 			}

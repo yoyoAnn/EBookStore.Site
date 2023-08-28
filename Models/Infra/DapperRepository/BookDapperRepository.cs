@@ -18,13 +18,13 @@ namespace EBookStore.Site.Models.Infra.DapperRepository
     {
         private readonly IDbConnection _connection;
         private readonly AppDbContext _db;
-
+        private readonly string connStr;
         public BookDapperRepository(AppDbContext db)
         {
 
             _db = db;
-            string connStr = "data source=.;initial catalog=EBookStore;user id=ebookLogin;password=123;MultipleActiveResultSets=True;App=EntityFramework\" providerName=\"System.Data.SqlClient";
 
+            connStr = System.Configuration.ConfigurationManager.ConnectionStrings["AppDbContext"].ConnectionString;
             _connection = new SqlConnection(connStr);
         }
 

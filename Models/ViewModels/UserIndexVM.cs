@@ -43,10 +43,15 @@ namespace EBookStore.Site.Models.ViewModels
         {
             get
             {
-                return this.Address.Length > 10
-                            ? this.Address.Substring(0, 10) + "..."
-                            : this.Address;
+                if (!string.IsNullOrEmpty(Address)) {
+                    return this.Address.Length > 10
+                 ? this.Address.Substring(0, 10) + "..."
+                 : this.Address;
+                }
+                else { return ""; }
+ 
             }
+            
         }
 
         public bool Gender { get; set; }
