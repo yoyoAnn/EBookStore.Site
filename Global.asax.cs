@@ -32,7 +32,7 @@ namespace EBookStore.Site
             System.Threading.TimerCallback tcb = WriteSql;
 
             //系統啟動1分鐘後執行，每30秒執行一次
-            sqlOrderTimer = new System.Threading.Timer(tcb, areRoutine, 60000, 30000);
+            sqlOrderTimer = new System.Threading.Timer(tcb, areRoutine, 30000, 30000);
 
         }
 
@@ -60,7 +60,7 @@ namespace EBookStore.Site
                         UPDATE [dbo].[Orders]
                         SET OrderStatusId = 3
                         OUTPUT inserted.Id INTO @UpdatedOrders
-                        WHERE OrderStatusId = 1 AND DATEDIFF(DAY, OrderTime, GETDATE()) > 7;
+                        WHERE OrderStatusId = 1 AND DATEDIFF(SECOND, OrderTime, GETDATE()) > 30;
 
                         UPDATE Books
                         SET Books.Stock = Books.Stock + OrderItems.Qty
@@ -73,7 +73,7 @@ namespace EBookStore.Site
                         UPDATE [dbo].[Orders]
                         SET OrderStatusId = 2
                         OUTPUT inserted.Id, ' 訂單已完成' as Status
-                        WHERE OrderStatusId = 6 AND ShippingStatusId = 5 AND DATEDIFF(DAY, ShippingTime, GETDATE()) > 7";
+                        WHERE OrderStatusId = 6 AND ShippingStatusId = 5 AND DATEDIFF(SECOND, OrderTime, GETDATE()) > 30";
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
